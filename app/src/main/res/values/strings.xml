@@ -1,28 +1,10 @@
 <resources>
     <string name="app_name">chemCraft</string>
-    <string name="app_name2">fsdl;kjfl;sdklfsl;dkfl;dskf;ldskfkldsjmflksdfmklewmfkl ewmlf klmeklwfm
-    weklflwef  fkewolkf weofk wel;f,k lwekf;l kewl;f ,klew f
-    weofkwelflwekmfl;wekfpokewjf kew fjewk jl; jkewklfjk
-    lp[welfp kwe lk f lwe;kflw;ekfl;
-    wepokfpolewkfewopkfwoepkfopwekfpoewf
-    fsdl;kjfl;sdklfsl;dkfl;dskf;ldskfkldsjmflksdfmklewmfkl ewmlf klmeklwfm
-    weklflwef  fkewolkf weofk wel;f,k lwekf;l kewl;f ,klew f
-    weofkwelflwekmfl;wekfpokewjf kew fjewk jl; jkewklfjk
-    lp[welfp kwe lk f lwe;kflw;ekfl;
-    wepokfpolewkfewopkfwoepkfopwekfpoewf
-    fsdl;kjfl;sdklfsl;dkfl;dskf;ldskfkldsjmflksdfmklewmfkl ewmlf klmeklwfm
-    weklflwef  fkewolkf weofk wel;f,k lwekf;l kewl;f ,klew f
-    weofkwelflwekmfl;wekfpokewjf kew fjewk jl; jkewklfjk
-    lp[welfp kwe lk f lwe;kflw;ekfl;
-    wepokfpolewkfewopkfwoepkfopwekfpoewf
-    fsdl;kjfl;sdklfsl;dkfl;dskf;ldskfkldsjmflksdfmklewmfkl ewmlf klmeklwfm
-    weklflwef  fkewolkf weofk wel;f,k lwekf;l kewl;f ,klew f
-    weofkwelflwekmfl;wekfpokewjf kew fjewk jl; jkewklfjk
-    lp[welfp kwe lk f lwe;kflw;ekfl;
-    wepokfpolewkfewopkfwoepkfopwekfpoewf
-    fsdl;kjfl;sdklfsl;dkfl;dskf;ldskfkldsjmflksdfmklewmfkl ewmlf klmeklwfm
-    weklflwef  fkewolkf weofk wel;f,k lwekf;l kewl;f ,klew f
-    weofkwelflwekmfl;wekfpokewjf kew fjewk jl; jkewklfjk
-    lp[welfp kwe lk f lwe;kflw;ekfl;
-    wepokfpolewkfewopkfwoepkfopwekfpoewf</string>
+    <string name="app_name2">fsf</string>
+
+    <string name="main_menu_list">Список тем</string>
+    <string name="main_menu_favorit">Избранные темы</string>
+    <string name="main_menu_settings">Настройки</string>
+
+
 </resources>

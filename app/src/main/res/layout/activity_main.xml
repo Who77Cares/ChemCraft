@@ -1,96 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <TextView
+        style="@style/Main_menu"
 
-        <!-- Заголовок -->
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Заголовок"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:paddingBottom="16dp" />
+        android:foreground="?attr/selectableItemBackground"
 
-        <!-- Основной текст -->
+        android:id="@+id/main_menu_list_textview"
+        android:text="@string/main_menu_list" />
 
-        <!-- Картинка -->
-        <TextView
-            android:id="@+id/contentTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="4dp"
-            android:paddingBottom="16dp"
-            android:text="@string/app_name2"
-            android:textSize="16sp" />
+    <TextView
+        style="@style/Main_menu"
+        android:id="@+id/main_menu_favourite_textview"
+        android:text="@string/main_menu_favorit" />
+    <TextView
+        style="@style/Main_menu"
+        android:id="@+id/main_menu_settings_textview"
+        android:text="@string/main_menu_settings" />
 
-        <ImageView
-            android:id="@+id/exampleImageView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/pnggog"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Анимация -->
-        <ImageView
-            android:id="@+id/animationView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="fitCenter"
-
-            android:layout_marginBottom="16dp" />
-
-        <!-- Вопрос -->
-        <TextView
-            android:id="@+id/questionTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Какой вопрос по тексту?"
-            android:textSize="18sp"
-            android:textStyle="italic"
-            android:paddingBottom="16dp" />
-
-        <!-- Ответы -->
-        <Button
-            android:id="@+id/answerButton1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ответ 1"
-            android:layout_marginBottom="8dp" />
-
-        <Button
-            android:id="@+id/answerButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ответ 2" />
-
-
-        <TextView
-            android:layout_marginTop="25dp"
-            android:id="@+id/contentTextView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name2"
-            android:textSize="16sp"
-            android:lineSpacingExtra="4dp"
-            android:paddingBottom="16dp" />
-
-        <!-- Картинка -->
-        <ImageView
-            android:id="@+id/gifImageView"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image1"
-            android:layout_marginBottom="16dp" />
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

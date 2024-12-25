@@ -2,4 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="card">#F5F5F5</color>
+    <color name="border">#E0E0E0</color>
+
+    <color name="main_text">#424242</color>
+    <color name="button">#FFCCB3</color>
+    <color name="in_focus">#FFE5D9</color>
+
+    <color name="like">#F9595F</color>
+    <color name="not_like">#E0E0E0</color>
+
+    #F9595F
 </resources>

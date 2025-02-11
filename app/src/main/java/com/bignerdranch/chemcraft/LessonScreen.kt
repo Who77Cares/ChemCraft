@@ -1,6 +1,5 @@
 package com.bignerdranch.chemcraft
 
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,15 +9,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import coil.ImageLoader
 import coil.decode.GifDecoder
-
 import coil.load
 import coil.request.CachePolicy
 
-class MainActivity : AppCompatActivity() {
-
+class LessonScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_lesson_screen)
 
         // Инициализация элементов с использованием findViewById
         val titleTextView = findViewById<TextView>(R.id.titleTextView)
@@ -45,6 +42,6 @@ class MainActivity : AppCompatActivity() {
 
         // Загрузка GIF
         gifImageView.load(R.drawable.image1, imageLoader)
-    }
 
     }
+}

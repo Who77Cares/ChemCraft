@@ -40,7 +40,7 @@ android {
         jvmTarget = "11"
     }
 }
-//
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -52,7 +52,12 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation (libs.glide)
+
+    // неиспользуемые зависимости
     implementation(libs.coil)
     implementation(libs.coil.gif)
+
+
 
 }

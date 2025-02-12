@@ -20,8 +20,7 @@ class LessonScreen : AppCompatActivity() {
         binding = ActivityLessonScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        val contentList = mutableListOf<ContentItem>(
+        val oneContent = mutableListOf<ContentItem>(
             ContentItem.Text("Солнышко встало на утреннем небе, разгоняя последние тёмные тени ночи. Его лучи мягко касались земли, согревая всё вокруг. Цветы раскрывались, приветствуя его тепло, а воздух наполнился запахом свежести и цветов. В лесу пели птицы, а на поляне играли зайчата. Солнышко радостно светило, обещая всем новый день, полный света и счастья."),
             ContentItem.Image("https://downloader.disk.yandex.ru/preview/2153d566688a75d0f062a5735d124a9f4fb21e5b5106859b62c83d2b1f6f2049/67ac0bca/KwOkaa4_16A0-eBS6lqGoJa68VyyOyd9rOCU23C_tMREektdtbp_9ZRW92rnidHseF00_ysuUihmEjSIsaJqtQ%3D%3D?uid=0&filename=Screenshot_1.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=2048x2048"),
             ContentItem.Text("Котик по имени Мурка сидел на подоконнике и наблюдал за миром с высоты. Его пушистая шёрстка была как мягкое облако, а большие зелёные глаза с интересом следили за каждым движением. Мурка был любителем тёплых местечек и длинных дневных снов. Иногда он лениво растягивался на солнечном диване, потягиваясь и мурлыкая, словно наслаждаясь каждым моментом своей жизни."),
@@ -35,6 +34,6 @@ class LessonScreen : AppCompatActivity() {
         binding.lessonRecycleView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        binding.lessonRecycleView.adapter = ContentAdapter(contentList)
+        binding.lessonRecycleView.adapter = ContentAdapter(oneContent)
     }
 }

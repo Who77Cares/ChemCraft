@@ -1,6 +1,10 @@
 package com.bignerdranch.chemcraft.lessonScreen
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -60,6 +64,7 @@ class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     }
 }
 
+@SuppressLint("ClickableViewAccessibility")
 class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     LayoutInflater
         .from(parent.context)
@@ -69,6 +74,8 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     val lessonImage: ImageView = itemView.findViewById(R.id.lesson_image)
 
     fun bind(contentItem: ContentItem.Image) {
+        itemView.tag = contentItem
+
         Glide.with(itemView)
             .load(contentItem.url)
             .centerCrop()
@@ -76,4 +83,30 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 //          .placeholder(R.drawable.placeholder)
             .into(lessonImage)
     }
+
+    // логика двойного клика и открытия картинки
+    private val gestureDetector = GestureDetector(itemView.context, object : GestureDetector.SimpleOnGestureListener() {
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            val contentItem = itemView.tag as ContentItem.Image
+            openImageFullScreen(contentItem.url)
+            return true
+        }
+    })
+
+    init {
+        lessonImage.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            true
+        }
+
+        
+    }
+
+    private fun openImageFullScreen(imageUrl: String) {
+        val intent = Intent(itemView.context, FullScreenImageActivity::class.java)
+        intent.putExtra("image_url", imageUrl)
+        itemView.context.startActivity(intent)
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.bignerdranch.chemcraft.lessonScreen
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -51,6 +52,8 @@ class ContentAdapter(private val contentList: List<ContentItem>): RecyclerView.A
     }
 }
 
+
+
 class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     LayoutInflater
         .from(parent.context)
@@ -64,12 +67,16 @@ class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     }
 }
 
+
+
+
 @SuppressLint("ClickableViewAccessibility")
 class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     LayoutInflater
         .from(parent.context)
         .inflate(R.layout.item_image, parent, false)
 ) {
+
 
     val lessonImage: ImageView = itemView.findViewById(R.id.lesson_image)
 

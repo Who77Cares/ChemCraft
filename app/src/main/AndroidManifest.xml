@@ -21,7 +21,7 @@
             android:name=".lessonScreen.LessonScreen"
             android:exported="false" />
         <activity
-            android:name=".LessonsListScreen"
+            android:name="com.bignerdranch.chemcraft.lessonsListScreen.LessonsListScreen"
             android:exported="false" />
         <activity
             android:name=".MainMenu"

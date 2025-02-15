@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 
-class ContentAdapter(private val contentList: List<ContentItem>): RecyclerView.Adapter<ViewHolder> () {
+class ContentAdapter(private var contentList: List<ContentItem>): RecyclerView.Adapter<ViewHolder> () {
 
     companion object {
         private const val TEXT = 0
@@ -49,6 +49,11 @@ class ContentAdapter(private val contentList: List<ContentItem>): RecyclerView.A
             is ContentItem.Image -> (holder as ImageViewHolder).bind(content)
 
         }
+    }
+
+    fun updateContent(newContentList: List<ContentItem>) {
+        contentList = newContentList
+        notifyDataSetChanged()  // Обновляем RecyclerView
     }
 }
 

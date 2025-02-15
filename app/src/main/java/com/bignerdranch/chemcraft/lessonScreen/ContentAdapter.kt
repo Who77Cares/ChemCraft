@@ -1,6 +1,11 @@
 package com.bignerdranch.chemcraft.lessonScreen
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.util.Log
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 
-class ContentAdapter(private val contentList: List<ContentItem>): RecyclerView.Adapter<ViewHolder> () {
+class ContentAdapter(private var contentList: List<ContentItem>): RecyclerView.Adapter<ViewHolder> () {
 
     companion object {
         private const val TEXT = 0
@@ -45,7 +50,14 @@ class ContentAdapter(private val contentList: List<ContentItem>): RecyclerView.A
 
         }
     }
+
+    fun updateContent(newContentList: List<ContentItem>) {
+        contentList = newContentList
+        notifyDataSetChanged()  // Обновляем RecyclerView
+    }
 }
+
+
 
 class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     LayoutInflater
@@ -60,15 +72,22 @@ class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     }
 }
 
+
+
+
+@SuppressLint("ClickableViewAccessibility")
 class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     LayoutInflater
         .from(parent.context)
         .inflate(R.layout.item_image, parent, false)
 ) {
 
+
     val lessonImage: ImageView = itemView.findViewById(R.id.lesson_image)
 
     fun bind(contentItem: ContentItem.Image) {
+        itemView.tag = contentItem
+
         Glide.with(itemView)
             .load(contentItem.url)
             .centerCrop()
@@ -76,4 +95,30 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 //          .placeholder(R.drawable.placeholder)
             .into(lessonImage)
     }
+
+    // логика двойного клика и открытия картинки
+    private val gestureDetector = GestureDetector(itemView.context, object : GestureDetector.SimpleOnGestureListener() {
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            val contentItem = itemView.tag as ContentItem.Image
+            openImageFullScreen(contentItem.url)
+            return true
+        }
+    })
+
+    init {
+        lessonImage.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            true
+        }
+
+        
+    }
+
+    private fun openImageFullScreen(imageUrl: String) {
+        val intent = Intent(itemView.context, FullScreenImageActivity::class.java)
+        intent.putExtra("image_url", imageUrl)
+        itemView.context.startActivity(intent)
+    }
+
+
 }

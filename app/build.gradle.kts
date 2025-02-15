@@ -53,6 +53,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation (libs.glide)
+    implementation ("com.github.chrisbanes:PhotoView:2.3.0")
 
     // неиспользуемые зависимости
     implementation(libs.coil)

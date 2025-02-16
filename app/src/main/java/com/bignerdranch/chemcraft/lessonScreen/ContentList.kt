@@ -5,7 +5,7 @@ import java.io.Serializable
 data class ContentList(val blockName: String, val content: List<ContentItem>): Serializable {
 }
 
-data class Lesson(val title: String, val blocks: List<ContentList>): Serializable
+data class Lesson(val title: String, val description: String, val blocks: List<ContentList>): Serializable
 
 sealed class ContentItem: Serializable {
     data class Text(val content: String) : ContentItem()

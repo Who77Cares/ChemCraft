@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "911371918886",
+    "project_id": "chemcraft-442a0",
+    "storage_bucket": "chemcraft-442a0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911371918886:android:f46619a222b0001eb290e7",
+        "android_client_info": {
+          "package_name": "com.bignerdranch.chemcraft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcOoD4jfosXkj2RZ1FuheH5OPMha-PMho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.OnBlockClickListener
 import com.bignerdranch.chemcraft.R
 
-class BlocksAdapter(private val contentList: List<ContentList>,
+class BlocksAdapter(private var contentList: List<ContentList>,
                     private val listener: OnBlockClickListener
 ): RecyclerView.Adapter<BlocksHolder>() {
 
@@ -25,6 +25,11 @@ class BlocksAdapter(private val contentList: List<ContentList>,
         }
 
 
+    }
+
+    fun updateBlocks(newBlocks: List<ContentList>) {
+        contentList = newBlocks
+        notifyDataSetChanged()  // Перерисовываем RecyclerView с новыми блоками
     }
 }
 

@@ -28,7 +28,9 @@ class LessonsListScreenAdapter(
         holder.itemView.setOnClickListener {
 
             val intent = Intent(holder.itemView.context, LessonScreen::class.java).apply {
-                putExtra("lesson", lessons[position] as Serializable) // as Serializable и добавление : Serializable в ContentLISt необходимо для передачи объекта в интент. вообще этот способ не очень - лучше использовать Parcelable
+                putExtra("lessonId", lessons[position].id)
+                putExtra("title", lessons[position].title)
+                putExtra("description", lessons[position].description)
             }
             holder.itemView.context.startActivity(intent)
 

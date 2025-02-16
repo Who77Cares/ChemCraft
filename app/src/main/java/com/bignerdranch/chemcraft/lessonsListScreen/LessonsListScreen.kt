@@ -127,10 +127,11 @@ class LessonsListScreen : AppCompatActivity() {
                 for (document in resul) {
                     val title = document.getString("title") ?: " No title "
                     val desciption = document.getString("description") ?: "No description"
+                    val lessonId = document.id
 
-                    lessons.add((Lesson(title, desciption, listOf())))
+                    lessons.add((Lesson(lessonId, title, desciption, listOf())))
 
-                    Log.d("Firestore", "Fetched lesson: $title")
+                    Log.d("Firestore", "Fetched lesson: $lessonId")
                 }
 
                 adapter = LessonsListScreenAdapter(lessons)

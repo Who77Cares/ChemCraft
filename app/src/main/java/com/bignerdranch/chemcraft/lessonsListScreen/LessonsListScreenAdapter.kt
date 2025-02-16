@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bignerdranch.chemcraft.R
@@ -27,7 +28,9 @@ class LessonsListScreenAdapter(
         holder.itemView.setOnClickListener {
 
             val intent = Intent(holder.itemView.context, LessonScreen::class.java).apply {
-                putExtra("lesson", lessons[position] as Serializable) // as Serializable и добавление : Serializable в ContentLISt необходимо для передачи объекта в интент. вообще этот способ не очень - лучше использовать Parcelable
+                putExtra("lessonId", lessons[position].id)
+                putExtra("title", lessons[position].title)
+                putExtra("description", lessons[position].description)
             }
             holder.itemView.context.startActivity(intent)
 
@@ -46,9 +49,11 @@ class LessonsListScreenHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 ) {
 
     private val lessonTitle: Button = itemView.findViewById(R.id.lessonButton)
+    private val lessonDescription: TextView = itemView.findViewById(R.id.lessonDrescription)
 
     fun bind(model: Lesson) {
         lessonTitle.text = model.title
+        lessonDescription.text = model.description
     }
 
 }

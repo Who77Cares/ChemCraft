@@ -1,12 +1,11 @@
 package com.bignerdranch.chemcraft.lessonScreen
 
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bignerdranch.chemcraft.OnBlockClickListener
+import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.databinding.ActivityLessonScreenBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -35,7 +34,7 @@ class LessonScreen : AppCompatActivity(), OnBlockClickListener {
 
         // Инициализация адаптеров до загрузки данных
         contentAdapter = ContentAdapter(emptyList()) // Изначально пустой список
-        blocksAdapter = BlocksAdapter(emptyList(), this)
+        blocksAdapter = BlocksAdapter(emptyList(),this, binding.blocksRecycleView)
 
         binding.lessonRecycleView.layoutManager = LinearLayoutManager(this)
         binding.lessonRecycleView.adapter = contentAdapter
@@ -89,6 +88,7 @@ class LessonScreen : AppCompatActivity(), OnBlockClickListener {
                     if (blocks.isNotEmpty()) {
                         contentAdapter.updateContent(lesson.blocks[0].content)
                         blocksAdapter.updateBlocks(lesson.blocks)
+                        blocksAdapter.selectedPosition = 0 // для установки первого блока в состояние isClicked
                         Log.d("LessonScreen", "Адаптеры обновлены")
                     } else {
                         Log.d("LessonScreen", "Нет блоков для отображения.")

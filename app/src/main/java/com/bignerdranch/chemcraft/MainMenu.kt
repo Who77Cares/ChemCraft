@@ -24,6 +24,10 @@ class MainMenu : AppCompatActivity() {
             startActivity(Intent(this, LessonsListScreen::class.java))
         }
 
+        binding.myListLessonsButton.setOnClickListener {
+            startActivity(Intent(this, MyLessonsScreen::class.java))
+        }
+
         val db = Firebase.firestore
 
     }

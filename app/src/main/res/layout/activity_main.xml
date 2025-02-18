@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_guide_line"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 <Button
     android:id="@+id/lessonsListButton"
     android:layout_width="wrap_content"
@@ -11,7 +19,15 @@
     android:text="Список уроков"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"/>
+    app:layout_constraintBottom_toTopOf="@id/main_guide_line" />
+
+    <Button
+        android:id="@+id/my_list_lessons_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Мои уроки"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_guide_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

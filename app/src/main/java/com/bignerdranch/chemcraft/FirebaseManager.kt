@@ -1,6 +1,8 @@
 package com.bignerdranch.chemcraft
 
 import android.util.Log
+import com.bignerdranch.chemcraft.lessonScreen.ContentItem
+import com.bignerdranch.chemcraft.lessonScreen.ContentList
 import com.bignerdranch.chemcraft.lessonScreen.Lesson
 import com.bignerdranch.chemcraft.lessonsListScreen.LessonsListScreenAdapter
 import com.google.firebase.Firebase
@@ -11,6 +13,7 @@ class FirebaseManager {
     interface FirebaseDataCallback {
         fun onDataReceived(lessons: MutableList<Lesson>)
     }
+
 
     companion object {
 
@@ -67,5 +70,47 @@ class FirebaseManager {
                         Log.e("FirebaseManager", "Error getting document: ", exception)
                     }
         }
+
+        fun loadLessonData(lessonId: String, callback: (Lesson) -> Unit) {
+            val db = Firebase.firestore
+
+            db.collection("lesson_content").document(lessonId).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        // Извлекаем блоки
+                        val blocksData = document.get("blocks") as? List<Map<String, Any>>?
+                        Log.d("LessonScreen", "Количество блоков: ${blocksData?.size}")
+
+                        // Преобразуем данные в модель Lesson
+                        val blocks = blocksData?.mapNotNull { blockData ->
+                            val blockName = blockData["blockName"] as? String ?: ""
+                            val contentData = blockData["content"] as? List<Map<String, Any>>?
+                            val content = contentData?.mapNotNull { itemData ->
+                                when (itemData["type"] as? String) {
+                                    "Text" -> ContentItem.Text(content = itemData["content"] as? String ?: "")
+                                    "Img" -> ContentItem.Image(url = itemData["url"] as? String ?: "")
+                                    else -> null
+                                }
+                            } ?: emptyList()
+
+                            Log.d("LessonScreen", "Блок: $blockName, Содержимое: ${content.size} элементов")
+
+                            ContentList(blockName, content)
+                        } ?: emptyList()
+
+                        Log.d("LessonScreen", "Всего блоков: ${blocks.size}")
+
+                        // Создаем объект урока
+                        val lesson = Lesson(id = lessonId, title = "Название урока", description = "Описание урока", blocks = blocks)
+                        callback(lesson) // Передаем загруженные данные в callback
+                    } else {
+                        Log.d("Error", "Документ с ID $lessonId не найден.")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.d("Error2", "Ошибка загрузки урока: ${e.message}")
+                }
+        }
+
     }
 }

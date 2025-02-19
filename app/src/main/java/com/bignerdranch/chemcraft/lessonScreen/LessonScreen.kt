@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.chemcraft.FirebaseManager
 import com.bignerdranch.chemcraft.databinding.ActivityLessonScreenBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -27,7 +28,7 @@ class LessonScreen : AppCompatActivity(), OnBlockClickListener {
 
         database = Firebase.firestore
 
-        val lessonId = intent.getStringExtra("lessonId")
+        val lessonId = intent.getStringExtra("lessonId")!!
         Log.d("LessonScreen", "Передаем ID урока: $lessonId")
         title = intent.getStringExtra("title") ?: " _ "
         description = intent.getStringExtra("description") ?: " _ "
@@ -55,68 +56,16 @@ class LessonScreen : AppCompatActivity(), OnBlockClickListener {
 //            }
 //        })
 
-       
 
+        FirebaseManager.loadLessonData(lessonId) { lesson ->
+            binding.title.text = lesson.title
 
-        lessonId?.let {
-            // Загружаем урок по id
-            loadLessonData(it)
+            contentAdapter.updateContent(lesson.blocks[0].content)
+            blocksAdapter.updateBlocks(lesson.blocks)
+            blocksAdapter.selectedPosition = 0
         }
     }
 
-    private fun loadLessonData(lessonId: String) {
-        // начало загрузки данных
-        Log.d("LessonScreen", "Загрузка урока с ID: $lessonId")
-
-        database.collection("lesson_content").document(lessonId).get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-
-                    // Извлекаем блоки
-                    val blocksData = document.get("blocks") as? List<Map<String, Any>>?
-                    Log.d("LessonScreen", "Количество блоков: ${blocksData?.size}")
-
-                    // Преобразуем данные в модель Lesson
-                    val blocks = blocksData?.mapNotNull { blockData ->
-                        val blockName = blockData["blockName"] as? String ?: ""
-                        val contentData = blockData["content"] as? List<Map<String, Any>>?
-                        val content = contentData?.mapNotNull { itemData ->
-                            when (itemData["type"] as? String) {
-                                "Text" -> ContentItem.Text(content = itemData["content"] as? String ?: "")
-                                "Img" -> ContentItem.Image(url = itemData["url"] as? String ?: "")
-                                else -> null
-                            }
-                        } ?: emptyList()
-
-                        Log.d("LessonScreen", "Блок: $blockName, Содержимое: ${content.size} элементов")
-
-                        ContentList(blockName, content)
-                    } ?: emptyList()
-
-                    Log.d("LessonScreen", "Всего блоков: ${blocks.size}")
-
-                    // Создаем объект урока и обновляем интерфейс
-                    val lesson = Lesson(id = lessonId, title = title, description = description, blocks = blocks)
-                    binding.title.text = lesson.title
-
-                    // Обновляем адаптеры с реальными данными
-                    if (blocks.isNotEmpty()) {
-                        contentAdapter.updateContent(lesson.blocks[0].content)
-                        blocksAdapter.updateBlocks(lesson.blocks)
-                        blocksAdapter.selectedPosition = 0 // для установки первого блока в состояние isClicked
-                        Log.d("LessonScreen", "Адаптеры обновлены")
-                    } else {
-                        Log.d("LessonScreen", "Нет блоков для отображения.")
-                    }
-                } else {
-                    Log.d("LessonScreen", "Документ с ID $lessonId не найден.")
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("LessonScreen", "Ошибка загрузки урока: ${e.message}")
-                Toast.makeText(this@LessonScreen, "Ошибка загрузки урока", Toast.LENGTH_SHORT).show()
-            }
-    }
 
     override fun onBlockClick(contentList: List<ContentItem>) {
         contentAdapter.updateContent(contentList)

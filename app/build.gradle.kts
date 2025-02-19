@@ -60,6 +60,8 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
 
+    implementation("com.google.code.gson:gson:2.8.9")
+
     // неиспользуемые зависимости
     implementation(libs.coil)
     implementation(libs.coil.gif)

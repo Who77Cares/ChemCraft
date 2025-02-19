@@ -17,21 +17,32 @@
         android:backgroundTint="#f0bbbd"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/dp25"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/lessonDrescription"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Описание для урока"
-        android:gravity="center"
+        android:gravity="start"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lessonButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:layout_marginStart="@dimen/dp25"
+        android:layout_marginEnd="@dimen/dp25"/>
+
+    <ImageView
+        android:id="@+id/add_or_remove_to_my_lessons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/lessonButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lessonButton"
+        app:srcCompat="@drawable/save_to_my_lessons_icon"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_marginEnd="@dimen/dp25"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bignerdranch.chemcraft.FirebaseManager
 import com.bignerdranch.chemcraft.databinding.ActivityLessonsListScreenBinding
 import com.bignerdranch.chemcraft.lessonScreen.ContentAdapter
 import com.bignerdranch.chemcraft.lessonScreen.ContentItem
@@ -30,36 +31,14 @@ class LessonsListScreen : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         // Получаем список уроков из Firestore
-        getListDataFromFirebase()
+        FirebaseManager.getListDataFromFirebase(object : FirebaseManager.FirebaseDataCallback {
+            override fun onDataReceived(lessons: MutableList<Lesson>) {
 
-    }
-
-
-
-
-    private fun getListDataFromFirebase() {
-        val db = Firebase.firestore
-
-        db.collection("lessons")
-            .get()
-            .addOnSuccessListener { resul ->
-
-                val lessons = mutableListOf<Lesson>()
-
-                for (document in resul) {
-                    val title = document.getString("title") ?: " No title "
-                    val desciption = document.getString("description") ?: "No description"
-                    val lessonId = document.id
-
-                    lessons.add((Lesson(lessonId, title, desciption, listOf())))
-
-                    Log.d("Firestore", "Fetched lesson: $lessonId")
-                }
-
-                adapter = LessonsListScreenAdapter(lessons)
+                // После того как данные загружены, создаем адаптер и устанавливаем его
+                adapter = LessonsListScreenAdapter(this@LessonsListScreen, lessons)
                 binding.lessonsRecycleView.adapter = adapter
-
             }
+        })
     }
 
 }

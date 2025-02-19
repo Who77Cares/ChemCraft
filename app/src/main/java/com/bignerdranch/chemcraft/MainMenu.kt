@@ -1,12 +1,12 @@
 package com.bignerdranch.chemcraft
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 
 
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
 import com.bignerdranch.chemcraft.lessonsListScreen.LessonsListScreen
+import com.bignerdranch.chemcraft.myLessons.MyLessonsScreen
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 

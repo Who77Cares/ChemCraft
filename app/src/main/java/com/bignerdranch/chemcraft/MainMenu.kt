@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
 import com.bignerdranch.chemcraft.lessonsListScreen.LessonsListScreen
 import com.bignerdranch.chemcraft.myLessons.MyLessonsScreen
+import com.bignerdranch.chemcraft.test.TestScreen
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -26,6 +27,10 @@ class MainMenu : AppCompatActivity() {
 
         binding.myListLessonsButton.setOnClickListener {
             startActivity(Intent(this, MyLessonsScreen::class.java))
+        }
+
+        binding.testsButton.setOnClickListener {
+            startActivity(Intent(this, TestScreen::class.java))
         }
 
         val db = Firebase.firestore

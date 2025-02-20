@@ -92,7 +92,7 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
             .load(contentItem.url)
             .centerCrop()
             .transform(RoundedCorners(2))
-//          .placeholder(R.drawable.placeholder)
+            .placeholder(R.drawable.placeholder)
             .into(lessonImage)
     }
 

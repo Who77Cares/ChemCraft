@@ -15,7 +15,7 @@
         android:theme="@style/Theme.ChemCraft"
         tools:targetApi="31">
         <activity
-            android:name=".test.TestScreen"
+            android:name=".test.TestActivity"
             android:exported="false" />
         <activity
             android:name=".myLessons.MyLessonsScreen"

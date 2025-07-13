@@ -44,18 +44,6 @@ class LessonScreen : AppCompatActivity(), OnBlockClickListener {
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.blocksRecycleView.adapter = blocksAdapter
 
-//        binding.lessonRecycleView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//
-//                // Если прокручиваем второй RecyclerView вниз
-//                if (dy > 0) {
-//                    // Сдвигаем первый RecyclerView (blocks_recycleView) вверх
-//                    binding.blocksRecycleView.offsetTopAndBottom(-dy)
-//                }
-//            }
-//        })
-
 
         FirebaseManager.loadLessonData(lessonId) { lesson ->
             binding.title.text = lesson.title

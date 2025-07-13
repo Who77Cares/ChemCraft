@@ -83,7 +83,7 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 ) {
 
 
-    val lessonImage: ImageView = itemView.findViewById(R.id.lesson_image)
+    private val lessonImage: ImageView = itemView.findViewById(R.id.lesson_image)
 
     fun bind(contentItem: ContentItem.Image) {
         itemView.tag = contentItem

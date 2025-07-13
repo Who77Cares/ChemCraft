@@ -4,7 +4,6 @@ import android.util.Log
 import com.bignerdranch.chemcraft.lessonScreen.ContentItem
 import com.bignerdranch.chemcraft.lessonScreen.ContentList
 import com.bignerdranch.chemcraft.lessonScreen.Lesson
-import com.bignerdranch.chemcraft.lessonsListScreen.LessonsListScreenAdapter
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 

@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <!-- Основные цвета -->
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="gray">#FF9E9E9E</color>
+    <color name="light_gray">#FFEEEEEE</color>
+    <color name="dark_gray">#FF616161</color>
 
-    <color name="color1">#c97963</color>
-    <color name="color2">#292B32</color>
-    <color name="color3">#4a3432</color>
-    <color name="color4">#e5c8a4</color>
-    <color name="color5">#ebe5d5</color>
+    <!-- Цвета интерфейса -->
+    <color name="blue">#FF2196F3</color>
+    <color name="blue_dark">#FF1976D2</color>
+    <color name="blue_light">#FFBBDEFB</color>
 
-    <color name="color6">#8a9ba2</color>
-    <color name="color7">#414a4d</color>
-    <color name="color8">#d2ecf7</color>
+    <color name="red">#FFF44336</color>
+    <color name="red_dark">#FFD32F2F</color>
+    <color name="red_light">#FFFFCDD2</color>
+
+    <color name="green">#FF4CAF50</color>
+    <color name="green_dark">#FF388E3C</color>
+    <color name="green_light">#FFC8E6C9</color>
+
+    <color name="orange">#FFFF9800</color>
+    <color name="orange_dark">#FFF57C00</color>
+    <color name="orange_light">#FFFFE0B2</color>
+
+    <color name="purple">#FF9C27B0</color>
+    <color name="purple_dark">#FF7B1FA2</color>
+    <color name="purple_light">#FFE1BEE7</color>
+
+    <!-- Цвета фона -->
+    <color name="background_main">#FFF5F5F5</color>
+    <color name="background_dark">#FFE0E0E0</color>
+
+    <!-- Дополнительные -->
+    <color name="text_primary">#FF212121</color>
+    <color name="text_secondary">#FF757575</color>
+    <color name="accent">#FFFFC107</color>
+
+
+
+
 
 </resources>

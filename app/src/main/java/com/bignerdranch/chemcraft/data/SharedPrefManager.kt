@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.myLessons
+package com.bignerdranch.chemcraft.data
 
 import android.content.Context
 import android.content.SharedPreferences

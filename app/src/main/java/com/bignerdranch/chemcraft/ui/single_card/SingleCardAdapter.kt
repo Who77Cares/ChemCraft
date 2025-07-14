@@ -1,8 +1,7 @@
-package com.bignerdranch.chemcraft.lessonScreen
+package com.bignerdranch.chemcraft.ui.single_card
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,11 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bignerdranch.chemcraft.R
+import com.bignerdranch.chemcraft.SingleCardItemModel
+import com.bignerdranch.chemcraft.ui.single_card.full_screen_img.FullScreenImageActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 
-class ContentAdapter(private var contentList: List<ContentItem>): RecyclerView.Adapter<ViewHolder> () {
+class SingleCardAdapter(private var contentList: List<SingleCardItemModel>): RecyclerView.Adapter<ViewHolder> () {
 
     companion object {
         private const val TEXT = 0
@@ -26,8 +27,8 @@ class ContentAdapter(private var contentList: List<ContentItem>): RecyclerView.A
     // функция для установки верных классов из sealed класса
     override fun getItemViewType(position: Int): Int {
         return when (contentList[position]) {
-            is ContentItem.Text -> TEXT
-            is ContentItem.Image -> IMAGE
+            is SingleCardItemModel.Text -> TEXT
+            is SingleCardItemModel.Image -> IMAGE
         }
     }
 
@@ -45,13 +46,13 @@ class ContentAdapter(private var contentList: List<ContentItem>): RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (val content = contentList[position]) {
-            is ContentItem.Text -> (holder as TextViewHolder).bind(content)
-            is ContentItem.Image -> (holder as ImageViewHolder).bind(content)
+            is SingleCardItemModel.Text -> (holder as TextViewHolder).bind(content)
+            is SingleCardItemModel.Image -> (holder as ImageViewHolder).bind(content)
 
         }
     }
 
-    fun updateContent(newContentList: List<ContentItem>) {
+    fun updateContent(newContentList: List<SingleCardItemModel>) {
         contentList = newContentList
         notifyDataSetChanged()  // Обновляем RecyclerView
     }
@@ -67,8 +68,8 @@ class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 
     val lessonText: TextView = itemView.findViewById(R.id.lesson_text)
 
-    fun bind(contentItem: ContentItem.Text) {
-        lessonText.text = contentItem.content
+    fun bind(singleCardItemModel: SingleCardItemModel.Text) {
+        lessonText.text = singleCardItemModel.content
     }
 }
 
@@ -85,11 +86,11 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 
     private val lessonImage: ImageView = itemView.findViewById(R.id.lesson_image)
 
-    fun bind(contentItem: ContentItem.Image) {
-        itemView.tag = contentItem
+    fun bind(singleCardItemModel: SingleCardItemModel.Image) {
+        itemView.tag = singleCardItemModel
 
         Glide.with(itemView)
-            .load(contentItem.url)
+            .load(singleCardItemModel.url)
             .centerCrop()
             .transform(RoundedCorners(2))
             .placeholder(R.drawable.placeholder)
@@ -99,8 +100,8 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     // логика двойного клика и открытия картинки
     private val gestureDetector = GestureDetector(itemView.context, object : GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean {
-            val contentItem = itemView.tag as ContentItem.Image
-            openImageFullScreen(contentItem.url)
+            val singleCardItemModel = itemView.tag as SingleCardItemModel.Image
+            openImageFullScreen(singleCardItemModel.url)
             return true
         }
     })

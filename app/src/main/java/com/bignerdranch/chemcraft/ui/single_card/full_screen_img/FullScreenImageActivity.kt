@@ -1,10 +1,9 @@
-package com.bignerdranch.chemcraft.lessonScreen
+package com.bignerdranch.chemcraft.ui.single_card.full_screen_img
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.chemcraft.databinding.ActivityFullScreenImageBinding
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 class FullScreenImageActivity : AppCompatActivity() {
 

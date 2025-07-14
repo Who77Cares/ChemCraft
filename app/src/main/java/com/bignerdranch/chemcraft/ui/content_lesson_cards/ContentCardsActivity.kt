@@ -1,16 +1,15 @@
-package com.bignerdranch.chemcraft.ui.subtopic_lesson_cards
+package com.bignerdranch.chemcraft.ui.content_lesson_cards
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bignerdranch.chemcraft.FirebaseManager
+import com.bignerdranch.chemcraft.data.FirebaseManager
 import com.bignerdranch.chemcraft.databinding.ActivitySubtopicCardsBinding
-import com.bignerdranch.chemcraft.lessonScreen.LessonContent
-import com.bignerdranch.chemcraft.lessonsListScreen.LessonsListScreenAdapter
+import com.bignerdranch.chemcraft.LessonsContentModel
 
-class SubtopicCardsView : AppCompatActivity() {
+class ContentCardsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySubtopicCardsBinding
-    private lateinit var adapter: LessonsListScreenAdapter
+    private lateinit var adapter: SubtopicCardsAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,10 +23,10 @@ class SubtopicCardsView : AppCompatActivity() {
 
         // Получаем список уроков из Firestore
         FirebaseManager.getListDataFromFirebase(object : FirebaseManager.FirebaseDataCallback {
-            override fun onDataReceived(lessonContents: MutableList<LessonContent>) {
+            override fun onDataReceived(lessonsContentModels: MutableList<LessonsContentModel>) {
 
                 // После того как данные загружены, создаем адаптер и устанавливаем его
-                adapter = LessonsListScreenAdapter(this@SubtopicCardsView, lessonContents)
+                adapter = SubtopicCardsAdapter(this@ContentCardsActivity, lessonsContentModels)
                 binding.lessonsRecycleView.adapter = adapter
             }
         })

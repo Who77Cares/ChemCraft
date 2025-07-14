@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.test
+package com.bignerdranch.chemcraft.ui.test
 
 
 data class TestModel(val title: String,

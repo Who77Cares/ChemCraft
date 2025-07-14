@@ -1,16 +1,16 @@
-package com.bignerdranch.chemcraft
+package com.bignerdranch.chemcraft.data
 
 import android.util.Log
-import com.bignerdranch.chemcraft.lessonScreen.ContentItem
-import com.bignerdranch.chemcraft.lessonScreen.ContentCardViewModel
-import com.bignerdranch.chemcraft.lessonScreen.LessonContent
+import com.bignerdranch.chemcraft.SingleCardItemModel
+import com.bignerdranch.chemcraft.ContentCardModel
+import com.bignerdranch.chemcraft.LessonsContentModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class FirebaseManager {
 
     interface FirebaseDataCallback {
-        fun onDataReceived(lessonContents: MutableList<LessonContent>)
+        fun onDataReceived(lessonsContentModels: MutableList<LessonsContentModel>)
     }
 
 
@@ -27,7 +27,7 @@ class FirebaseManager {
 
         fun getListDataFromFirebase(callback: FirebaseDataCallback){
             val db = Firebase.firestore
-            val lessonContents = mutableListOf<LessonContent>()
+            val lessonsContentModels = mutableListOf<LessonsContentModel>()
 
             db.collection("lessons")
                 .get()
@@ -38,17 +38,17 @@ class FirebaseManager {
                         val desciption = document.getString("description") ?: "No description"
                         val lessonId = document.id
 
-                        lessonContents.add((LessonContent(lessonId, title, desciption, listOf())))
+                        lessonsContentModels.add((LessonsContentModel(lessonId, title, desciption, listOf())))
 
                     }
-                    callback.onDataReceived(lessonContents)
+                    callback.onDataReceived(lessonsContentModels)
                 }
         }
 
 
-        fun getMyLessons(lessonIds: List<String>, callback: (List<LessonContent>) -> Unit) {
+        fun getMyLessons(lessonIds: List<String>, callback: (List<LessonsContentModel>) -> Unit) {
             val db = Firebase.firestore
-            val lessonContents = mutableListOf<LessonContent>()
+            val lessonsContentModels = mutableListOf<LessonsContentModel>()
 
             for(lessonId in lessonIds)
                 db.collection("lessons")
@@ -58,11 +58,11 @@ class FirebaseManager {
                         if (document.exists()) {
                             val title = document.getString("title") ?: "No title"
                             val description = document.getString("description") ?: "No description"
-                            lessonContents.add(LessonContent(lessonId, title, description, listOf()))
+                            lessonsContentModels.add(LessonsContentModel(lessonId, title, description, listOf()))
                         }
                         // Если все запросы завершены, вызываем callback
-                        if (lessonContents.size == lessonIds.size)
-                            callback(lessonContents)
+                        if (lessonsContentModels.size == lessonIds.size)
+                            callback(lessonsContentModels)
                     }
 
                     .addOnFailureListener { exception ->
@@ -70,7 +70,7 @@ class FirebaseManager {
                     }
         }
 
-        fun loadLessonData(lessonId: String, callback: (LessonContent) -> Unit) {
+        fun loadLessonData(lessonId: String, callback: (LessonsContentModel) -> Unit) {
             val db = Firebase.firestore
 
             db.collection("lesson_content").document(lessonId).get()
@@ -86,22 +86,22 @@ class FirebaseManager {
                             val contentData = blockData["content"] as? List<Map<String, Any>>?
                             val content = contentData?.mapNotNull { itemData ->
                                 when (itemData["type"] as? String) {
-                                    "Text" -> ContentItem.Text(content = itemData["content"] as? String ?: "")
-                                    "Img" -> ContentItem.Image(url = itemData["url"] as? String ?: "")
+                                    "Text" -> SingleCardItemModel.Text(content = itemData["content"] as? String ?: "")
+                                    "Img" -> SingleCardItemModel.Image(url = itemData["url"] as? String ?: "")
                                     else -> null
                                 }
                             } ?: emptyList()
 
                             Log.d("LessonScreen", "Блок: $blockName, Содержимое: ${content.size} элементов")
 
-                            ContentCardViewModel(blockName, content, true)
+                            ContentCardModel(blockName, content, true)
                         } ?: emptyList()
 
                         Log.d("LessonScreen", "Всего блоков: ${blocks.size}")
 
                         // Создаем объект урока
-                        val lessonContent = LessonContent(id = lessonId, title = "Название урока", description = "Описание урока", contentCards = blocks)
-                        callback(lessonContent) // Передаем загруженные данные в callback
+                        val lessonsContentModel = LessonsContentModel(id = lessonId, title = "Название урока", description = "Описание урока", contentCards = blocks)
+                        callback(lessonsContentModel) // Передаем загруженные данные в callback
                     } else {
                         Log.d("Error", "Документ с ID $lessonId не найден.")
                     }

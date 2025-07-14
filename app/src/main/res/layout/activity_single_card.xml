@@ -39,11 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="Тест"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/blocks_recycleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#e7e7fe"/>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lesson_recycleView"

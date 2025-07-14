@@ -16,22 +16,22 @@
         tools:targetApi="31" >
 
         <activity
-            android:name=".test.TestActivity"
+            android:name=".ui.test.TestActivity"
             android:exported="false" />
         <activity
-            android:name=".myLessons.MyLessonsScreen"
+            android:name=".ui.favorite.FavoriteActivity"
             android:exported="false" />
         <activity
-            android:name=".lessonScreen.FullScreenImageActivity"
+            android:name=".ui.single_card.full_screen_img.FullScreenImageActivity"
             android:exported="false" />
         <activity
-            android:name=".lessonScreen.LessonScreen"
+            android:name=".ui.single_card.SingleCardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.subtopic_lesson_cards.SubtopicCardsView"
+            android:name=".ui.content_lesson_cards.ContentCardsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.MainMenu"
+            android:name=".ui.main.MainMenuActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

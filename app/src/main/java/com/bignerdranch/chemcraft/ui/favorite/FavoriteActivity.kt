@@ -1,25 +1,24 @@
-package com.bignerdranch.chemcraft.myLessons
+package com.bignerdranch.chemcraft.ui.favorite
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bignerdranch.chemcraft.FirebaseManager
-import com.bignerdranch.chemcraft.databinding.ActivityMyLessonsBinding
-import com.bignerdranch.chemcraft.lessonsListScreen.LessonsListScreenAdapter
+import com.bignerdranch.chemcraft.data.FirebaseManager
+import com.bignerdranch.chemcraft.databinding.ActivityFavoriteBinding
+import com.bignerdranch.chemcraft.data.SharedPrefManager
+import com.bignerdranch.chemcraft.ui.content_lesson_cards.SubtopicCardsAdapter
 
-class MyLessonsScreen : AppCompatActivity(){
+class FavoriteActivity : AppCompatActivity(){
 
-    private lateinit var binding: ActivityMyLessonsBinding
-    private lateinit var adapter: LessonsListScreenAdapter
+    private lateinit var binding: ActivityFavoriteBinding
+    private lateinit var adapter: SubtopicCardsAdapter
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyLessonsBinding.inflate(layoutInflater)
+        binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val sharedPreference = SharedPrefManager(this)
@@ -36,7 +35,7 @@ class MyLessonsScreen : AppCompatActivity(){
 
 
         FirebaseManager.getMyLessons(favoritesList) { lessons ->
-            adapter = LessonsListScreenAdapter(this@MyLessonsScreen, lessons)
+            adapter = SubtopicCardsAdapter(this@FavoriteActivity, lessons)
             binding.myLessonsRecycleView.adapter = adapter
         }
 

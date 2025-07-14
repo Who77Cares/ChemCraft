@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.test
+package com.bignerdranch.chemcraft.ui.test
 
 import android.os.Bundle
 import android.widget.Toast

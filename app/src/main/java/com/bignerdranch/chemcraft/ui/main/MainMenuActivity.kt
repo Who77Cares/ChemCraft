@@ -5,14 +5,14 @@ import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
-import com.bignerdranch.chemcraft.ui.subtopic_lesson_cards.SubtopicCardsView
-import com.bignerdranch.chemcraft.myLessons.MyLessonsScreen
-import com.bignerdranch.chemcraft.test.TestActivity
+import com.bignerdranch.chemcraft.ui.content_lesson_cards.ContentCardsActivity
+import com.bignerdranch.chemcraft.ui.favorite.FavoriteActivity
+import com.bignerdranch.chemcraft.ui.test.TestActivity
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 
-class MainMenu : AppCompatActivity() {
+class MainMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +22,11 @@ class MainMenu : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lessonsListButton.setOnClickListener {
-            startActivity(Intent(this, SubtopicCardsView::class.java))
+            startActivity(Intent(this, ContentCardsActivity::class.java))
         }
 
         binding.myListLessonsButton.setOnClickListener {
-            startActivity(Intent(this, MyLessonsScreen::class.java))
+            startActivity(Intent(this, FavoriteActivity::class.java))
         }
 
         binding.testsButton.setOnClickListener {

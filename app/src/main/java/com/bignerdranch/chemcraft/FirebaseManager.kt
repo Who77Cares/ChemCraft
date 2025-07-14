@@ -2,15 +2,15 @@ package com.bignerdranch.chemcraft
 
 import android.util.Log
 import com.bignerdranch.chemcraft.lessonScreen.ContentItem
-import com.bignerdranch.chemcraft.lessonScreen.ContentList
-import com.bignerdranch.chemcraft.lessonScreen.Lesson
+import com.bignerdranch.chemcraft.lessonScreen.ContentCardViewModel
+import com.bignerdranch.chemcraft.lessonScreen.LessonContent
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class FirebaseManager {
 
     interface FirebaseDataCallback {
-        fun onDataReceived(lessons: MutableList<Lesson>)
+        fun onDataReceived(lessonContents: MutableList<LessonContent>)
     }
 
 
@@ -27,7 +27,7 @@ class FirebaseManager {
 
         fun getListDataFromFirebase(callback: FirebaseDataCallback){
             val db = Firebase.firestore
-            val lessons = mutableListOf<Lesson>()
+            val lessonContents = mutableListOf<LessonContent>()
 
             db.collection("lessons")
                 .get()
@@ -38,17 +38,17 @@ class FirebaseManager {
                         val desciption = document.getString("description") ?: "No description"
                         val lessonId = document.id
 
-                        lessons.add((Lesson(lessonId, title, desciption, listOf())))
+                        lessonContents.add((LessonContent(lessonId, title, desciption, listOf())))
 
                     }
-                    callback.onDataReceived(lessons)
+                    callback.onDataReceived(lessonContents)
                 }
         }
 
 
-        fun getMyLessons(lessonIds: List<String>, callback: (List<Lesson>) -> Unit) {
+        fun getMyLessons(lessonIds: List<String>, callback: (List<LessonContent>) -> Unit) {
             val db = Firebase.firestore
-            val lessons = mutableListOf<Lesson>()
+            val lessonContents = mutableListOf<LessonContent>()
 
             for(lessonId in lessonIds)
                 db.collection("lessons")
@@ -58,11 +58,11 @@ class FirebaseManager {
                         if (document.exists()) {
                             val title = document.getString("title") ?: "No title"
                             val description = document.getString("description") ?: "No description"
-                            lessons.add(Lesson(lessonId, title, description, listOf()))
+                            lessonContents.add(LessonContent(lessonId, title, description, listOf()))
                         }
                         // Если все запросы завершены, вызываем callback
-                        if (lessons.size == lessonIds.size)
-                            callback(lessons)
+                        if (lessonContents.size == lessonIds.size)
+                            callback(lessonContents)
                     }
 
                     .addOnFailureListener { exception ->
@@ -70,7 +70,7 @@ class FirebaseManager {
                     }
         }
 
-        fun loadLessonData(lessonId: String, callback: (Lesson) -> Unit) {
+        fun loadLessonData(lessonId: String, callback: (LessonContent) -> Unit) {
             val db = Firebase.firestore
 
             db.collection("lesson_content").document(lessonId).get()
@@ -94,14 +94,14 @@ class FirebaseManager {
 
                             Log.d("LessonScreen", "Блок: $blockName, Содержимое: ${content.size} элементов")
 
-                            ContentList(blockName, content)
+                            ContentCardViewModel(blockName, content, true)
                         } ?: emptyList()
 
                         Log.d("LessonScreen", "Всего блоков: ${blocks.size}")
 
                         // Создаем объект урока
-                        val lesson = Lesson(id = lessonId, title = "Название урока", description = "Описание урока", blocks = blocks)
-                        callback(lesson) // Передаем загруженные данные в callback
+                        val lessonContent = LessonContent(id = lessonId, title = "Название урока", description = "Описание урока", contentCards = blocks)
+                        callback(lessonContent) // Передаем загруженные данные в callback
                     } else {
                         Log.d("Error", "Документ с ID $lessonId не найден.")
                     }

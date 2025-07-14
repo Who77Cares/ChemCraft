@@ -2,10 +2,8 @@ package com.bignerdranch.chemcraft.lessonScreen
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.FirebaseManager
 import com.bignerdranch.chemcraft.databinding.ActivityLessonScreenBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,8 +46,8 @@ class LessonScreen : AppCompatActivity(), OnBlockClickListener {
         FirebaseManager.loadLessonData(lessonId) { lesson ->
             binding.title.text = lesson.title
 
-            contentAdapter.updateContent(lesson.blocks[0].content)
-            blocksAdapter.updateBlocks(lesson.blocks)
+            contentAdapter.updateContent(lesson.contentCards[0].content)
+            blocksAdapter.updateBlocks(lesson.contentCards)
             blocksAdapter.selectedPosition = 0
         }
     }

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 
-class BlocksAdapter(private var contentList: List<ContentList>,
+class BlocksAdapter(private var contentCardViewModel: List<ContentCardViewModel>,
                     private val listener: OnBlockClickListener,
                     private val recyclerView: RecyclerView
 ): RecyclerView.Adapter<BlocksHolder>() {
@@ -15,9 +15,9 @@ class BlocksAdapter(private var contentList: List<ContentList>,
     var selectedPosition: Int = -1 // Переменная для отслеживания выбранного элемента
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BlocksHolder = BlocksHolder(parent)
-    override fun getItemCount(): Int = contentList.size
+    override fun getItemCount(): Int = contentCardViewModel.size
     override fun onBindViewHolder(holder: BlocksHolder, position: Int) {
-        holder.bind(contentList[position], position == selectedPosition)
+        holder.bind(contentCardViewModel[position], position == selectedPosition)
 
         // Обработчик клика
         holder.itemView.setOnClickListener {
@@ -28,15 +28,15 @@ class BlocksAdapter(private var contentList: List<ContentList>,
             notifyItemChanged(selectedPosition)
 
             // Передаем блок в слушатель
-            listener.onBlockClick(contentList[position].content)
+            listener.onBlockClick(contentCardViewModel[position].content)
             recyclerView.smoothScrollToPosition(position)
         }
 
 
     }
 
-    fun updateBlocks(newBlocks: List<ContentList>) {
-        contentList = newBlocks
+    fun updateBlocks(newBlocks: List<ContentCardViewModel>) {
+        contentCardViewModel = newBlocks
         notifyDataSetChanged()  // Перерисовываем RecyclerView с новыми блоками
     }
 }
@@ -49,7 +49,7 @@ class BlocksHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 ){
     private val blockTitle: TextView = itemView.findViewById(R.id.block_title)
 
-    fun bind(model: ContentList, isSelected: Boolean) {
+    fun bind(model: ContentCardViewModel, isSelected: Boolean) {
         blockTitle.text = model.blockName
 
         if (isSelected) {

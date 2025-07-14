@@ -17,7 +17,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 
-class SingleCardAdapter(private var contentList: List<SingleCardItemModel>): RecyclerView.Adapter<ViewHolder> () {
+class SingleCardAdapter(
+    var contentList: List<SingleCardItemModel>
+): RecyclerView.Adapter<ViewHolder> () {
 
     companion object {
         private const val TEXT = 0
@@ -51,11 +53,6 @@ class SingleCardAdapter(private var contentList: List<SingleCardItemModel>): Rec
 
         }
     }
-
-    fun updateContent(newContentList: List<SingleCardItemModel>) {
-        contentList = newContentList
-        notifyDataSetChanged()  // Обновляем RecyclerView
-    }
 }
 
 
@@ -72,7 +69,6 @@ class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
         lessonText.text = singleCardItemModel.content
     }
 }
-
 
 
 

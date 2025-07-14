@@ -4,17 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.data.FirebaseManager
-import com.bignerdranch.chemcraft.databinding.ActivitySubtopicCardsBinding
 import com.bignerdranch.chemcraft.LessonsContentModel
+import com.bignerdranch.chemcraft.databinding.ActivityLessonContentBinding
 
-class ContentCardsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySubtopicCardsBinding
-    private lateinit var adapter: SubtopicCardsAdapter
+class LessonContentActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLessonContentBinding
+    private lateinit var adapter: LessonContentAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySubtopicCardsBinding.inflate(layoutInflater)
+        binding = ActivityLessonContentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -26,7 +26,7 @@ class ContentCardsActivity : AppCompatActivity() {
             override fun onDataReceived(lessonsContentModels: MutableList<LessonsContentModel>) {
 
                 // После того как данные загружены, создаем адаптер и устанавливаем его
-                adapter = SubtopicCardsAdapter(this@ContentCardsActivity, lessonsContentModels)
+                adapter = LessonContentAdapter(this@LessonContentActivity, lessonsContentModels)
                 binding.lessonsRecycleView.adapter = adapter
             }
         })

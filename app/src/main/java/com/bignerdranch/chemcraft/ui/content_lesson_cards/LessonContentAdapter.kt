@@ -12,26 +12,28 @@ import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.LessonsContentModel
 import com.bignerdranch.chemcraft.ui.single_card.SingleCardActivity
 import com.bignerdranch.chemcraft.data.SharedPrefManager
+import com.bignerdranch.chemcraft.ui.sub_cards.SubtopicCardsActivity
 
 
-class SubtopicCardsAdapter(
+class LessonContentAdapter(
     context: Context,
     private val lessonsContentModels: List<LessonsContentModel>
-) : RecyclerView.Adapter<LessonsListScreenHolder>() {
+) : RecyclerView.Adapter<LessonContentViewHolder>() {
 
     private val sharedPreferences = SharedPrefManager(context)
 
     override fun getItemCount(): Int = lessonsContentModels.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonsListScreenHolder = LessonsListScreenHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonContentViewHolder =
+        LessonContentViewHolder(parent)
 
-    override fun onBindViewHolder(holder: LessonsListScreenHolder, position: Int) {
+    override fun onBindViewHolder(holder: LessonContentViewHolder, position: Int) {
         holder.bind(lessonsContentModels[position])
 
         updateIcon(holder.addOrRemove, lessonsContentModels[position].id)
 
         holder.lessonTitle.setOnClickListener {
-            val intent = Intent(holder.itemView.context, SingleCardActivity::class.java).apply {
+            val intent = Intent(holder.itemView.context, SubtopicCardsActivity::class.java).apply {
                 putExtra("lessonId", lessonsContentModels[position].id)
                 putExtra("title", lessonsContentModels[position].title)
                 putExtra("description", lessonsContentModels[position].description)
@@ -62,7 +64,7 @@ class SubtopicCardsAdapter(
 
 }
 
-class LessonsListScreenHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+class LessonContentViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater
         .from(parent.context)
         .inflate(R.layout.item_lesson, parent, false)
@@ -75,7 +77,5 @@ class LessonsListScreenHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     fun bind(model: LessonsContentModel) {
         lessonTitle.text = model.title
         lessonDescription.text = model.description
-
     }
-
 }

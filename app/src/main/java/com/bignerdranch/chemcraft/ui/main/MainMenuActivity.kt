@@ -5,7 +5,7 @@ import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
-import com.bignerdranch.chemcraft.ui.content_lesson_cards.ContentCardsActivity
+import com.bignerdranch.chemcraft.ui.content_lesson_cards.LessonContentActivity
 import com.bignerdranch.chemcraft.ui.favorite.FavoriteActivity
 import com.bignerdranch.chemcraft.ui.test.TestActivity
 import com.google.firebase.Firebase
@@ -22,7 +22,7 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lessonsListButton.setOnClickListener {
-            startActivity(Intent(this, ContentCardsActivity::class.java))
+            startActivity(Intent(this, LessonContentActivity::class.java))
         }
 
         binding.myListLessonsButton.setOnClickListener {

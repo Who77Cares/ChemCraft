@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bignerdranch.chemcraft.data.FirebaseManager
+import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.databinding.ActivityFavoriteBinding
 import com.bignerdranch.chemcraft.data.SharedPrefManager
 import com.bignerdranch.chemcraft.ui.lessons_content.LessonContentAdapter
@@ -34,7 +34,7 @@ class FavoriteActivity : AppCompatActivity(){
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
-        FirebaseManager.getMyLessons(favoritesList) { lessons ->
+        FirebaseNetworkClient.getMyLessons(favoritesList) { lessons ->
             adapter = LessonContentAdapter(this@FavoriteActivity, lessons)
             binding.myLessonsRecycleView.adapter = adapter
         }

@@ -7,9 +7,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.data.FirebaseManager
+import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.databinding.ActivitySingleCardBinding
-import com.bignerdranch.chemcraft.ui.cards.CardsActivity
 import com.bignerdranch.chemcraft.ui.test.TestActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -50,7 +49,7 @@ class SingleCardActivity : AppCompatActivity() {
 
 
 
-        FirebaseManager.loadLessonData(lessonId) { lesson ->
+        FirebaseNetworkClient.loadLessonData(lessonId) { lesson ->
             binding.title.text = lesson.title
 
             singleCardAdapter.contentList = lesson.contentCards[cardIndex].content // тут получаем епервый урок

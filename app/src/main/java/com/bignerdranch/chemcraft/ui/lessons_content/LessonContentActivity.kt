@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bignerdranch.chemcraft.data.FirebaseManager
-import com.bignerdranch.chemcraft.LessonsContentModel
+import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.data.get_card_repository.CardStorage
 import com.bignerdranch.chemcraft.databinding.ActivityLessonContentBinding
 
@@ -24,7 +23,7 @@ class LessonContentActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         // Получаем список уроков из Firestore
-        FirebaseManager.getListDataFromFirebase { lessonsContentModels ->
+        FirebaseNetworkClient.getListDataFromFirebase { lessonsContentModels ->
 
             // После того как данные загружены, создаем адаптер и устанавливаем его
             adapter = LessonContentAdapter(this@LessonContentActivity, lessonsContentModels)

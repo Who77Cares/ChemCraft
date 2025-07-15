@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.data.FirebaseManager
 import com.bignerdranch.chemcraft.databinding.ActivitySingleCardBinding
-import com.bignerdranch.chemcraft.SingleCardItemModel
-import com.bignerdranch.chemcraft.ui.sub_cards.SubtopicCardsActivity
+import com.bignerdranch.chemcraft.ui.sub_cards.CardsActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -51,13 +50,13 @@ class SingleCardActivity : AppCompatActivity() {
         FirebaseManager.loadLessonData(lessonId) { lesson ->
             binding.title.text = lesson.title
 
-            singleCardAdapter.contentList = lesson.contentCards[0].content
+            singleCardAdapter.contentList = lesson.contentCards[0].content // тут получаем епервый урок
             singleCardAdapter.notifyDataSetChanged()
 
         }
 
         button.setOnClickListener {
-            val intent = Intent(this, SubtopicCardsActivity::class.java)
+            val intent = Intent(this, CardsActivity::class.java)
             startActivity(intent)
         }
 

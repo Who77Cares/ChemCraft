@@ -10,9 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.LessonsContentModel
-import com.bignerdranch.chemcraft.ui.single_card.SingleCardActivity
 import com.bignerdranch.chemcraft.data.SharedPrefManager
-import com.bignerdranch.chemcraft.ui.sub_cards.SubtopicCardsActivity
+import com.bignerdranch.chemcraft.ui.sub_cards.CardsActivity
 
 
 class LessonContentAdapter(
@@ -33,7 +32,7 @@ class LessonContentAdapter(
         updateIcon(holder.addOrRemove, lessonsContentModels[position].id)
 
         holder.lessonTitle.setOnClickListener {
-            val intent = Intent(holder.itemView.context, SubtopicCardsActivity::class.java).apply {
+            val intent = Intent(holder.itemView.context, CardsActivity::class.java).apply {
                 putExtra("lessonId", lessonsContentModels[position].id)
                 putExtra("title", lessonsContentModels[position].title)
                 putExtra("description", lessonsContentModels[position].description)

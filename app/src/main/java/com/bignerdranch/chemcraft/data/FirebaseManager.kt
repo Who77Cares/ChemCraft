@@ -45,6 +45,35 @@ class FirebaseManager {
                 }
         }
 
+        fun getCard(lessonId: String, callback: (List<ContentCardModel>) -> Unit) {
+            val db = Firebase.firestore
+
+            db.collection("lesson_content").document(lessonId).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val blocksData = document.get("blocks") as? List<Map<String, Any>> ?: emptyList()
+
+                        val cards = blocksData.map { block ->
+                            val blockName = block["blockName"] as? String ?: "Без названия"
+                            ContentCardModel(
+                                id = blockName,
+                                content = emptyList(),  // Загрузи при необходимости
+                                answerStatus = false
+                            )
+                        }
+
+                        callback(cards)
+                    } else {
+                        Log.d("Firestore", "Документ не найден")
+                        callback(emptyList())
+                    }
+                }
+                .addOnFailureListener {
+                    Log.e("Firestore", "Ошибка загрузки: ${it.message}")
+                    callback(emptyList())
+                }
+        }
+
 
         fun getMyLessons(lessonIds: List<String>, callback: (List<LessonsContentModel>) -> Unit) {
             val db = Firebase.firestore

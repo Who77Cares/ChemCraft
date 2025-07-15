@@ -4,6 +4,7 @@ import android.util.Log
 import com.bignerdranch.chemcraft.SingleCardItemModel
 import com.bignerdranch.chemcraft.ContentCardModel
 import com.bignerdranch.chemcraft.LessonsContentModel
+import com.bignerdranch.chemcraft.data.get_card_repository.CardStorage
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -47,32 +48,50 @@ class FirebaseManager {
 
         fun getCard(lessonId: String, callback: (List<ContentCardModel>) -> Unit) {
             val db = Firebase.firestore
+            Log.d("getCard", "Начало загрузки карточек для lessonId: $lessonId")
 
             db.collection("lesson_content").document(lessonId).get()
                 .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val blocksData = document.get("blocks") as? List<Map<String, Any>> ?: emptyList()
+                    Log.d("getCard", "Загрузка документа прошла успешно")
 
-                        val cards = blocksData.map { block ->
+                    if (document.exists()) {
+                        Log.d("getCard", "Документ найден: ${document.id}")
+
+                        val blocksData = document.get("blocks") as? List<Map<String, Any>>
+                        if (blocksData != null) {
+                            Log.d("getCard", "Найдено блоков: ${blocksData.size}")
+                        } else {
+                            Log.d("getCard", "Поле 'blocks' отсутствует или имеет неверный формат")
+                        }
+
+                        val cards = blocksData?.map { block ->
                             val blockName = block["blockName"] as? String ?: "Без названия"
+                            Log.d("getCard", "Обработка блока: $blockName")
                             ContentCardModel(
                                 id = blockName,
-                                content = emptyList(),  // Загрузи при необходимости
+                                content = emptyList(),
                                 answerStatus = false
                             )
-                        }
+                        } ?: emptyList()
+
+                        Log.d("getCard", "Создано карточек: ${cards.size}")
+
+//                        // ✅ Сохраняем карточки
+//                        CardStorage.saveCards(cards)
 
                         callback(cards)
                     } else {
-                        Log.d("Firestore", "Документ не найден")
+                        Log.d("getCard", "Документ не найден в коллекции")
                         callback(emptyList())
                     }
                 }
                 .addOnFailureListener {
-                    Log.e("Firestore", "Ошибка загрузки: ${it.message}")
+                    Log.e("getCard", "Ошибка при загрузке документа: ${it.message}", it)
                     callback(emptyList())
                 }
         }
+
+
 
 
         fun getMyLessons(lessonIds: List<String>, callback: (List<LessonsContentModel>) -> Unit) {

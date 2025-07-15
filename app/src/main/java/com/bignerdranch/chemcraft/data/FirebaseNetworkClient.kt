@@ -4,16 +4,11 @@ import android.util.Log
 import com.bignerdranch.chemcraft.SingleCardItemModel
 import com.bignerdranch.chemcraft.ContentCardModel
 import com.bignerdranch.chemcraft.LessonsContentModel
-import com.bignerdranch.chemcraft.data.get_card_repository.CardStorage
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
 
-class FirebaseManager {
-
-    interface FirebaseDataCallback {
-        fun onDataReceived(lessonsContentModels: MutableList<LessonsContentModel>)
-    }
-
+class FirebaseNetworkClient {
 
     companion object {
 
@@ -26,23 +21,34 @@ class FirebaseManager {
         (например, с помощью addOnSuccessListener). Следовательно, вам нужно обрабатывать полученные данные после завершения загрузки.
          */
 
-        fun getListDataFromFirebase(callback: FirebaseDataCallback){
+        fun getListDataFromFirebase(callback: (List<LessonsContentModel>) -> Unit) {
             val db = Firebase.firestore
             val lessonsContentModels = mutableListOf<LessonsContentModel>()
 
+            Log.d("Firebase", "Начало загрузки данных из коллекции 'lessons'")
+
             db.collection("lessons")
                 .get()
-                .addOnSuccessListener { resul ->
+                .addOnSuccessListener { result ->
+                    Log.d("Firebase", "Успешно получены данные: ${result.size()} документов")
 
-                    for (document in resul) {
-                        val title = document.getString("title") ?: " No title "
-                        val desciption = document.getString("description") ?: "No description"
+                    for (document in result) {
+                        val title = document.getString("title") ?: "No title"
+                        val description = document.getString("description") ?: "No description"
                         val lessonId = document.id
 
-                        lessonsContentModels.add((LessonsContentModel(lessonId, title, desciption, listOf())))
+                        val lesson = LessonsContentModel(lessonId, title, description, listOf())
+                        lessonsContentModels.add(lesson)
 
+                        Log.d("Firebase", "Добавлен урок: id=$lessonId, title=$title")
                     }
-                    callback.onDataReceived(lessonsContentModels)
+
+                    Log.d("Firebase", "Всего добавлено уроков: ${lessonsContentModels.size}")
+                    callback(lessonsContentModels)
+                }
+                .addOnFailureListener { exception ->
+                    Log.e("Firebase", "Ошибка при загрузке данных: ${exception.message}", exception)
+                    callback(emptyList())
                 }
         }
 
@@ -158,6 +164,69 @@ class FirebaseManager {
                     Log.d("Error2", "Ошибка загрузки урока: ${e.message}")
                 }
         }
+
+
+
+
+        // Логика добавления урока (lesons)
+
+        fun createLesson(
+            lesson: HashMap<String, String>,
+            documentPath: String,
+        ) {
+            val db = Firebase.firestore
+
+            db.collection("lessons").document(documentPath)
+                .set(lesson)
+
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Урок $lesson загружен в lessons --> $documentPath")
+                }
+        }
+
+
+        // заменяет существующие карточки (блоки) на новые
+        fun updateContentLesson(
+
+            documentPath: String,
+            content: HashMap<String, List<HashMap<String, Any>>>
+
+        ) {
+            val db = Firebase.firestore
+
+            db.collection("lesson_content").document(documentPath)
+                .set(content)
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Content added to lessons_content --> $documentPath")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Error uploading Lesson 1 content", e)
+                }
+
+        }
+
+        // добавляет новые карточки (блоки)
+        fun addContentToLesson(
+            documentPath: String,
+            content: HashMap<String, HashMap<String, Any>>
+        ) {
+            val db = Firebase.firestore
+            val docRef = db.collection("lesson_content").document(documentPath)
+
+            val block = content["blocks"]
+            if (block != null) {
+                docRef.update("blocks", FieldValue.arrayUnion(block))
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Block added to lesson: $documentPath")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Firestore", "Error adding block", e)
+                    }
+            } else {
+                Log.e("Firestore", "No 'blocks' key in content map")
+            }
+        }
+
 
     }
 }

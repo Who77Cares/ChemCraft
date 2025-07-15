@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.content_lesson_cards
+package com.bignerdranch.chemcraft.ui.lessons_content
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.LessonsContentModel
 import com.bignerdranch.chemcraft.data.SharedPrefManager
-import com.bignerdranch.chemcraft.ui.sub_cards.CardsActivity
+import com.bignerdranch.chemcraft.ui.cards.CardsActivity
 
 
 class LessonContentAdapter(

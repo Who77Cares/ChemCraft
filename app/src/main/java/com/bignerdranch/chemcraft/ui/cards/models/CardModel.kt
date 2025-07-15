@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.sub_cards.models
+package com.bignerdranch.chemcraft.ui.cards.models
 
 data class CardModel(
     val title: String,

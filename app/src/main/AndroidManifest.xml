@@ -15,7 +15,7 @@
         android:theme="@style/Theme.ChemCraft"
         tools:targetApi="31">
         <activity
-            android:name=".ui.sub_cards.CardsActivity"
+            android:name=".ui.cards.CardsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.test.TestActivity"
@@ -30,7 +30,7 @@
             android:name=".ui.single_card.SingleCardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.content_lesson_cards.LessonContentActivity"
+            android:name=".ui.lessons_content.LessonContentActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.MainMenuActivity"

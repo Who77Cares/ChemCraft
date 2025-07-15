@@ -1,5 +1,6 @@
-package com.bignerdranch.chemcraft.ui.sub_cards
+package com.bignerdranch.chemcraft.ui.cards
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.data.FirebaseManager
+import com.bignerdranch.chemcraft.ui.single_card.SingleCardActivity
+import com.bignerdranch.chemcraft.ui.test.TestActivity
 
 class CardsActivity : AppCompatActivity() {
 
@@ -39,7 +42,14 @@ class CardsActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recycleView_subtopic)
         recyclerView.layoutManager = LinearLayoutManager(this) // ОБЯЗАТЕЛЬНО
-        val adapter = CardsAdapter()
+        val adapter = CardsAdapter(onCardClick = { model, position ->
+            val intent = Intent(this, SingleCardActivity::class.java)
+            intent.putExtra("ITEM_ID", lessonId) // что за model.id
+            intent.putExtra("CARD_POSITION", position)
+
+            intent.putExtra("title", title)
+            startActivity(intent)
+        })
         recyclerView.adapter = adapter
 
 

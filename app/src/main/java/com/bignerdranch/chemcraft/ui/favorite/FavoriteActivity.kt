@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.data.FirebaseManager
 import com.bignerdranch.chemcraft.databinding.ActivityFavoriteBinding
 import com.bignerdranch.chemcraft.data.SharedPrefManager
-import com.bignerdranch.chemcraft.ui.content_lesson_cards.LessonContentAdapter
+import com.bignerdranch.chemcraft.ui.lessons_content.LessonContentAdapter
 
 class FavoriteActivity : AppCompatActivity(){
 

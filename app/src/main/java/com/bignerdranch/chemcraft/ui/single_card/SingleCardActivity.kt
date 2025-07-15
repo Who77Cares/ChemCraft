@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.data.FirebaseManager
 import com.bignerdranch.chemcraft.databinding.ActivitySingleCardBinding
-import com.bignerdranch.chemcraft.ui.sub_cards.CardsActivity
+import com.bignerdranch.chemcraft.ui.cards.CardsActivity
+import com.bignerdranch.chemcraft.ui.test.TestActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -32,8 +33,10 @@ class SingleCardActivity : AppCompatActivity() {
 
         database = Firebase.firestore
 
-        val lessonId = intent.getStringExtra("lessonId")!!
-        Log.d("LessonScreen", "Передаем ID урока: $lessonId")
+
+        val lessonId = intent.getStringExtra("ITEM_ID")!!
+        val cardIndex = intent.getIntExtra("CARD_POSITION", 0)
+        Log.d("LessonScreen", "Передаем ID урока: $lessonId, ---- $cardIndex")
 
         title = intent.getStringExtra("title") ?: " _ "
         description = intent.getStringExtra("description") ?: " _ "
@@ -50,13 +53,13 @@ class SingleCardActivity : AppCompatActivity() {
         FirebaseManager.loadLessonData(lessonId) { lesson ->
             binding.title.text = lesson.title
 
-            singleCardAdapter.contentList = lesson.contentCards[0].content // тут получаем епервый урок
+            singleCardAdapter.contentList = lesson.contentCards[cardIndex].content // тут получаем епервый урок
             singleCardAdapter.notifyDataSetChanged()
 
         }
 
         button.setOnClickListener {
-            val intent = Intent(this, CardsActivity::class.java)
+            val intent = Intent(this, TestActivity::class.java)
             startActivity(intent)
         }
 

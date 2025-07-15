@@ -4,16 +4,10 @@ import android.util.Log
 import com.bignerdranch.chemcraft.SingleCardItemModel
 import com.bignerdranch.chemcraft.ContentCardModel
 import com.bignerdranch.chemcraft.LessonsContentModel
-import com.bignerdranch.chemcraft.data.get_card_repository.CardStorage
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class FirebaseManager {
-
-    interface FirebaseDataCallback {
-        fun onDataReceived(lessonsContentModels: MutableList<LessonsContentModel>)
-    }
-
 
     companion object {
 
@@ -26,7 +20,7 @@ class FirebaseManager {
         (например, с помощью addOnSuccessListener). Следовательно, вам нужно обрабатывать полученные данные после завершения загрузки.
          */
 
-        fun getListDataFromFirebase(callback: FirebaseDataCallback){
+        fun getListDataFromFirebase(callback: (List<LessonsContentModel>) -> Unit){
             val db = Firebase.firestore
             val lessonsContentModels = mutableListOf<LessonsContentModel>()
 
@@ -42,7 +36,7 @@ class FirebaseManager {
                         lessonsContentModels.add((LessonsContentModel(lessonId, title, desciption, listOf())))
 
                     }
-                    callback.onDataReceived(lessonsContentModels)
+                    callback(lessonsContentModels)
                 }
         }
 

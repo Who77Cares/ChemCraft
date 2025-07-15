@@ -13,6 +13,9 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityTestScreenBinding.inflate(layoutInflater)
+
+        val itemId = intent.getStringExtra("ITEM_ID")
+
         setContentView(binding.root)
 
         binding.testText.text =

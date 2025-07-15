@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.content_lesson_cards
+package com.bignerdranch.chemcraft.ui.lessons_content
 
 import android.os.Bundle
 import android.util.Log
@@ -24,25 +24,23 @@ class LessonContentActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         // Получаем список уроков из Firestore
-        FirebaseManager.getListDataFromFirebase(object : FirebaseManager.FirebaseDataCallback {
-            override fun onDataReceived(lessonsContentModels: MutableList<LessonsContentModel>) {
+        FirebaseManager.getListDataFromFirebase { lessonsContentModels ->
 
-                // После того как данные загружены, создаем адаптер и устанавливаем его
-                adapter = LessonContentAdapter(this@LessonContentActivity, lessonsContentModels)
-                binding.lessonsRecycleView.adapter = adapter
+            // После того как данные загружены, создаем адаптер и устанавливаем его
+            adapter = LessonContentAdapter(this@LessonContentActivity, lessonsContentModels)
+            binding.lessonsRecycleView.adapter = adapter
 
-                val savedCards = CardStorage.getCards()
+            val savedCards = CardStorage.getCards()
 
-                for (card in savedCards) {
-                    Log.d("------", "ID: ${card.id}, Ответ: ${card.answerStatus}")
+            for (card in savedCards) {
+                Log.d("------", "ID: ${card.id}, Ответ: ${card.answerStatus}")
 
-
-                }
 
             }
-        })
 
+        }
+    }
 
 
 }
-}
+

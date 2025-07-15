@@ -20,7 +20,7 @@ class LessonContentAdapter(
 ) : RecyclerView.Adapter<LessonContentViewHolder>() {
 
     private val sharedPreferences = SharedPrefManager(context)
-
+//
     override fun getItemCount(): Int = lessonsContentModels.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonContentViewHolder =

@@ -1,10 +1,12 @@
 package com.bignerdranch.chemcraft.ui.content_lesson_cards
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.data.FirebaseManager
 import com.bignerdranch.chemcraft.LessonsContentModel
+import com.bignerdranch.chemcraft.data.get_card_repository.CardStorage
 import com.bignerdranch.chemcraft.databinding.ActivityLessonContentBinding
 
 class LessonContentActivity : AppCompatActivity() {
@@ -28,8 +30,19 @@ class LessonContentActivity : AppCompatActivity() {
                 // После того как данные загружены, создаем адаптер и устанавливаем его
                 adapter = LessonContentAdapter(this@LessonContentActivity, lessonsContentModels)
                 binding.lessonsRecycleView.adapter = adapter
+
+                val savedCards = CardStorage.getCards()
+
+                for (card in savedCards) {
+                    Log.d("------", "ID: ${card.id}, Ответ: ${card.answerStatus}")
+
+
+                }
+
             }
         })
-    }
 
+
+
+}
 }

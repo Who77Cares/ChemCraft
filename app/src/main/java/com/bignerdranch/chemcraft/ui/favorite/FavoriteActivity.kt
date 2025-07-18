@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.databinding.ActivityFavoriteBinding
 import com.bignerdranch.chemcraft.data.SharedPrefManager
-import com.bignerdranch.chemcraft.ui.lessons_content.LessonContentAdapter
+import com.bignerdranch.chemcraft.ui.lessons_data.LessonContentAdapter
 
 class FavoriteActivity : AppCompatActivity(){
 
@@ -33,11 +33,11 @@ class FavoriteActivity : AppCompatActivity(){
         binding.myLessonsRecycleView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-
-        FirebaseNetworkClient.getMyLessons(favoritesList) { lessons ->
-            adapter = LessonContentAdapter(this@FavoriteActivity, lessons)
-            binding.myLessonsRecycleView.adapter = adapter
-        }
+//
+//        FirebaseNetworkClient.getMyLessons(favoritesList) { lessons ->
+//            adapter = LessonContentAdapter(this@FavoriteActivity, lessons)
+//            binding.myLessonsRecycleView.adapter = adapter
+//        }
 
     }
 

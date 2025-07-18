@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.lessons_content
+package com.bignerdranch.chemcraft.ui.lessons_data
 
 import android.content.Context
 import android.content.Intent
@@ -9,45 +9,45 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.LessonsContentModel
+
 import com.bignerdranch.chemcraft.data.SharedPrefManager
 import com.bignerdranch.chemcraft.ui.cards.CardsActivity
 
 
 class LessonContentAdapter(
     context: Context,
-    private val lessonsContentModels: List<LessonsContentModel>
+    private val lessonsData: List<LessonsData>
 ) : RecyclerView.Adapter<LessonContentViewHolder>() {
 
     private val sharedPreferences = SharedPrefManager(context)
 //
-    override fun getItemCount(): Int = lessonsContentModels.size
+    override fun getItemCount(): Int = lessonsData.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonContentViewHolder =
         LessonContentViewHolder(parent)
 
     override fun onBindViewHolder(holder: LessonContentViewHolder, position: Int) {
-        holder.bind(lessonsContentModels[position])
+        holder.bind(lessonsData[position])
 
-        updateIcon(holder.addOrRemove, lessonsContentModels[position].id)
+        updateIcon(holder.addOrRemove, lessonsData[position].name)
 
         holder.lessonTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, CardsActivity::class.java).apply {
-                putExtra("lessonId", lessonsContentModels[position].id)
-                putExtra("title", lessonsContentModels[position].title)
-                putExtra("description", lessonsContentModels[position].description)
+                putExtra("lessonId", lessonsData[position].id)
+//                putExtra("title", lessonsData[position].title)
+//                putExtra("description", lessonsData[position].description)
             }
             holder.itemView.context.startActivity(intent)
         }
 
         holder.addOrRemove.setOnClickListener {
-            if (sharedPreferences.isFavorite(lessonsContentModels[position].id)) {
-                sharedPreferences.removeFavorite(lessonsContentModels[position].id)
+            if (sharedPreferences.isFavorite(lessonsData[position].name)) {
+                sharedPreferences.removeFavorite(lessonsData[position].name)
 
             } else {
-                sharedPreferences.addFavorite(lessonsContentModels[position].id)
+                sharedPreferences.addFavorite(lessonsData[position].name)
             }
-            updateIcon(holder.addOrRemove, lessonsContentModels[position].id)
+            updateIcon(holder.addOrRemove, lessonsData[position].name)
         }
     }
 
@@ -73,8 +73,8 @@ class LessonContentViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     val lessonTitle: Button = itemView.findViewById(R.id.lessonButton)
     private val lessonDescription: TextView = itemView.findViewById(R.id.lessonDrescription)
 
-    fun bind(model: LessonsContentModel) {
-        lessonTitle.text = model.title
-        lessonDescription.text = model.description
+    fun bind(model: LessonsData) {
+        lessonTitle.text = model.description
+        lessonDescription.text = model.name
     }
 }

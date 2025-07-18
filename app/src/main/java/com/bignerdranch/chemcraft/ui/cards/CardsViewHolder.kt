@@ -4,8 +4,9 @@ import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bignerdranch.chemcraft.ContentCardModel
+
 import com.bignerdranch.chemcraft.R
+import com.bignerdranch.chemcraft.ui.cards.models.CardModel
 import com.bignerdranch.chemcraft.ui.test.TestActivity
 import com.google.android.material.card.MaterialCardView
 
@@ -18,10 +19,10 @@ class CardsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
 
     fun bind(
-        model: ContentCardModel,
-        onCardClick: (ContentCardModel) -> Unit) {
+        model: CardModel,
+        onCardClick: (CardModel) -> Unit) {
 
-        card_title.text = model.id
+        card_title.text = model.title
         lesson_description.text = model.id
 
         material_card_view.setOnClickListener {

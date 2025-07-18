@@ -20,8 +20,7 @@ class SingleCardActivity : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
 
     private lateinit var button: Button
-    private lateinit var description: String
-    private lateinit  var title: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +32,12 @@ class SingleCardActivity : AppCompatActivity() {
         database = Firebase.firestore
 
 
-        val lessonId = intent.getStringExtra("ITEM_ID")!!
-        val cardIndex = intent.getIntExtra("CARD_POSITION", 0)
-        Log.d("LessonScreen", "Передаем ID урока: $lessonId, ---- $cardIndex")
+        val lessonId = intent.getStringExtra("LESSON_ID")!!
+        val cardId = intent.getStringExtra("CARD_ID")!!
+        val title = intent.getStringExtra("title") ?: " _ "
 
-        title = intent.getStringExtra("title") ?: " _ "
-        description = intent.getStringExtra("description") ?: " _ "
+
+        Log.d("LessonScreen", "Передаем ID урока: $cardId, ---- $title")
 
 
 
@@ -49,13 +48,18 @@ class SingleCardActivity : AppCompatActivity() {
 
 
 
-        FirebaseNetworkClient.loadLessonData(lessonId) { lesson ->
-            binding.title.text = lesson.title
+        FirebaseNetworkClient.loadCardItemsById(
+            lessonId = lessonId,
+            cardId = cardId,
+            onSuccess = {  listSingleCardItems ->
+                singleCardAdapter.contentList = listSingleCardItems
+                singleCardAdapter.notifyDataSetChanged()
+            },
+            onFailure = {
 
-            singleCardAdapter.contentList = lesson.contentCards[cardIndex].content // тут получаем епервый урок
-            singleCardAdapter.notifyDataSetChanged()
+            }
+        )
 
-        }
 
         button.setOnClickListener {
             val intent = Intent(this, TestActivity::class.java)

@@ -30,7 +30,7 @@
             android:name=".ui.single_card.SingleCardActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.lessons_content.LessonContentActivity"
+            android:name=".ui.lessons_data.LessonActivity"
             android:exported="false" />
         <activity
             android:name=".ui.main.MainMenuActivity"

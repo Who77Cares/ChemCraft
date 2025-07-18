@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.R
@@ -20,6 +21,7 @@ class SingleCardActivity : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
 
     private lateinit var button: Button
+    private lateinit var title: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,13 +30,14 @@ class SingleCardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         button = findViewById(R.id.test_test)
+        title = findViewById(R.id.title)
 
         database = Firebase.firestore
 
 
         val lessonId = intent.getStringExtra("LESSON_ID")!!
         val cardId = intent.getStringExtra("CARD_ID")!!
-        val title = intent.getStringExtra("title") ?: " _ "
+        title.text = cardId
 
 
         Log.d("LessonScreen", "Передаем ID урока: $cardId, ---- $title")
@@ -54,6 +57,8 @@ class SingleCardActivity : AppCompatActivity() {
             onSuccess = {  listSingleCardItems ->
                 singleCardAdapter.contentList = listSingleCardItems
                 singleCardAdapter.notifyDataSetChanged()
+
+
             },
             onFailure = {
 

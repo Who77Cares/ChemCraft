@@ -1,16 +1,18 @@
 package com.bignerdranch.chemcraft.ui.main
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 
 
 import androidx.appcompat.app.AppCompatActivity
-import com.bignerdranch.chemcraft.SingleCardItemModel
-import com.bignerdranch.chemcraft.data.get_card_repository.FirebaseAdminManager
+import com.bignerdranch.chemcraft.data.FirebaseAdminManager
 import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
 import com.bignerdranch.chemcraft.ui.cards.models.CardToServerModel
 import com.bignerdranch.chemcraft.ui.lessons_data.LessonActivity
 import com.bignerdranch.chemcraft.ui.favorite.FavoriteActivity
 import com.bignerdranch.chemcraft.ui.test.TestActivity
+import com.bignerdranch.chemcraft.ui.test.model.TestModel
+import com.bignerdranch.chemcraft.ui.test.model.TestToServerModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -116,42 +118,120 @@ class MainMenuActivity : AppCompatActivity() {
 
         // Данные
         val lessonData: HashMap<String, Any> = hashMapOf(
-            "description" to "",
-            "name" to "",
+            "description" to "777",
+            "name" to "1",
         )
 
-        val testData: HashMap<String, Any> = hashMapOf(
-            "score" to 0,
-            "testName" to ""
+        val testData  = listOf(
+            TestModel(
+                questionText = "Установите правильную последовательность событий, предшествующих образованию зиготы у человека. Запишите в таблицу соответствующую последовательность цифр.\n" +
+                        "1) выход яйцеклетки из фолликула в маточную трубу\n" +
+                        "2) накопление питательных веществ в яйцеклетке\n" +
+                        "3) проникновение ядра сперматозоида в яйцеклетку\n" +
+                        "4) формирование первичного фолликула\n" +
+                        "5) окончательное прохождение первого деления мейоза яйцеклеткой",
+                imgUrl = "",
+                correctAnswer = "42513",
+                maxScore = 1,
+                type = 1
+
+            ),
+            TestModel(
+                questionText = "16531. Расположите в хронологической последовательности исторические события. Запишите цифры, которыми обозначены исторические события, в правильной последовательности в поле ответа.\n" +
+                        "1) провозглашение Германской империи\n" +
+                        "2) Чигиринские походы\n" +
+                        "3) создание Верховного тайного совета",
+                imgUrl = "",
+                correctAnswer = "231",
+                maxScore = 1,
+                type = 1
+
+            ),
+            TestModel(
+                questionText = "16530. Установите соответствие между событиями и годами: к каждой позиции первого столбца подберите соответствующую позицию из второго столбца.\n" +
+                        "СОБЫТИЯ\n" +
+                        "\n" +
+                        "А) заключение письменного договора Руси с Византией\n" +
+                        "Б) дарование конституции Царству Польскому\n" +
+                        "В) Медный бунт\n" +
+                        "Г) возведение Берлинской стены\n" +
+                        "ГОДЫ\n" +
+                        "\n" +
+                        "1) 911 г.\n" +
+                        "2) 1097 г.\n" +
+                        "3) 1662 г.\n" +
+                        "4) 1815 г.\n" +
+                        "5) 1945 г.\n" +
+                        "6) 1961 г.",
+                imgUrl = "",
+                correctAnswer = "1436",
+                maxScore = 1,
+                type = 1
+
+            )
+        )
+
+        val testToServerData = TestToServerModel(
+            testContent = testData
         )
 
         val cardsToServerData = CardToServerModel(
-            imageUrl = "123",
+            imageUrl = "GerGer JOJO",
             important = false,
-            title = "Geir",
+            title = "!_!_!_!_!_!!_",
             cardItems = cardItems
         )
 
 
+        // создаем урок
+        binding.adminButtonOne.setOnClickListener {
 
-
-        binding.getCardData.setOnClickListener {
-
-//            FirebaseAdminManager.addCardToLesson(
-//                lessonId = "1YbgLsyvKVjGqcMuZWkk",
-//                cardModel = cardsToServerData,
-//                onSuccess = { },
-//                onFailure = { }
-//            )
-
-//
-            FirebaseAdminManager.createLessonData(
+            FirebaseAdminManager.createLesson(
                 lessonData = lessonData,
-                testData = testData,
-                cardsData = cardsToServerData
-            )
+                onLessonCreated = { result ->
+                    Log.d("Урок создан", "id : ${result.id}")
+                },
+
+                )
 
         }
+
+
+            // создать карточку в уроке
+        binding.adminButtonTwo.setOnClickListener {
+
+            val lessonId: String = "lO2juSRIkYm7Wzb0og9G"
+
+            FirebaseAdminManager.addCardToLesson(
+                lessonId = lessonId,
+                cardModel = cardsToServerData,
+                onSuccess = { result ->
+                    Log.d("Карточка  добавлена в урок", "Карточка: ${result.id} в $lessonId")
+                },
+                onFailure = { }
+            )
+
+
+        }
+
+        binding.adminButtonThree.setOnClickListener {
+
+            val lessonId: String = "lO2juSRIkYm7Wzb0og9G"
+            val cardId: String = "Hoa6J343cc9wZ1Bx7DRZ"
+
+            //
+                    FirebaseAdminManager.addTestToCard(
+                        lessonId = lessonId,
+                        cardId = cardId,
+                        testData = testToServerData,
+                        onSuccess = { result ->
+                            Log.d("Тест загружен", "Путь: тест: ${result.id} -> \n карточка: $cardId \n -> урок: $lessonId ")
+                        }
+                    )
+
+        }
+
+
 
 
         db = Firebase.firestore

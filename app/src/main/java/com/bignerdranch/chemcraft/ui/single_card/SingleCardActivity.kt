@@ -3,10 +3,12 @@ package com.bignerdranch.chemcraft.ui.single_card
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.databinding.ActivitySingleCardBinding
@@ -68,8 +70,11 @@ class SingleCardActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             val intent = Intent(this, TestActivity::class.java)
+            intent.putExtra("LESSON_ID", lessonId)
+            intent.putExtra("CARD_ID", cardId)
             startActivity(intent)
         }
+
 
     }
 

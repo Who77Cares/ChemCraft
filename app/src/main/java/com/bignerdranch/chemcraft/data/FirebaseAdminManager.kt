@@ -1,9 +1,11 @@
-package com.bignerdranch.chemcraft.data.get_card_repository
+package com.bignerdranch.chemcraft.data
 
 import android.util.Log
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
 import com.bignerdranch.chemcraft.ui.cards.models.CardToServerModel
+import com.bignerdranch.chemcraft.ui.test.model.TestToServerModel
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.gson.Gson
@@ -14,81 +16,73 @@ class FirebaseAdminManager {
     companion object {
 
 
-
-
-        // создаем файл урока в firebase
-        fun createLessonData(
+        // создаем 1 новый пустой урок
+        fun createLesson(
             lessonData: HashMap<String, Any>,
-            testData: HashMap<String, Any>,
-            cardsData: CardToServerModel
+            onLessonCreated: (DocumentReference) -> Unit
         ) {
-
             val db = Firebase.firestore
 
             db.collection("lessonsData")
                 .add(lessonData)
-                .addOnSuccessListener { newLesson ->
-                    Log.d("Firestore", "Урок $lessonData создан с ID ${newLesson.id}")
-
-                    newLesson.collection("testData")
-                        .add(testData)
-                        .addOnSuccessListener {
-                            Log.d(
-                                "Firestore",
-                                "Тест $testData добавлен в testData урока ${newLesson.id}"
-                            )
-                        }
-
-                    newLesson.collection("cardsData")
-                        .add(cardsData)
-                        .addOnSuccessListener {
-                            Log.d(
-                                "Firestore",
-                                "Тест $testData добавлен в testData урока ${newLesson.id}"
-                            )
-                        }
+                .addOnSuccessListener { lessonRef ->
+                    Log.d("Firestore", "Урок создан: ${lessonRef.id}")
+                    onLessonCreated(lessonRef)
+                }
+                .addOnFailureListener {
+                    Log.e("Firestore", "Ошибка при создании урока", it)
                 }
         }
-
-//     Инициализируем код выше
-//        FirebaseAdminManager.createLessonData(
-//        lessonData = lessonData,
-//        testData = testData,
-//        cardsData = cardsData
-//        )
-
-
 
 
         // добавляем новую карточку по id урока
         fun addCardToLesson(
             lessonId: String,
             cardModel: CardToServerModel,
-            onSuccess: () -> Unit,
+            onSuccess: (DocumentReference) -> Unit,
             onFailure: (Exception) -> Unit
         ) {
             val db = FirebaseFirestore.getInstance()
 
             db.collection("lessonsData")
                 .document(lessonId)
-                .collection("cardsData")
+                .collection("cardData")
                 .add(cardModel)
-                .addOnSuccessListener {
-                    onSuccess()
+
+                .addOnSuccessListener { cardRef ->
+                    onSuccess(cardRef)
                 }
                 .addOnFailureListener { e ->
                     onFailure(e)
                 }
         }
-//       Для инициализации
-//        FirebaseAdminManager.addCardToLesson(
-//        lessonId = "YNVB4KAtQJozmTyhTxjw",
-//        cardModel = CardToServerModel(
-//
-//        ),
-//        onSuccess = {  },
-//        onFailure = {  }
-//        )
+
+
+
+
+        // добавляем новый тест по id урока
+        fun addTestToCard(
+            lessonId: String,
+            cardId: String,
+            testData: TestToServerModel,
+            onSuccess: (DocumentReference) -> Unit
+        ) {
+            val db = Firebase.firestore
+
+            val cardRef = db.collection("lessonsData")
+                .document(lessonId)
+                .collection("cardData")
+                .document(cardId)
+
+            cardRef.collection("testData")
+                .add(testData)
+                .addOnSuccessListener { testRef ->
+                    onSuccess(testRef)
+                }
+                .addOnFailureListener {
+                    Log.e("Firestore", "Ошибка при добавлении теста в карточку $cardId", it)
+                }
+        }
 
 
         fun exportCardsToJson(

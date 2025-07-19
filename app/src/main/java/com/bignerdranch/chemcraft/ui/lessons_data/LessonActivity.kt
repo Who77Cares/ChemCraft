@@ -5,10 +5,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
-import com.bignerdranch.chemcraft.databinding.ActivityLessonContentBinding
+import com.bignerdranch.chemcraft.databinding.ActivityLessonBinding
+
 
 class LessonActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLessonContentBinding
+    private lateinit var binding: ActivityLessonBinding
     private lateinit var adapter: LessonContentAdapter
 
     private var lessonsList: List<LessonsData> = emptyList()
@@ -16,7 +17,7 @@ class LessonActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLessonContentBinding.inflate(layoutInflater)
+        binding = ActivityLessonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 

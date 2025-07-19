@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
 import com.bignerdranch.chemcraft.ui.single_card.SingleCardActivity
 
 class CardsActivity : AppCompatActivity() {
@@ -18,13 +17,13 @@ class CardsActivity : AppCompatActivity() {
     private lateinit var title: String
     private lateinit var titleText: TextView
 
+    private lateinit var cardTestIDs: Map<String, String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sub_cards)
+        setContentView(R.layout.activity_cards)
 
-        title = ""
-        description = ""
 
         titleText = findViewById(R.id.titleText)
         val recyclerView: RecyclerView = findViewById(R.id.recycleView_subtopic)
@@ -34,10 +33,9 @@ class CardsActivity : AppCompatActivity() {
         Log.d("LessonScreen", "Передаем ID урока: $lessonId")
 
 
-
-
-
-        titleText.text = "$title ::: $description"
+        title = ""
+        description = ""
+        titleText.text = " "
 
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -47,11 +45,12 @@ class CardsActivity : AppCompatActivity() {
             onCardClick = { card, position ->
                 val intent = Intent(this, SingleCardActivity::class.java)
                 intent.putExtra("LESSON_ID", lessonId)
-                intent.putExtra("CARD_ID", card.id) // ч
+                intent.putExtra("CARD_ID", card.id)
                 intent.putExtra("title", card.title)
                 startActivity(intent)
 
             })
+
         recyclerView.adapter = adapter
 
 
@@ -67,11 +66,6 @@ class CardsActivity : AppCompatActivity() {
 
             },
         )
-
-
-
-
-
 
     }
 

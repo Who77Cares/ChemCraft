@@ -33,9 +33,10 @@ class LessonContentAdapter(
 
         holder.lessonTitle.setOnClickListener {
             val intent = Intent(holder.itemView.context, CardsActivity::class.java).apply {
+
                 putExtra("lessonId", lessonsData[position].id)
-//                putExtra("title", lessonsData[position].title)
-//                putExtra("description", lessonsData[position].description)
+
+
             }
             holder.itemView.context.startActivity(intent)
         }

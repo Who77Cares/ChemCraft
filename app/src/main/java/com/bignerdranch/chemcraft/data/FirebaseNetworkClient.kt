@@ -1,13 +1,14 @@
 package com.bignerdranch.chemcraft.data
 
 import android.util.Log
-import com.bignerdranch.chemcraft.SingleCardItemModel
+import com.bignerdranch.chemcraft.ui.single_card.SingleCardItemModel
 
 
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
 import com.bignerdranch.chemcraft.ui.lessons_data.LessonsData
-import com.bignerdranch.chemcraft.ui.test.model.TestData
+import com.bignerdranch.chemcraft.ui.test.model.TestModel
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 class FirebaseNetworkClient {
@@ -58,7 +59,7 @@ class FirebaseNetworkClient {
 
             db.collection("lessonsData")
                 .document(lessonId)
-                .collection("cardsData")
+                .collection("cardData")
                 .get()
                 .addOnSuccessListener { querySnapshot ->
                     val cardList = querySnapshot.documents.mapNotNull { doc ->
@@ -89,7 +90,7 @@ class FirebaseNetworkClient {
             Log.d("CardLoader", "Запрос документа: lessonsData/$lessonId/cardsData/$cardId")
 
             db.collection("lessonsData").document(lessonId)
-                .collection("cardsData").document(cardId).get()
+                .collection("cardData").document(cardId).get()
                 .addOnSuccessListener { document ->
                     Log.d("CardLoader", "onSuccess: Документ получен")
 
@@ -126,42 +127,45 @@ class FirebaseNetworkClient {
         }
 
 
-
-        // получаем список ключей тестов (id) по ключу урока
-        fun getTestDataIdsForLesson(
+        fun getTestsFromCard(
             lessonId: String,
-            onSuccess: (List<String>) -> Unit,
+            cardId: String,
+            onSuccess: (List<TestModel>) -> Unit,
             onFailure: (Exception) -> Unit
         ) {
-            val db = Firebase.firestore
-
-            db.collection("lessonsData") // или lessonsData — проверь точное имя!
+            val db = FirebaseFirestore.getInstance()
+            db.collection("lessonsData")
                 .document(lessonId)
+                .collection("cardData")
+                .document(cardId)
                 .collection("testData")
                 .get()
-
                 .addOnSuccessListener { querySnapshot ->
-                    val testDataIds = querySnapshot.documents.map { it.id }
-                    onSuccess(testDataIds)
+                    val tests = mutableListOf<TestModel>()
+                    for (doc in querySnapshot.documents) {
+                        val rawTestContent = doc.get("testContent")
+
+                        if (rawTestContent is List<*>) {
+                            for (item in rawTestContent) {
+                                if (item is Map<*, *>) {
+                                    val questionText = item["questionText"] as? String ?: ""
+                                    val imgUrl = item["imgUrl"] as? String ?: ""
+                                    val correctAnswer = item["correctAnswer"] as? String ?: ""
+                                    val maxScore = (item["maxScore"] as? Long)?.toInt() ?: 0
+                                    val type = (item["type"] as? Long)?.toInt() ?: 1
+                                    tests.add(TestModel(questionText, imgUrl, correctAnswer, maxScore, type))
+                                }
+                            }
+                        } else {
+                            Log.e("FirestoreTestData", "testContent is missing or wrong type in doc ${doc.id}")
+                        }
+                    }
+                    onSuccess(tests)
                 }
-                .addOnFailureListener { e ->
-                    onFailure(e)
+                .addOnFailureListener { exception ->
+                    onFailure(exception)
                 }
         }
 
-
-//        этот код - реализация функции выше
-//        FirebaseNetworkClient.getTestDataIdsForLesson(
-//        lessonId = "vPtFN1bqd6P5yVOZ0GAW",
-//        onSuccess = { listTestId ->
-//            Log.d("SnapshotTEST", "$listTestId")
-//        },
-//        onFailure = { e ->
-//            Log.d("SnapshotTEST", "$e")
-//        },
-//        )
-
-
     }
-
 }

@@ -50,26 +50,41 @@
 
     <!--   Новое барахло  -->
 
-    <Button
-        android:id="@+id/getCardData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Получить данные о карточке"
-        android:backgroundTint="@color/cardview_dark_background"
-        app:layout_constraintBottom_toTopOf="@+id/my_list_lessons_Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
+
 
     <Button
-        android:id="@+id/getLessonData"
+        android:id="@+id/admin_button_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/cardview_dark_background"
-        android:text="Получить данные о уроке"
-        app:layout_constraintBottom_toTopOf="@+id/getCardData"
+        android:text="+ Новый урок ->"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="16dp" />
+
+    <Button
+        android:id="@+id/admin_button_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cardview_dark_background"
+        android:text="Загрузить карточку"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/admin_button_one" />
+
+    <Button
+        android:id="@+id/admin_button_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cardview_dark_background"
+        android:text="Загрузка теста"
+        app:layout_constraintTop_toBottomOf="@+id/admin_button_two"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="16dp" />
+
 
     <TextView
         android:id="@+id/getDataLesson_textView"

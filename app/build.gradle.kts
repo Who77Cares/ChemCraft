@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.gif)
 
+    implementation(libs.lottie)
+
 
 
 }

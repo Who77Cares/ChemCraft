@@ -8,17 +8,19 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieDrawable
 import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
-import com.bignerdranch.chemcraft.databinding.ActivityTestScreenBinding
+import com.bignerdranch.chemcraft.databinding.ActivityTestBinding
+
 
 class TestActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTestScreenBinding
+    private lateinit var binding: ActivityTestBinding
     private lateinit var correctAnswer: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTestScreenBinding.inflate(layoutInflater)
+        binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val lessonId = intent.getStringExtra("LESSON_ID") ?: ""
@@ -26,6 +28,17 @@ class TestActivity : AppCompatActivity() {
 
 
         binding.testText.text = "dss"
+
+
+        binding.startLottiVew.setOnClickListener {
+            binding.lottiView.setMinProgress(0.0f)
+            binding.lottiView.setMaxProgress(1.0f)
+            binding.lottiView.repeatCount = LottieDrawable.INFINITE
+            binding.lottiView.repeatMode = LottieDrawable.RESTART
+            binding.lottiView.playAnimation()
+
+
+        }
 
 
         binding.textInputLayout.setEndIconOnClickListener {

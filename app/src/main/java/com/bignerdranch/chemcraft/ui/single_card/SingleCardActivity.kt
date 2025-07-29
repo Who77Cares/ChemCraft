@@ -3,9 +3,12 @@ package com.bignerdranch.chemcraft.ui.single_card
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.databinding.ActivitySingleCardBinding
@@ -20,8 +23,8 @@ class SingleCardActivity : AppCompatActivity() {
     private lateinit var database: FirebaseFirestore
 
     private lateinit var button: Button
-    private lateinit var description: String
-    private lateinit  var title: String
+    private lateinit var title: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +32,17 @@ class SingleCardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         button = findViewById(R.id.test_test)
+        title = findViewById(R.id.title)
 
         database = Firebase.firestore
 
 
-        val lessonId = intent.getStringExtra("ITEM_ID")!!
-        val cardIndex = intent.getIntExtra("CARD_POSITION", 0)
-        Log.d("LessonScreen", "Передаем ID урока: $lessonId, ---- $cardIndex")
+        val lessonId = intent.getStringExtra("LESSON_ID")!!
+        val cardId = intent.getStringExtra("CARD_ID")!!
+        title.text = cardId
 
-        title = intent.getStringExtra("title") ?: " _ "
-        description = intent.getStringExtra("description") ?: " _ "
+
+        Log.d("LessonScreen", "Передаем ID урока: $cardId, ---- $title")
 
 
 
@@ -49,18 +53,28 @@ class SingleCardActivity : AppCompatActivity() {
 
 
 
-        FirebaseNetworkClient.loadLessonData(lessonId) { lesson ->
-            binding.title.text = lesson.title
+        FirebaseNetworkClient.loadCardItemsById(
+            lessonId = lessonId,
+            cardId = cardId,
+            onSuccess = {  listSingleCardItems ->
+                singleCardAdapter.contentList = listSingleCardItems
+                singleCardAdapter.notifyDataSetChanged()
 
-            singleCardAdapter.contentList = lesson.contentCards[cardIndex].content // тут получаем епервый урок
-            singleCardAdapter.notifyDataSetChanged()
 
-        }
+            },
+            onFailure = {
+
+            }
+        )
+
 
         button.setOnClickListener {
             val intent = Intent(this, TestActivity::class.java)
+            intent.putExtra("LESSON_ID", lessonId)
+            intent.putExtra("CARD_ID", cardId)
             startActivity(intent)
         }
+
 
     }
 

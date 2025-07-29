@@ -1,11 +1,14 @@
 package com.bignerdranch.chemcraft.data
 
 import android.util.Log
-import com.bignerdranch.chemcraft.SingleCardItemModel
-import com.bignerdranch.chemcraft.ContentCardModel
-import com.bignerdranch.chemcraft.LessonsContentModel
+import com.bignerdranch.chemcraft.ui.single_card.SingleCardItemModel
+
+
+import com.bignerdranch.chemcraft.ui.cards.models.CardModel
+import com.bignerdranch.chemcraft.ui.lessons_data.LessonsData
+import com.bignerdranch.chemcraft.ui.test.model.TestModel
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 class FirebaseNetworkClient {
@@ -21,212 +24,148 @@ class FirebaseNetworkClient {
         (например, с помощью addOnSuccessListener). Следовательно, вам нужно обрабатывать полученные данные после завершения загрузки.
          */
 
-        fun getListDataFromFirebase(callback: (List<LessonsContentModel>) -> Unit) {
+
+        // получаем все уроки
+        fun getAllLessons(
+            onSuccess: (List<LessonsData>) -> Unit,
+            onFailure: (Exception) -> Unit
+        ) {
             val db = Firebase.firestore
-            val lessonsContentModels = mutableListOf<LessonsContentModel>()
 
-            Log.d("Firebase", "Начало загрузки данных из коллекции 'lessons'")
-
-            db.collection("lessons")
+            db.collection("lessonsData")
                 .get()
-                .addOnSuccessListener { result ->
-                    Log.d("Firebase", "Успешно получены данные: ${result.size()} документов")
-
-                    for (document in result) {
-                        val title = document.getString("title") ?: "No title"
-                        val description = document.getString("description") ?: "No description"
-                        val lessonId = document.id
-
-                        val lesson = LessonsContentModel(lessonId, title, description, listOf())
-                        lessonsContentModels.add(lesson)
-
-                        Log.d("Firebase", "Добавлен урок: id=$lessonId, title=$title")
+                .addOnSuccessListener { querySnapshot ->
+                    val lessonsList = querySnapshot.documents.mapNotNull { doc ->
+                        val lesson = doc.toObject(LessonsData::class.java)
+                        lesson?.apply { id = doc.id  }
                     }
 
-                    Log.d("Firebase", "Всего добавлено уроков: ${lessonsContentModels.size}")
-                    callback(lessonsContentModels)
+                    Log.d("Получили данные уроков их id", lessonsList.toString())
+
+                    onSuccess(lessonsList)
+                }
+                .addOnFailureListener { e ->
+                    onFailure(e)
+                }
+        }
+
+// получаем данные карточек по айдишнику урока
+        fun getCardDataListByLessonId(
+            lessonId: String,
+            onSuccess: (List<CardModel>) -> Unit,
+            onFailure: (Exception) -> Unit
+        ) {
+            val db = Firebase.firestore
+
+            db.collection("lessonsData")
+                .document(lessonId)
+                .collection("cardData")
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    val cardList = querySnapshot.documents.mapNotNull { doc ->
+                        val cards = doc.toObject(CardModel::class.java)
+                        cards?.apply { id = doc.id }
+                        // поле cardItems мы не маппим сразу
+
+                    }
+                    Log.d("КАРТОЧКИ", cardList.toString())
+                    onSuccess(cardList)
+
+
                 }
                 .addOnFailureListener { exception ->
-                    Log.e("Firebase", "Ошибка при загрузке данных: ${exception.message}", exception)
-                    callback(emptyList())
+                    onFailure(exception)
                 }
         }
 
-        fun getCard(lessonId: String, callback: (List<ContentCardModel>) -> Unit) {
-            val db = Firebase.firestore
-            Log.d("getCard", "Начало загрузки карточек для lessonId: $lessonId")
 
-            db.collection("lesson_content").document(lessonId).get()
+
+        fun loadCardItemsById(
+            lessonId: String,
+            cardId: String,
+            onSuccess: (List<SingleCardItemModel>) -> Unit,
+            onFailure: (Exception) -> Unit
+        ) {
+            val db = Firebase.firestore
+            Log.d("CardLoader", "Запрос документа: lessonsData/$lessonId/cardsData/$cardId")
+
+            db.collection("lessonsData").document(lessonId)
+                .collection("cardData").document(cardId).get()
                 .addOnSuccessListener { document ->
-                    Log.d("getCard", "Загрузка документа прошла успешно")
+                    Log.d("CardLoader", "onSuccess: Документ получен")
 
                     if (document.exists()) {
-                        Log.d("getCard", "Документ найден: ${document.id}")
-
-                        val blocksData = document.get("blocks") as? List<Map<String, Any>>
-                        if (blocksData != null) {
-                            Log.d("getCard", "Найдено блоков: ${blocksData.size}")
+                        val rawList = document.get("cardItems") as? List<Map<String, Any>>
+                        if (rawList == null) {
+                            Log.d("CardLoader", "cardItems отсутствует или null")
+                            onSuccess(emptyList())
                         } else {
-                            Log.d("getCard", "Поле 'blocks' отсутствует или имеет неверный формат")
-                        }
+                            Log.d("CardLoader", "cardItems получен: ${rawList.size} элементов")
 
-                        val cards = blocksData?.map { block ->
-                            val blockName = block["blockName"] as? String ?: "Без названия"
-                            Log.d("getCard", "Обработка блока: $blockName")
-                            ContentCardModel(
-                                id = blockName,
-                                content = emptyList(),
-                                answerStatus = false
-                            )
-                        } ?: emptyList()
+                            val parsedItems = rawList.mapNotNull { item ->
+                                val type = (item["type"] as? String)?.lowercase()
+                                val content = item["content"] as? String
 
-                        Log.d("getCard", "Создано карточек: ${cards.size}")
-
-//                        // ✅ Сохраняем карточки
-//                        CardStorage.saveCards(cards)
-
-                        callback(cards)
-                    } else {
-                        Log.d("getCard", "Документ не найден в коллекции")
-                        callback(emptyList())
-                    }
-                }
-                .addOnFailureListener {
-                    Log.e("getCard", "Ошибка при загрузке документа: ${it.message}", it)
-                    callback(emptyList())
-                }
-        }
-
-
-
-
-        fun getMyLessons(lessonIds: List<String>, callback: (List<LessonsContentModel>) -> Unit) {
-            val db = Firebase.firestore
-            val lessonsContentModels = mutableListOf<LessonsContentModel>()
-
-            for(lessonId in lessonIds)
-                db.collection("lessons")
-                    .document(lessonId)
-                    .get()
-                    .addOnSuccessListener { document ->
-                        if (document.exists()) {
-                            val title = document.getString("title") ?: "No title"
-                            val description = document.getString("description") ?: "No description"
-                            lessonsContentModels.add(LessonsContentModel(lessonId, title, description, listOf()))
-                        }
-                        // Если все запросы завершены, вызываем callback
-                        if (lessonsContentModels.size == lessonIds.size)
-                            callback(lessonsContentModels)
-                    }
-
-                    .addOnFailureListener { exception ->
-                        Log.e("FirebaseManager", "Error getting document: ", exception)
-                    }
-        }
-
-        fun loadLessonData(lessonId: String, callback: (LessonsContentModel) -> Unit) {
-            val db = Firebase.firestore
-
-            db.collection("lesson_content").document(lessonId).get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        // Извлекаем блоки
-                        val blocksData = document.get("blocks") as? List<Map<String, Any>>?
-                        Log.d("LessonScreen", "Количество блоков: ${blocksData?.size}")
-
-                        // Преобразуем данные в модель Lesson
-                        val blocks = blocksData?.mapNotNull { blockData ->
-                            val blockName = blockData["blockName"] as? String ?: ""
-                            val contentData = blockData["content"] as? List<Map<String, Any>>?
-                            val content = contentData?.mapNotNull { itemData ->
-                                when (itemData["type"] as? String) {
-                                    "Text" -> SingleCardItemModel.Text(content = itemData["content"] as? String ?: "")
-                                    "Img" -> SingleCardItemModel.Image(url = itemData["url"] as? String ?: "")
+                                when (type) {
+                                    "text" -> content?.let { SingleCardItemModel.Text(it) }
+                                    "img" -> content?.let { SingleCardItemModel.Image(it) }
                                     else -> null
                                 }
-                            } ?: emptyList()
-
-                            Log.d("LessonScreen", "Блок: $blockName, Содержимое: ${content.size} элементов")
-
-                            ContentCardModel(blockName, content, true)
-                        } ?: emptyList()
-
-                        Log.d("LessonScreen", "Всего блоков: ${blocks.size}")
-
-                        // Создаем объект урока
-                        val lessonsContentModel = LessonsContentModel(id = lessonId, title = "Название урока", description = "Описание урока", contentCards = blocks)
-                        callback(lessonsContentModel) // Передаем загруженные данные в callback
+                            }
+                            Log.d("CardLoader", "Парсинг завершён, всего элементов: ${parsedItems.size}")
+                            onSuccess(parsedItems)
+                        }
                     } else {
-                        Log.d("Error", "Документ с ID $lessonId не найден.")
+                        Log.e("CardLoader", "Документ с id $cardId не найден в уроке $lessonId")
+                        onFailure(Exception("Документ с id $cardId не найден"))
                     }
                 }
-                .addOnFailureListener { e ->
-                    Log.d("Error2", "Ошибка загрузки урока: ${e.message}")
+                .addOnFailureListener { exception ->
+                    Log.e("CardLoader", "Ошибка получения документа: ${exception.message}", exception)
+                    onFailure(exception)
                 }
         }
 
 
-
-
-        // Логика добавления урока (lesons)
-
-        fun createLesson(
-            lesson: HashMap<String, String>,
-            documentPath: String,
+        fun getTestsFromCard(
+            lessonId: String,
+            cardId: String,
+            onSuccess: (List<TestModel>) -> Unit,
+            onFailure: (Exception) -> Unit
         ) {
-            val db = Firebase.firestore
+            val db = FirebaseFirestore.getInstance()
+            db.collection("lessonsData")
+                .document(lessonId)
+                .collection("cardData")
+                .document(cardId)
+                .collection("testData")
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    val tests = mutableListOf<TestModel>()
+                    for (doc in querySnapshot.documents) {
+                        val rawTestContent = doc.get("testContent")
 
-            db.collection("lessons").document(documentPath)
-                .set(lesson)
-
-                .addOnSuccessListener {
-                    Log.d("Firestore", "Урок $lesson загружен в lessons --> $documentPath")
-                }
-        }
-
-
-        // заменяет существующие карточки (блоки) на новые
-        fun updateContentLesson(
-
-            documentPath: String,
-            content: HashMap<String, List<HashMap<String, Any>>>
-
-        ) {
-            val db = Firebase.firestore
-
-            db.collection("lesson_content").document(documentPath)
-                .set(content)
-                .addOnSuccessListener {
-                    Log.d("Firestore", "Content added to lessons_content --> $documentPath")
-                }
-                .addOnFailureListener { e ->
-                    Log.e("Firestore", "Error uploading Lesson 1 content", e)
-                }
-
-        }
-
-        // добавляет новые карточки (блоки)
-        fun addContentToLesson(
-            documentPath: String,
-            content: HashMap<String, HashMap<String, Any>>
-        ) {
-            val db = Firebase.firestore
-            val docRef = db.collection("lesson_content").document(documentPath)
-
-            val block = content["blocks"]
-            if (block != null) {
-                docRef.update("blocks", FieldValue.arrayUnion(block))
-                    .addOnSuccessListener {
-                        Log.d("Firestore", "Block added to lesson: $documentPath")
+                        if (rawTestContent is List<*>) {
+                            for (item in rawTestContent) {
+                                if (item is Map<*, *>) {
+                                    val questionText = item["questionText"] as? String ?: ""
+                                    val imgUrl = item["imgUrl"] as? String ?: ""
+                                    val correctAnswer = item["correctAnswer"] as? String ?: ""
+                                    val maxScore = (item["maxScore"] as? Long)?.toInt() ?: 0
+                                    val type = (item["type"] as? Long)?.toInt() ?: 1
+                                    tests.add(TestModel(questionText, imgUrl, correctAnswer, maxScore, type))
+                                }
+                            }
+                        } else {
+                            Log.e("FirestoreTestData", "testContent is missing or wrong type in doc ${doc.id}")
+                        }
                     }
-                    .addOnFailureListener { e ->
-                        Log.e("Firestore", "Error adding block", e)
-                    }
-            } else {
-                Log.e("Firestore", "No 'blocks' key in content map")
-            }
+                    onSuccess(tests)
+                }
+                .addOnFailureListener { exception ->
+                    onFailure(exception)
+                }
         }
-
 
     }
 }

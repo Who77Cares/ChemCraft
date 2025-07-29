@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.SingleCardItemModel
 import com.bignerdranch.chemcraft.ui.single_card.full_screen_img.FullScreenImageActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners

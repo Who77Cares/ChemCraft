@@ -17,46 +17,55 @@ class CardsActivity : AppCompatActivity() {
     private lateinit var title: String
     private lateinit var titleText: TextView
 
+    private lateinit var cardTestIDs: Map<String, String>
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sub_cards)
+        setContentView(R.layout.activity_cards)
 
 
         titleText = findViewById(R.id.titleText)
+        val recyclerView: RecyclerView = findViewById(R.id.recycleView_subtopic)
 
 
         val lessonId = intent.getStringExtra("lessonId")!!
         Log.d("LessonScreen", "Передаем ID урока: $lessonId")
 
 
+        title = ""
+        description = ""
+        titleText.text = " "
 
 
-        title = intent.getStringExtra("title") ?: " _ "
-        description = intent.getStringExtra("description") ?: " _ "
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        titleText.text = "$title ::: $description"
+        val adapter = CardsAdapter(
+            this,
+            onCardClick = { card, position ->
+                val intent = Intent(this, SingleCardActivity::class.java)
+                intent.putExtra("LESSON_ID", lessonId)
+                intent.putExtra("CARD_ID", card.id)
+                intent.putExtra("title", card.title)
+                startActivity(intent)
 
+            })
 
-
-
-        val recyclerView: RecyclerView = findViewById(R.id.recycleView_subtopic)
-        recyclerView.layoutManager = LinearLayoutManager(this) // ОБЯЗАТЕЛЬНО
-        val adapter = CardsAdapter(onCardClick = { model, position ->
-            val intent = Intent(this, SingleCardActivity::class.java)
-            intent.putExtra("ITEM_ID", lessonId) // что за model.id
-            intent.putExtra("CARD_POSITION", position)
-
-            intent.putExtra("title", title)
-            startActivity(intent)
-        })
         recyclerView.adapter = adapter
 
 
-        FirebaseNetworkClient.getCard(lessonId) { listCards ->
-            adapter.setItems(listCards)
-            adapter.notifyDataSetChanged()
-        }
+        FirebaseNetworkClient.getCardDataListByLessonId(
+            lessonId = lessonId,
+            onSuccess = { cardModelList ->
 
+                adapter.setItems(cardModelList)
+                adapter.notifyDataSetChanged()
+
+            },
+            onFailure = {
+
+            },
+        )
 
     }
 

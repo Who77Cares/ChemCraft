@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ChemCraft"
         tools:targetApi="31">
         <activity
+            android:name=".ui.test.AllTestResult"
+            android:exported="false" />
+        <activity
             android:name=".ui.cards.CardsActivity"
             android:exported="false" />
         <activity

@@ -1,13 +1,17 @@
 package com.bignerdranch.chemcraft.ui.test
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.airbnb.lottie.LottieDrawable
 import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.databinding.ActivityTestBinding
@@ -36,6 +40,12 @@ class TestActivity : AppCompatActivity() {
             binding.lottiView.repeatCount = LottieDrawable.INFINITE
             binding.lottiView.repeatMode = LottieDrawable.RESTART
             binding.lottiView.playAnimation()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this, AllTestResult::class.java)
+                startActivity(intent)
+                binding.lottiView.cancelAnimation()
+            }, 3000)
 
 
         }

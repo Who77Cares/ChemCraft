@@ -1,17 +1,16 @@
-package com.bignerdranch.chemcraft.data
+package com.bignerdranch.chemcraft.data.old
 
 import android.util.Log
 import com.bignerdranch.chemcraft.ui.single_card.SingleCardItemModel
 
 
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
-import com.bignerdranch.chemcraft.ui.lessons_data.LessonsData
 import com.bignerdranch.chemcraft.ui.test.model.TestModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
-class FirebaseNetworkClient {
+class FirebaseNetworkClientOld {
 
     companion object {
 
@@ -25,32 +24,9 @@ class FirebaseNetworkClient {
          */
 
 
-        // получаем все уроки
-        fun getAllLessons(
-            onSuccess: (List<LessonsData>) -> Unit,
-            onFailure: (Exception) -> Unit
-        ) {
-            val db = Firebase.firestore
-
-            db.collection("lessonsData")
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    val lessonsList = querySnapshot.documents.mapNotNull { doc ->
-                        val lesson = doc.toObject(LessonsData::class.java)
-                        lesson?.apply { id = doc.id  }
-                    }
-
-                    Log.d("Получили данные уроков их id", lessonsList.toString())
-
-                    onSuccess(lessonsList)
-                }
-                .addOnFailureListener { e ->
-                    onFailure(e)
-                }
-        }
 
 // получаем данные карточек по айдишнику урока
-        fun getCardDataListByLessonId(
+        fun getCardsByLessonId(
             lessonId: String,
             onSuccess: (List<CardModel>) -> Unit,
             onFailure: (Exception) -> Unit

@@ -59,15 +59,18 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
-
     implementation("com.google.code.gson:gson:2.8.9")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation(libs.lottie)
+    implementation(libs.koin.android)
+
+
+
 
     // неиспользуемые зависимости
     implementation(libs.coil)
     implementation(libs.coil.gif)
-
-    implementation(libs.lottie)
-
 
 
 }

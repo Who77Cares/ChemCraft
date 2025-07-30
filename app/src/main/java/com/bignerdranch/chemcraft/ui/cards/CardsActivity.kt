@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
+import com.bignerdranch.chemcraft.data.old.FirebaseNetworkClientOld
 import com.bignerdranch.chemcraft.ui.single_card.SingleCardActivity
 
 class CardsActivity : AppCompatActivity() {
@@ -54,7 +54,7 @@ class CardsActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
 
-        FirebaseNetworkClient.getCardDataListByLessonId(
+        FirebaseNetworkClientOld.getCardsByLessonId(
             lessonId = lessonId,
             onSuccess = { cardModelList ->
 

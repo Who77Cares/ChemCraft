@@ -11,9 +11,8 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.airbnb.lottie.LottieDrawable
-import com.bignerdranch.chemcraft.data.FirebaseNetworkClient
+import com.bignerdranch.chemcraft.data.old.FirebaseNetworkClientOld
 import com.bignerdranch.chemcraft.databinding.ActivityTestBinding
 
 
@@ -70,7 +69,7 @@ class TestActivity : AppCompatActivity() {
             }
         }
 
-        FirebaseNetworkClient.getTestsFromCard(
+        FirebaseNetworkClientOld.getTestsFromCard(
             lessonId = lessonId,
             cardId = cardId,
             onSuccess = { result ->

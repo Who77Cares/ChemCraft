@@ -1,13 +1,13 @@
 package com.bignerdranch.chemcraft.ui.cards
 
-import android.content.Intent
+
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
-import com.bignerdranch.chemcraft.ui.test.TestActivity
+
 import com.google.android.material.card.MaterialCardView
 
 class CardsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

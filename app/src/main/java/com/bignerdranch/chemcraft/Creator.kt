@@ -1,6 +1,10 @@
 package com.bignerdranch.chemcraft
 
 import android.content.Context
+import com.bignerdranch.chemcraft.cards.data.GetCardsRepositoryImpl
+import com.bignerdranch.chemcraft.cards.domain.GetCardsInteractorImp
+import com.bignerdranch.chemcraft.cards.domain.api.GetCardsInteractor
+import com.bignerdranch.chemcraft.cards.domain.api.GetCardsRepository
 import com.bignerdranch.chemcraft.network.FirebaseNetworkClient
 import com.bignerdranch.chemcraft.lessons.data.GetLessonsRepositoryImpl
 import com.bignerdranch.chemcraft.lessons.domain.GetLessonsInteractorImpl
@@ -16,6 +20,8 @@ object Creator {
 //     fun provideLessonInteractor(context: Context): GetLessonsInteractor {
 //        return GetLessonsInteractorImpl(getLessonRepository(context = context))
 //    }
+
+
 
 
 }

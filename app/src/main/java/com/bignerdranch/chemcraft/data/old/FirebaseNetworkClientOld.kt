@@ -24,38 +24,6 @@ class FirebaseNetworkClientOld {
          */
 
 
-
-// получаем данные карточек по айдишнику урока
-        fun getCardsByLessonId(
-            lessonId: String,
-            onSuccess: (List<CardModel>) -> Unit,
-            onFailure: (Exception) -> Unit
-        ) {
-            val db = Firebase.firestore
-
-            db.collection("lessonsData")
-                .document(lessonId)
-                .collection("cardData")
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    val cardList = querySnapshot.documents.mapNotNull { doc ->
-                        val cards = doc.toObject(CardModel::class.java)
-                        cards?.apply { id = doc.id }
-                        // поле cardItems мы не маппим сразу
-
-                    }
-                    Log.d("КАРТОЧКИ", cardList.toString())
-                    onSuccess(cardList)
-
-
-                }
-                .addOnFailureListener { exception ->
-                    onFailure(exception)
-                }
-        }
-
-
-
         fun loadCardItemsById(
             lessonId: String,
             cardId: String,

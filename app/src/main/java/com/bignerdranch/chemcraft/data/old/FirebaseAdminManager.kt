@@ -2,7 +2,6 @@ package com.bignerdranch.chemcraft.data.old
 
 import android.util.Log
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
-import com.bignerdranch.chemcraft.ui.cards.models.CardToServerModel
 import com.bignerdranch.chemcraft.ui.test.model.TestToServerModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference

@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.cards
+package com.bignerdranch.chemcraft.cards.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
 
-class CardsAdapter(private val context: Context,
-    private var items: List<CardModel> = emptyList(),
+class CardsAdapter(
+    private val context: Context,
+   var cards: List<CardModel> = emptyList(),
     private val onCardClick: (CardModel, Int) -> Unit
-): RecyclerView.Adapter<CardsViewHolder>() {
+) : RecyclerView.Adapter<CardsViewHolder>() {
 
-    fun setItems(newItems: List<CardModel>) {
-        items = newItems
-    }
+//    fun setItems(newItems: List<CardModel>) {
+//        cards = newItems
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val itemView = LayoutInflater
@@ -26,11 +27,11 @@ class CardsAdapter(private val context: Context,
         return CardsViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = cards.size
 
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
-        holder.bind(items[position]) {
-            onCardClick(items[position], position)  //
+        holder.bind(cards[position]) {
+            onCardClick(cards[position], position)  //
         }
 
         holder.itemView.findViewById<ImageView>(R.id.star).setOnClickListener{

@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.cards
+package com.bignerdranch.chemcraft.cards.ui
 
 
 import android.view.View

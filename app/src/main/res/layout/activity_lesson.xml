@@ -29,14 +29,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_lesson" />
 
-    <ProgressBar
-        android:id="@+id/lessonsProgressBar"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingLotti"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:lottie_fileName="loadingLotti.json"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+
+
+
+
+        />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lessonsErrorLottie"

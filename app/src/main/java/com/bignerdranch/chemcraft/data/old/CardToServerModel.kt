@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.cards.models
+package com.bignerdranch.chemcraft.data.old
 
 data class CardToServerModel(
     val imageUrl: String = "",

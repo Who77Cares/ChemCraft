@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,16 +11,18 @@ import com.bignerdranch.chemcraft.R
 
 import com.bignerdranch.chemcraft.data.old.SharedPrefManager
 import com.bignerdranch.chemcraft.lessons.domain.models.LessonsModel
-import com.bignerdranch.chemcraft.ui.cards.CardsActivity
+import com.bignerdranch.chemcraft.cards.ui.CardsActivity
 
 
 class LessonContentAdapter(
     context: Context,
-     var lessons: List<LessonsModel>
+    var lessons: List<LessonsModel>,
+    private val onLessonClick: (LessonsModel) -> Unit
 ) : RecyclerView.Adapter<LessonContentViewHolder>() {
 
     private val sharedPreferences = SharedPrefManager(context)
-//
+
+    //
     override fun getItemCount(): Int = lessons.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonContentViewHolder =
@@ -30,16 +31,14 @@ class LessonContentAdapter(
     override fun onBindViewHolder(holder: LessonContentViewHolder, position: Int) {
         holder.bind(lessons[position])
 
+        holder.lessonArrowForward.setOnClickListener {
+            onLessonClick(lessons[position])
+        }
+
+
 //        updateIcon(holder.addOrRemove, lessons[position].name)
 
-        holder.lessonArrowForward.setOnClickListener {
-            val intent = Intent(holder.itemView.context, CardsActivity::class.java).apply {
 
-                putExtra("lessonId", lessons[position].id)
-            }
-            holder.itemView.context.startActivity(intent)
-
-        }
 
 
 

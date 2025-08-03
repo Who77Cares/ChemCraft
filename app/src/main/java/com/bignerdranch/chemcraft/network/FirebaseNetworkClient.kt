@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import com.bignerdranch.chemcraft.cards.data.CardsResponse
+import com.bignerdranch.chemcraft.cards.data.ClientGetCards
 import com.bignerdranch.chemcraft.lessons.data.api.ClientGetLessons
 import com.bignerdranch.chemcraft.lessons.data.api.LessonsResponse
 import com.google.firebase.Firebase
@@ -13,7 +15,7 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
 
-class FirebaseNetworkClient(private val context: Context): ClientGetLessons {
+class FirebaseNetworkClient(private val context: Context): ClientGetLessons, ClientGetCards {
 
     override suspend fun getLessons(): Response {
         val db = Firebase.firestore
@@ -38,7 +40,6 @@ class FirebaseNetworkClient(private val context: Context): ClientGetLessons {
 
             } catch (e: Exception) {
 
-                Log.e("LessonsRepositoryImpl", "Ошибка: ${e.message}", e)
                 Response().apply {
                     message = e.message ?: "Неизвестная ошибка"
                     resultCode = -1
@@ -55,6 +56,47 @@ class FirebaseNetworkClient(private val context: Context): ClientGetLessons {
 
 
 
+
+    override suspend fun getCardsByLessonId(lessonId: String): Response {
+
+        val db = Firebase.firestore
+
+        if (isConnected()) {
+
+            return try {
+                val querySnapshot = db.collection("lessonsData")
+                    .document(lessonId)
+                    .collection("cardData")
+                    .get()
+                    .await()
+
+                val cardsListWithId: List<Map <String, Any>> =
+                    querySnapshot.documents.mapNotNull { doc ->
+                        doc.data?.plus("id" to doc.id)
+                    }
+
+                Log.d("getCardsByLessonId()", "$cardsListWithId")
+
+                CardsResponse(result = cardsListWithId).apply {
+                    resultCode = 200
+                }
+
+            } catch (e: Exception) {
+
+                Response().apply {
+                    message = e.message ?: "Неизвестная ошибка"
+                    resultCode = -1
+                }
+
+            }
+
+        } else {
+            return Response().apply {
+                message = "Нет подключения к сети"
+                resultCode = -1 }
+        }
+
+    }
 
 
 
@@ -73,7 +115,6 @@ class FirebaseNetworkClient(private val context: Context): ClientGetLessons {
         }
         return false
     }
-
 
 
 }

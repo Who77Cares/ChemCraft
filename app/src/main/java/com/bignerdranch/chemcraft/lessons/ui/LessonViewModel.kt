@@ -20,7 +20,11 @@ class LessonViewModel(
 
     private var lessons = emptyList<LessonsModel>()
 
-     fun getAllLessons() {
+    private fun renderState(state: LessonsState) {
+        stateLiveData.postValue(state)
+    }
+
+     fun getLessons() {
 
          renderState(LessonsState.Loading)
 
@@ -39,7 +43,7 @@ class LessonViewModel(
                    renderState(LessonsState.Error(errorMessage))
 
                    delay(7000) // ⏱ Подожди 5 секунд
-                   getAllLessons() // 🔁 Повторно запусти
+                   getLessons() // 🔁 Повторно запусти
 
                }
            }
@@ -47,8 +51,6 @@ class LessonViewModel(
         }
     }
 
-    private fun renderState(state: LessonsState) {
-        stateLiveData.postValue(state)
-    }
+
 
 }

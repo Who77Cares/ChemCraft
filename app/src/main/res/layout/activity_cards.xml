@@ -5,30 +5,80 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.cards.CardsActivity">
+    tools:context=".cards.ui.CardsActivity">
 
-    <TextView
-        android:id="@+id/titleText"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cardsHorizontalGuideLineList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cardsHorizontalGuideLineList2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+
+    <TextView
+        android:id="@+id/cardsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="23333"
-        android:textSize="18sp"
         android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView_subtopic"
+        android:id="@+id/cardsRecycleView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
-        tools:listitem="@layout/item_card"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/cardsTitle"
+        tools:listitem="@layout/item_card" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/cardsLoadingLotti"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_fileName="loadingLotti.json" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/cardsErrorLottie"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/cardsHorizontalGuideLineList2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardsHorizontalGuideLineList"
+        app:lottie_fileName="сatError.json" />
+
+    <TextView
+        android:id="@+id/cardsErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="Ошибка подключения к мобильной сети"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardsHorizontalGuideLineList2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

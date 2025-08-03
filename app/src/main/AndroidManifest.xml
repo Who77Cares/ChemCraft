@@ -19,7 +19,7 @@
             android:name=".ui.test.AllTestResult"
             android:exported="false" />
         <activity
-            android:name=".ui.cards.CardsActivity"
+            android:name=".cards.ui.CardsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.test.TestActivity"

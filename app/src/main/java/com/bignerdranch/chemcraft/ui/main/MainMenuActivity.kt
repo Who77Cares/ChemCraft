@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.chemcraft.data.old.FirebaseAdminManager
 import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
-import com.bignerdranch.chemcraft.ui.cards.models.CardToServerModel
+import com.bignerdranch.chemcraft.data.old.CardToServerModel
 import com.bignerdranch.chemcraft.lessons.ui.LessonActivity
 import com.bignerdranch.chemcraft.ui.favorite.FavoriteActivity
 import com.bignerdranch.chemcraft.ui.test.TestActivity

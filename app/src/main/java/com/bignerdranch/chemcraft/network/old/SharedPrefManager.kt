@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.data.old
+package com.bignerdranch.chemcraft.network.old
 
 import android.content.Context
 import android.content.SharedPreferences

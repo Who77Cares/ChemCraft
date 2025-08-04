@@ -43,10 +43,6 @@ class CardsAdapter(
             onBookmarkClick(cards[position], holder)
         }
 
-
     }
-
-
-
 
 }

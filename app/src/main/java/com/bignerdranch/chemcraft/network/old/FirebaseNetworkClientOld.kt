@@ -1,13 +1,10 @@
-package com.bignerdranch.chemcraft.data.old
+package com.bignerdranch.chemcraft.network.old
 
 import android.util.Log
-import com.bignerdranch.chemcraft.single_card.SingleCardModel
 
 
 import com.bignerdranch.chemcraft.ui.test.model.TestModel
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 
 class FirebaseNetworkClientOld {
 
@@ -23,51 +20,51 @@ class FirebaseNetworkClientOld {
          */
 
 
-        fun loadCardItemsById(
-            lessonId: String,
-            cardId: String,
-            onSuccess: (List<SingleCardModel>) -> Unit,
-            onFailure: (Exception) -> Unit
-        ) {
-            val db = Firebase.firestore
-            Log.d("CardLoader", "Запрос документа: lessonsData/$lessonId/cardsData/$cardId")
-
-            db.collection("lessonsData").document(lessonId)
-                .collection("cardData").document(cardId).get()
-                .addOnSuccessListener { document ->
-                    Log.d("CardLoader", "onSuccess: Документ получен")
-
-                    if (document.exists()) {
-                        val rawList = document.get("cardItems") as? List<Map<String, Any>>
-                        if (rawList == null) {
-                            Log.d("CardLoader", "cardItems отсутствует или null")
-                            onSuccess(emptyList())
-                        } else {
-                            Log.d("CardLoader", "cardItems получен: ${rawList.size} элементов")
-
-                            val parsedItems = rawList.mapNotNull { item ->
-                                val type = (item["type"] as? String)?.lowercase()
-                                val content = item["content"] as? String
-
-                                when (type) {
-                                    "text" -> content?.let { SingleCardModel.TextItem(it) }
-                                    "img" -> content?.let { SingleCardModel.ImageItem(it) }
-                                    else -> null
-                                }
-                            }
-                            Log.d("CardLoader", "Парсинг завершён, всего элементов: ${parsedItems.size}")
-                            onSuccess(parsedItems)
-                        }
-                    } else {
-                        Log.e("CardLoader", "Документ с id $cardId не найден в уроке $lessonId")
-                        onFailure(Exception("Документ с id $cardId не найден"))
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.e("CardLoader", "Ошибка получения документа: ${exception.message}", exception)
-                    onFailure(exception)
-                }
-        }
+//        fun loadCardItemsById(
+//            lessonId: String,
+//            cardId: String,
+//            onSuccess: (List<ItemModel>) -> Unit,
+//            onFailure: (Exception) -> Unit
+//        ) {
+//            val db = Firebase.firestore
+//            Log.d("CardLoader", "Запрос документа: lessonsData/$lessonId/cardsData/$cardId")
+//
+//            db.collection("lessonsData").document(lessonId)
+//                .collection("cardData").document(cardId).get()
+//                .addOnSuccessListener { document ->
+//                    Log.d("CardLoader", "onSuccess: Документ получен")
+//
+//                    if (document.exists()) {
+//                        val rawList = document.get("cardItems") as? List<Map<String, Any>>
+//                        if (rawList == null) {
+//                            Log.d("CardLoader", "cardItems отсутствует или null")
+//                            onSuccess(emptyList())
+//                        } else {
+//                            Log.d("CardLoader", "cardItems получен: ${rawList.size} элементов")
+//
+//                            val parsedItems = rawList.mapNotNull { item ->
+//                                val type = (item["type"] as? String)?.lowercase()
+//                                val content = item["content"] as? String
+//
+//                                when (type) {
+//                                    "text" -> content?.let { ItemModel.TextItem(it) }
+//                                    "img" -> content?.let { ItemModel.ImageItem(it) }
+//                                    else -> null
+//                                }
+//                            }
+//                            Log.d("CardLoader", "Парсинг завершён, всего элементов: ${parsedItems.size}")
+//                            onSuccess(parsedItems)
+//                        }
+//                    } else {
+//                        Log.e("CardLoader", "Документ с id $cardId не найден в уроке $lessonId")
+//                        onFailure(Exception("Документ с id $cardId не найден"))
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.e("CardLoader", "Ошибка получения документа: ${exception.message}", exception)
+//                    onFailure(exception)
+//                }
+//        }
 
 
         fun getTestsFromCard(

@@ -8,6 +8,8 @@ import com.bignerdranch.chemcraft.cards.data.CardsResponse
 import com.bignerdranch.chemcraft.cards.data.ClientGetCards
 import com.bignerdranch.chemcraft.lessons.data.api.ClientGetLessons
 import com.bignerdranch.chemcraft.lessons.data.api.LessonsResponse
+import com.bignerdranch.chemcraft.items_in_lesson.data.ClientGetItems
+import com.bignerdranch.chemcraft.items_in_lesson.data.ItemsResponse
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -15,7 +17,9 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
 
-class FirebaseNetworkClient(private val context: Context): ClientGetLessons, ClientGetCards {
+class FirebaseNetworkClient(
+    private val context: Context
+): ClientGetLessons, ClientGetCards, ClientGetItems {
 
     override suspend fun getLessons(): Response {
         val db = Firebase.firestore
@@ -98,10 +102,48 @@ class FirebaseNetworkClient(private val context: Context): ClientGetLessons, Cli
 
     }
 
+    override suspend fun getItemsById(lessonId: String, cardId: String): Response {
+        val db = Firebase.firestore
 
+        if (!isConnected()) {
+            return Response().apply {
+                resultCode = -1
+                message = "No internet connection"
+            }
+        }
 
+        return try {
+            val documentSnapshot = db.collection("lessonsData")
+                .document(lessonId)
+                .collection("cardData")
+                .document(cardId)
+                .get()
+                .await()
+            Log.d("Firestore", "Document data: ${documentSnapshot.data}")
 
+            val dataMap = documentSnapshot.data ?: emptyMap()
+            // Извлекаем поле cardItems — список элементов
+            val cardItems = dataMap["cardItems"] as? List<Map<String, Any>>
 
+            if (!cardItems.isNullOrEmpty()) {
+                ItemsResponse(result = cardItems).apply {
+                    resultCode = 200
+                }
+            } else {
+                Response().apply {
+                    resultCode = -1
+                    message = "Ничего не найдено"
+                }
+            }
+
+        } catch (e: Exception) {
+            Log.e("Firestore", "Error fetching data", e)
+            Response().apply {
+                resultCode = -1
+                message = e.localizedMessage ?: "Unknown error"
+            }
+        }
+    }
 
 
    private fun isConnected(): Boolean {
@@ -117,6 +159,8 @@ class FirebaseNetworkClient(private val context: Context): ClientGetLessons, Cli
         }
         return false
     }
+
+
 
 
 }

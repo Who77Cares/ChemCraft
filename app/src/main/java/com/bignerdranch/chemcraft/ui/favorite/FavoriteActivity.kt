@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.databinding.ActivityFavoriteBinding
-import com.bignerdranch.chemcraft.data.old.SharedPrefManager
+import com.bignerdranch.chemcraft.network.old.SharedPrefManager
 import com.bignerdranch.chemcraft.lessons.ui.LessonContentAdapter
 
 class FavoriteActivity : AppCompatActivity(){

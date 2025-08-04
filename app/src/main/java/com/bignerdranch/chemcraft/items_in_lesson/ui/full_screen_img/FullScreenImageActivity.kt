@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.single_card.full_screen_img
+package com.bignerdranch.chemcraft.items_in_lesson.ui.full_screen_img
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

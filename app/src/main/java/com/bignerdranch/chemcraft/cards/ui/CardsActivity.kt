@@ -12,7 +12,7 @@ import com.airbnb.lottie.LottieDrawable
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.databinding.ActivityCardsBinding
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
-import com.bignerdranch.chemcraft.single_card.SingleCardActivity
+import com.bignerdranch.chemcraft.items_in_lesson.ui.ItemsActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CardsActivity : AppCompatActivity() {
@@ -30,10 +30,6 @@ class CardsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCardsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-
-
 
 
         titleText = findViewById(R.id.cardsTitle)
@@ -56,7 +52,7 @@ class CardsActivity : AppCompatActivity() {
          adapter = CardsAdapter(
              this,
              onCardClick = { card, position ->
-                 val intent = Intent(this, SingleCardActivity::class.java)
+                 val intent = Intent(this, ItemsActivity::class.java)
                  intent.putExtra("LESSON_ID", lessonId)
                  intent.putExtra("CARD_ID", card.id)
                  intent.putExtra("title", card.title)

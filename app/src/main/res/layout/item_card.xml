@@ -41,7 +41,7 @@
                 app:layout_constraintGuide_percent="0.3" />
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/itemTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"

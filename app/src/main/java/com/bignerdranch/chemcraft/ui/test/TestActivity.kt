@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieDrawable
-import com.bignerdranch.chemcraft.data.old.FirebaseNetworkClientOld
+import com.bignerdranch.chemcraft.network.old.FirebaseNetworkClientOld
 import com.bignerdranch.chemcraft.databinding.ActivityTestBinding
 
 

@@ -1,7 +1,6 @@
 package com.bignerdranch.chemcraft.lessons.ui
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,9 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 
-import com.bignerdranch.chemcraft.data.old.SharedPrefManager
+import com.bignerdranch.chemcraft.network.old.SharedPrefManager
 import com.bignerdranch.chemcraft.lessons.domain.models.LessonsModel
-import com.bignerdranch.chemcraft.cards.ui.CardsActivity
 
 
 class LessonContentAdapter(

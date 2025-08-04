@@ -6,7 +6,7 @@
 
     <!-- Заголовок (НЕ ПРОКРУЧИВАЕТСЯ) -->
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/itemTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Название урока"
@@ -25,10 +25,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@id/title">
+        app:layout_constraintTop_toBottomOf="@id/itemTitle">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lesson_recycleView"
+            android:id="@+id/itemRecycleView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
@@ -39,11 +39,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/test_test"
+            app:layout_constraintBottom_toTopOf="@+id/itemTest"
             />
 
         <Button
-            android:id="@+id/test_test"
+            android:id="@+id/itemTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Тест"
@@ -55,8 +55,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

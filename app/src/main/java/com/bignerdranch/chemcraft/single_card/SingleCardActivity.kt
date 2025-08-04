@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.single_card
+package com.bignerdranch.chemcraft.single_card
 
 import android.content.Intent
 import android.os.Bundle

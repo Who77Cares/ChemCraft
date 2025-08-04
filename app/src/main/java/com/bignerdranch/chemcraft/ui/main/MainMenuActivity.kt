@@ -42,7 +42,7 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(Intent(this, TestActivity::class.java))
         }
 
-        val cardItems = listOf(
+        val cardItemsMoke = listOf(
             mapOf(
                 "type" to "text",
                 "content" to "Более трёх с половиной тысяч лет назад на юге Балканского полуострова, в Европе, жили греческие племена. Значительную часть Греции — страны, которую они населяли, — покрывают крутые и обрывистые горы. Эти горы делят территорию на изолированные друг от друга области.\n" +
@@ -118,8 +118,8 @@ class MainMenuActivity : AppCompatActivity() {
 
         // Данные
         val lessonData: HashMap<String, Any> = hashMapOf(
-            "description" to "777",
-            "name" to "1",
+            "description" to "333",
+            "name" to "Древний Рим",
         )
 
         val testData  = listOf(
@@ -176,10 +176,10 @@ class MainMenuActivity : AppCompatActivity() {
         )
 
         val cardsToServerData = CardToServerModel(
-            imageUrl = "GerGer JOJO",
+            imageUrl = "Тут должна быть картинка",
             important = false,
-            title = "!_!_!_!_!_!!_",
-            cardItems = cardItems
+            title = "Заголовок мок",
+            cardItems = cardItemsMoke // биндим однотимным текстом и картинками (мок)
         )
 
 
@@ -200,7 +200,7 @@ class MainMenuActivity : AppCompatActivity() {
             // создать карточку в уроке
         binding.adminButtonTwo.setOnClickListener {
 
-            val lessonId: String = "lO2juSRIkYm7Wzb0og9G"
+            val lessonId: String = "jcOHbkq3m6YiQnQKyXVW"
 
             FirebaseAdminManager.addCardToLesson(
                 lessonId = lessonId,

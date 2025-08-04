@@ -1,10 +1,9 @@
 package com.bignerdranch.chemcraft.data.old
 
 import android.util.Log
-import com.bignerdranch.chemcraft.ui.single_card.SingleCardItemModel
+import com.bignerdranch.chemcraft.single_card.SingleCardModel
 
 
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
 import com.bignerdranch.chemcraft.ui.test.model.TestModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,7 +26,7 @@ class FirebaseNetworkClientOld {
         fun loadCardItemsById(
             lessonId: String,
             cardId: String,
-            onSuccess: (List<SingleCardItemModel>) -> Unit,
+            onSuccess: (List<SingleCardModel>) -> Unit,
             onFailure: (Exception) -> Unit
         ) {
             val db = Firebase.firestore
@@ -51,8 +50,8 @@ class FirebaseNetworkClientOld {
                                 val content = item["content"] as? String
 
                                 when (type) {
-                                    "text" -> content?.let { SingleCardItemModel.Text(it) }
-                                    "img" -> content?.let { SingleCardItemModel.Image(it) }
+                                    "text" -> content?.let { SingleCardModel.TextItem(it) }
+                                    "img" -> content?.let { SingleCardModel.ImageItem(it) }
                                     else -> null
                                 }
                             }

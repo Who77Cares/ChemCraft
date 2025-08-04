@@ -12,7 +12,8 @@ import com.bignerdranch.chemcraft.ui.cards.models.CardModel
 class CardsAdapter(
     private val context: Context,
    var cards: List<CardModel> = emptyList(),
-    private val onCardClick: (CardModel, Int) -> Unit
+    private val onCardClick: (CardModel, Int) -> Unit,
+    private val onBookmarkClick: (CardModel, CardsViewHolder) -> Unit
 ) : RecyclerView.Adapter<CardsViewHolder>() {
 
 //    fun setItems(newItems: List<CardModel>) {
@@ -34,11 +35,18 @@ class CardsAdapter(
             onCardClick(cards[position], position)  //
         }
 
-        holder.itemView.findViewById<ImageView>(R.id.star).setOnClickListener{
+        holder.itemView.findViewById<ImageView>(R.id.bookmarkLotti).setOnClickListener{
             Toast.makeText(context, "Star", Toast.LENGTH_LONG).show()
         }
+        // Клик по Lottie анимации
+        holder.bookmarkLotti.setOnClickListener {
+            onBookmarkClick(cards[position], holder)
+        }
+
 
     }
+
+
 
 
 }

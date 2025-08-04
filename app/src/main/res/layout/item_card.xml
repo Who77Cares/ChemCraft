@@ -60,26 +60,24 @@
                 android:gravity="start"
                 android:textSize="12sp"
                 android:layout_marginStart="12dp"
-
                 app:layout_constraintEnd_toStartOf="@+id/guideline_in_title_vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline_in_title_horisontal"
                 tools:text="Описание для текста любое сюда вставить" />
 
-            <ImageView
-                android:id="@+id/star"
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/bookmarkLotti"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:clickable="true"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="15dp"
 
-                android:background="?attr/selectableItemBackgroundBorderless"
+
                 app:layout_constraintBottom_toBottomOf="@id/guideline_in_title_horisontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline_in_title_vertical"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bookmark_del" />
+                app:lottie_fileName="bookmark.json"
+        />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

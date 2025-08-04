@@ -12,7 +12,7 @@ import com.airbnb.lottie.LottieDrawable
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.databinding.ActivityCardsBinding
 import com.bignerdranch.chemcraft.ui.cards.models.CardModel
-import com.bignerdranch.chemcraft.ui.single_card.SingleCardActivity
+import com.bignerdranch.chemcraft.single_card.SingleCardActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CardsActivity : AppCompatActivity() {
@@ -30,6 +30,8 @@ class CardsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCardsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
 
 
@@ -52,15 +54,33 @@ class CardsActivity : AppCompatActivity() {
         binding.cardsRecycleView.layoutManager = LinearLayoutManager(this)
 
          adapter = CardsAdapter(
-            this,
-            onCardClick = { card, position ->
-                val intent = Intent(this, SingleCardActivity::class.java)
-                intent.putExtra("LESSON_ID", lessonId)
-                intent.putExtra("CARD_ID", card.id)
-                intent.putExtra("title", card.title)
-                startActivity(intent)
+             this,
+             onCardClick = { card, position ->
+                 val intent = Intent(this, SingleCardActivity::class.java)
+                 intent.putExtra("LESSON_ID", lessonId)
+                 intent.putExtra("CARD_ID", card.id)
+                 intent.putExtra("title", card.title)
+                 startActivity(intent)
 
-            })
+             },
+
+
+             onBookmarkClick = { card, holder ->
+
+                 var flag: Boolean = true
+
+
+                 if(flag) {
+                     holder.bookmarkLotti.repeatCount = 0
+                     holder.bookmarkLotti.playAnimation()
+                 } else {
+
+                 }
+
+
+
+             }
+         )
 
         recyclerView.adapter = adapter
 

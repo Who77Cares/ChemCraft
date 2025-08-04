@@ -20,6 +20,7 @@ class LessonActivity : AppCompatActivity() {
     private var lessonsList: List<LessonsModel> = emptyList()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLessonBinding.inflate(layoutInflater)

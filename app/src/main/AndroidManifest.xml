@@ -28,10 +28,10 @@
             android:name=".ui.favorite.FavoriteActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.single_card.full_screen_img.FullScreenImageActivity"
+            android:name="com.bignerdranch.chemcraft.single_card.full_screen_img.FullScreenImageActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.single_card.SingleCardActivity"
+            android:name="com.bignerdranch.chemcraft.single_card.SingleCardActivity"
             android:exported="false" />
         <activity
             android:name=".lessons.ui.LessonActivity"

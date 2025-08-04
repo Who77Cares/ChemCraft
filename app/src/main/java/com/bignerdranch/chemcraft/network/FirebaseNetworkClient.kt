@@ -102,6 +102,8 @@ class FirebaseNetworkClient(private val context: Context): ClientGetLessons, Cli
 
 
 
+
+
    private fun isConnected(): Boolean {
         val connectivityManager = context.getSystemService(
             Context.CONNECTIVITY_SERVICE) as ConnectivityManager

@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/verticalGuideLine"
         app:layout_constraintTop_toTopOf="parent"
-        app:lottie_fileName="catAnim.json" />
+        app:lottie_fileName="loadingLotti.json" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLine0"
@@ -213,7 +213,7 @@
     android:id="@+id/startLottiVew"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/arrow_forward_del"
+    android:src="@drawable/arrow_forward"
     app:layout_constraintStart_toStartOf="@id/verticalGuideLine"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@id/guideLine2"

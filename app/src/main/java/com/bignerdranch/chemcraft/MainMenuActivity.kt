@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.main
+package com.bignerdranch.chemcraft
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +9,9 @@ import com.bignerdranch.chemcraft.network.old.FirebaseAdminManager
 import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
 import com.bignerdranch.chemcraft.network.old.CardToServerModel
 import com.bignerdranch.chemcraft.lessons.ui.LessonActivity
-import com.bignerdranch.chemcraft.ui.favorite.FavoriteActivity
-import com.bignerdranch.chemcraft.ui.test.TestActivity
-import com.bignerdranch.chemcraft.ui.test.model.TestModel
-import com.bignerdranch.chemcraft.ui.test.model.TestToServerModel
+import com.bignerdranch.chemcraft.network.old.TestToServerModel
+import com.bignerdranch.chemcraft.task_for_card.ui.TaskActivity
+import com.bignerdranch.chemcraft.task_for_card.domain.model.TaskModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -39,7 +38,7 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         binding.testsButton.setOnClickListener {
-            startActivity(Intent(this, TestActivity::class.java))
+            startActivity(Intent(this, TaskActivity::class.java))
         }
 
         val cardItemsMoke = listOf(
@@ -123,7 +122,7 @@ class MainMenuActivity : AppCompatActivity() {
         )
 
         val testData  = listOf(
-            TestModel(
+            TaskModel(
                 questionText = "Установите правильную последовательность событий, предшествующих образованию зиготы у человека. Запишите в таблицу соответствующую последовательность цифр.\n" +
                         "1) выход яйцеклетки из фолликула в маточную трубу\n" +
                         "2) накопление питательных веществ в яйцеклетке\n" +
@@ -136,7 +135,7 @@ class MainMenuActivity : AppCompatActivity() {
                 type = 1
 
             ),
-            TestModel(
+            TaskModel(
                 questionText = "16531. Расположите в хронологической последовательности исторические события. Запишите цифры, которыми обозначены исторические события, в правильной последовательности в поле ответа.\n" +
                         "1) провозглашение Германской империи\n" +
                         "2) Чигиринские походы\n" +
@@ -147,7 +146,7 @@ class MainMenuActivity : AppCompatActivity() {
                 type = 1
 
             ),
-            TestModel(
+            TaskModel(
                 questionText = "16530. Установите соответствие между событиями и годами: к каждой позиции первого столбца подберите соответствующую позицию из второго столбца.\n" +
                         "СОБЫТИЯ\n" +
                         "\n" +
@@ -171,7 +170,7 @@ class MainMenuActivity : AppCompatActivity() {
             )
         )
 
-        val testToServerData = TestToServerModel(
+        val testToServerData = TestToServerModel (
             testContent = testData
         )
 

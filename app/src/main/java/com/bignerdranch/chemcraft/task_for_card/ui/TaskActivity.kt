@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.test
+package com.bignerdranch.chemcraft.task_for_card.ui
 
 import android.content.Context
 import android.content.Intent
@@ -12,14 +12,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieDrawable
-import com.bignerdranch.chemcraft.network.old.FirebaseNetworkClientOld
 import com.bignerdranch.chemcraft.databinding.ActivityTestBinding
+import com.bignerdranch.chemcraft.task_for_card.AllTestResult
+import com.bignerdranch.chemcraft.task_for_card.domain.model.TaskModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class TestActivity : AppCompatActivity() {
+class TaskActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTestBinding
     private lateinit var correctAnswer: String
+    private val viewModel: TaskViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +32,11 @@ class TestActivity : AppCompatActivity() {
         val lessonId = intent.getStringExtra("LESSON_ID") ?: ""
         val cardId = intent.getStringExtra("CARD_ID") ?: ""
 
-
-        binding.testText.text = "dss"
-
+        viewModel.observeState().observe(this) {
+            render(it)
+        }
+        viewModel.setLessonId(lessonId = lessonId, cardId = cardId)
+        viewModel.getTasks()
 
         binding.startLottiVew.setOnClickListener {
             binding.lottiView.setMinProgress(0.0f)
@@ -68,25 +73,53 @@ class TestActivity : AppCompatActivity() {
                 false
             }
         }
-
-        FirebaseNetworkClientOld.getTestsFromCard(
-            lessonId = lessonId,
-            cardId = cardId,
-            onSuccess = { result ->
-                Log.d("Получены данные уроков", result.toString())
-                binding.testText.text = result[0].questionText
-                correctAnswer = result[0].correctAnswer
-
-            },
-            onFailure = {
-
-            }
-        )
+//
+//        FirebaseNetworkClientOld.getTestsFromCard(
+//            lessonId = lessonId,
+//            cardId = cardId,
+//            onSuccess = { result ->
+//                Log.d("Получены данные уроков", result.toString())
+//                binding.testText.text = result[0].questionText
+//                correctAnswer = result[0].correctAnswer
+//
+//            },
+//            onFailure = {
+//
+//            }
+//        )
 
     }
     fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun render(state: TaskState) {
+        when(state) {
+            TaskState.Loading -> {
+                Log.d("asd", "sad")
+
+
+            }
+            is TaskState.Content -> {
+                Log.d("TaskActivity", "Получили контент: ${state.items}")
+                showContent(tasks = state.items)
+            }
+
+            is TaskState.Error -> {
+                Log.d("asd", "sad")
+
+
+            }
+        }
+    }
+
+    private fun showContent(tasks: List<TaskModel>) {
+
+
+        binding.testText.text = tasks[0].questionText
+        correctAnswer = tasks[0].correctAnswer
+
     }
 
 

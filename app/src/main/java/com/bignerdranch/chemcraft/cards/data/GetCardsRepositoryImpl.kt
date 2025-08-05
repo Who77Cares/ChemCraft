@@ -1,10 +1,9 @@
 package com.bignerdranch.chemcraft.cards.data
 
 import android.util.Log
-import androidx.core.graphics.scaleMatrix
 import com.bignerdranch.chemcraft.Resource
 import com.bignerdranch.chemcraft.cards.domain.api.GetCardsRepository
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
+import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
 
 class GetCardsRepositoryImpl(
     private val firebaseClient: ClientGetCards

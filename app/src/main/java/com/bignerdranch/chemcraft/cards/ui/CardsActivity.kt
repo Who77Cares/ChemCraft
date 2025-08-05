@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieDrawable
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.databinding.ActivityCardsBinding
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
+import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
 import com.bignerdranch.chemcraft.items_in_lesson.ui.ItemsActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

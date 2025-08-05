@@ -1,8 +1,7 @@
 package com.bignerdranch.chemcraft.network.old
 
 import android.util.Log
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
-import com.bignerdranch.chemcraft.ui.test.model.TestToServerModel
+import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,7 +58,7 @@ class FirebaseAdminManager {
 
 
 
-        // добавляем новый тест по id урока
+        // добавляем новый тест по id урока и карточки
         fun addTestToCard(
             lessonId: String,
             cardId: String,

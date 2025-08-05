@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.databinding.ActivityItemsListBinding
 import com.bignerdranch.chemcraft.items_in_lesson.domain.models.ItemModel
-import com.bignerdranch.chemcraft.ui.test.TestActivity
+import com.bignerdranch.chemcraft.task_for_card.ui.TaskActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemsActivity : AppCompatActivity() {
@@ -53,23 +53,8 @@ class ItemsActivity : AppCompatActivity() {
         viewModel.getItems()
 
 
-//        FirebaseNetworkClientOld.loadCardItemsById(
-//            lessonId = lessonId,
-//            cardId = cardId,
-//            onSuccess = {  listSingleCardItems ->
-//                singleCardAdapter.contentList = listSingleCardItems
-//                singleCardAdapter.notifyDataSetChanged()
-//
-//
-//            },
-//            onFailure = {
-//
-//            }
-//        )
-
-
         binding.itemTest.setOnClickListener {
-            val intent = Intent(this, TestActivity::class.java)
+            val intent = Intent(this, TaskActivity::class.java)
             intent.putExtra("LESSON_ID", lessonId)
             intent.putExtra("CARD_ID", cardId)
             startActivity(intent)

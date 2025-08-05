@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.test.model
+package com.bignerdranch.chemcraft.task_for_card.model
 
 data class AllTestResultModel(
     val correct: String,

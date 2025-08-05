@@ -10,6 +10,8 @@ import com.bignerdranch.chemcraft.lessons.data.api.ClientGetLessons
 import com.bignerdranch.chemcraft.lessons.data.api.LessonsResponse
 import com.bignerdranch.chemcraft.items_in_lesson.data.ClientGetItems
 import com.bignerdranch.chemcraft.items_in_lesson.data.ItemsResponse
+import com.bignerdranch.chemcraft.task_for_card.data.ClientGetTasks
+import com.bignerdranch.chemcraft.task_for_card.data.model.TasksResponse
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -19,7 +21,7 @@ import kotlinx.coroutines.tasks.await
 
 class FirebaseNetworkClient(
     private val context: Context
-): ClientGetLessons, ClientGetCards, ClientGetItems {
+): ClientGetLessons, ClientGetCards, ClientGetItems, ClientGetTasks {
 
     override suspend fun getLessons(): Response {
         val db = Firebase.firestore
@@ -144,6 +146,56 @@ class FirebaseNetworkClient(
             }
         }
     }
+
+
+
+    // читаешь все документы из testData; вытаскиваешь из каждого testContent;  собираешь их в один список allTasks;  возвращаешь TasksResponse(result = allTasks).
+    override suspend fun getTasksById(lessonId: String, cardId: String): Response {
+        val db = Firebase.firestore
+
+        if (!isConnected()) {
+            return Response().apply {
+                resultCode = -1
+                message = "No connection"
+            }
+        }
+
+        return try {
+            val querySnapshot = db.collection("lessonsData")
+                .document(lessonId)
+                .collection("cardData")
+                .document(cardId)
+                .collection("testData")
+                .get()
+                .await()
+
+            val allTasks = mutableListOf<Map<String, Any>>()
+
+            for (doc in querySnapshot.documents) {
+                val testContent = doc.get("testContent") as? List<Map<String, Any>>
+                if (!testContent.isNullOrEmpty()) {
+                    allTasks.addAll(testContent)
+                }
+            }
+
+            return if (allTasks.isNotEmpty()) {
+                TasksResponse(result = allTasks).apply { resultCode = 200 }
+            } else {
+                Response().apply {
+                    resultCode = -1
+                    message = "Тесты не найдены"
+                }
+            }
+
+        } catch (e: Exception) {
+            Response().apply {
+                resultCode = -1
+                message = e.localizedMessage ?: "Unknown error"
+            }
+        }
+    }
+
+
 
 
    private fun isConnected(): Boolean {

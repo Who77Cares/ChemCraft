@@ -1,6 +1,6 @@
 package com.bignerdranch.chemcraft.cards.ui
 
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
+import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
 
 sealed interface CardsState {
 

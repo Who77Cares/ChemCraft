@@ -1,11 +1,11 @@
-package com.bignerdranch.chemcraft.ui.test
+package com.bignerdranch.chemcraft.task_for_card.ui.answer_screen
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.ui.test.model.AllTestResultModel
+import com.bignerdranch.chemcraft.task_for_card.model.AllTestResultModel
 
 class AllTestResultAdapter(
     private val context: Context,

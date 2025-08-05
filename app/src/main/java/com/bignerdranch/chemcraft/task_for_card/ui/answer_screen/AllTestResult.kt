@@ -1,15 +1,13 @@
-package com.bignerdranch.chemcraft.ui.test
+package com.bignerdranch.chemcraft.task_for_card
 
 import android.os.Bundle
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.ui.test.model.AllTestResultModel
+import com.bignerdranch.chemcraft.task_for_card.model.AllTestResultModel
+import com.bignerdranch.chemcraft.task_for_card.ui.answer_screen.AllTestResultAdapter
 
 class AllTestResult : AppCompatActivity() {
 

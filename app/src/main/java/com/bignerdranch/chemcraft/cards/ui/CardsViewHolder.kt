@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
+import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
 
 import com.google.android.material.card.MaterialCardView
 

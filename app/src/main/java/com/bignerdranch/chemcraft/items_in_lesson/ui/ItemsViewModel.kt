@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bignerdranch.chemcraft.Resource
-import com.bignerdranch.chemcraft.cards.ui.CardsState
 import com.bignerdranch.chemcraft.items_in_lesson.domain.api.GetItemsInteractor
 import com.bignerdranch.chemcraft.items_in_lesson.domain.models.ItemModel
 import kotlinx.coroutines.launch

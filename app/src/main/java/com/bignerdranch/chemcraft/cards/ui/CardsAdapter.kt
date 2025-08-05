@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
+import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
 
 class CardsAdapter(
     private val context: Context,

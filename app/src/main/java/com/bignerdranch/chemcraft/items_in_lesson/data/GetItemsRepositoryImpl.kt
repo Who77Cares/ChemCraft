@@ -2,7 +2,6 @@ package com.bignerdranch.chemcraft.items_in_lesson.data
 
 import android.util.Log
 import com.bignerdranch.chemcraft.Resource
-import com.bignerdranch.chemcraft.cards.data.CardsResponse
 import com.bignerdranch.chemcraft.items_in_lesson.domain.api.GetItemsRepository
 import com.bignerdranch.chemcraft.items_in_lesson.domain.models.ItemModel
 

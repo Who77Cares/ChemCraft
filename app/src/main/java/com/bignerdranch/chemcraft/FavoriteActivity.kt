@@ -1,4 +1,4 @@
-package com.bignerdranch.chemcraft.ui.favorite
+package com.bignerdranch.chemcraft
 
 import android.os.Bundle
 import android.view.View

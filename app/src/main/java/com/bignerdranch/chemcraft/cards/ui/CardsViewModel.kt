@@ -6,10 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bignerdranch.chemcraft.Resource
 import com.bignerdranch.chemcraft.cards.domain.api.GetCardsInteractor
-import com.bignerdranch.chemcraft.lessons.ui.LessonsState
 
-import com.bignerdranch.chemcraft.ui.cards.models.CardModel
-import kotlinx.coroutines.delay
+import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
 import kotlinx.coroutines.launch
 
 class CardsViewModel(

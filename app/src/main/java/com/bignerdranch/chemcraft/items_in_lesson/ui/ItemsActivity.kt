@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.chemcraft.databinding.ActivityItemsListBinding
 import com.bignerdranch.chemcraft.items_in_lesson.domain.models.ItemModel
-import com.bignerdranch.chemcraft.task_for_card.ui.TaskActivity
+import com.bignerdranch.chemcraft.lesson_task.ui.TaskActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemsActivity : AppCompatActivity() {

@@ -1,15 +1,16 @@
 package com.bignerdranch.chemcraft.lessons.ui
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.chemcraft.R
 
-import com.bignerdranch.chemcraft.network.old.SharedPrefManager
+import com.bignerdranch.chemcraft.local_storage.SharedPrefManager
 import com.bignerdranch.chemcraft.lessons.domain.models.LessonsModel
+import com.google.android.material.card.MaterialCardView
 
 
 class LessonContentAdapter(
@@ -27,41 +28,18 @@ class LessonContentAdapter(
         LessonContentViewHolder(parent)
 
     override fun onBindViewHolder(holder: LessonContentViewHolder, position: Int) {
-        holder.bind(lessons[position])
+        holder.bind(lessons[position], onLessonClick)
 
-        holder.lessonArrowForward.setOnClickListener {
+        holder.itemView.setOnClickListener {
+            Log.d("LessonClick", "Clicked lesson: ${lessons[position].name}")
+
             onLessonClick(lessons[position])
         }
-
-
-//        updateIcon(holder.addOrRemove, lessons[position].name)
-
-
-
-
-
         }
-//
-//        holder.addOrRemove.setOnClickListener {
-//            if (sharedPreferences.isFavorite(lessons[position].name)) {
-//                sharedPreferences.removeFavorite(lessons[position].name)
-//
-//            } else {
-//                sharedPreferences.addFavorite(lessons[position].name)
-//            }
-//            updateIcon(holder.addOrRemove, lessons[position].name)
-//        }
     }
 
 
-//    private fun updateIcon(imageView: ImageView, lessonId: String) {
-//        val iconRes = if (sharedPreferences.isFavorite(lessonId)) {
-//            R.drawable.save_to_my_lessons_icon_saved
-//        } else {
-//            R.drawable.save_to_my_lessons_icon
-//        }
-//        imageView.setImageResource(iconRes)
-//    }
+
 
 
 
@@ -71,13 +49,17 @@ class LessonContentViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         .inflate(R.layout.item_lesson, parent, false)
 ) {
 
-//    val addOrRemove: ImageView = itemView.findViewById(R.id.progressStar1)
-//    val lessonTitle: Button = itemView.findViewById(R.id.lessonButton)
     private val lessonDescription: TextView = itemView.findViewById(R.id.lessonDrescription)
-     val lessonArrowForward: ImageView = itemView.findViewById(R.id.lessonArrowForward)
+    private val lessonCard: MaterialCardView = itemView.findViewById(R.id.lessonIItem)
 
-    fun bind(model: LessonsModel) {
-//        lessonTitle.text = model.description
+
+    fun bind(model: LessonsModel, onClick: (LessonsModel) -> Unit) {
         lessonDescription.text = model.name
+        lessonCard.setOnClickListener {
+            onClick(model)
+        }
+
+
+
     }
 }

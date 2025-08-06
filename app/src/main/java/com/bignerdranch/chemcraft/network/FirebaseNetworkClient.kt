@@ -10,8 +10,8 @@ import com.bignerdranch.chemcraft.lessons.data.api.ClientGetLessons
 import com.bignerdranch.chemcraft.lessons.data.api.LessonsResponse
 import com.bignerdranch.chemcraft.items_in_lesson.data.ClientGetItems
 import com.bignerdranch.chemcraft.items_in_lesson.data.ItemsResponse
-import com.bignerdranch.chemcraft.task_for_card.data.ClientGetTasks
-import com.bignerdranch.chemcraft.task_for_card.data.model.TasksResponse
+import com.bignerdranch.chemcraft.lesson_task.data.ClientGetTasks
+import com.bignerdranch.chemcraft.lesson_task.data.model.TasksResponse
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 

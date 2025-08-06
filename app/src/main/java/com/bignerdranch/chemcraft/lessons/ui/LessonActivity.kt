@@ -53,6 +53,8 @@ class LessonActivity : AppCompatActivity() {
         viewModel.getLessons()
 
 
+
+
     }
 
     private fun render(state: LessonsState) {

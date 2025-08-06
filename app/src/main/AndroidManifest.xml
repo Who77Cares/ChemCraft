@@ -16,16 +16,16 @@
         android:theme="@style/Theme.ChemCraft"
         tools:targetApi="31">
         <activity
-            android:name="com.bignerdranch.chemcraft.task_for_card.AllTestResult"
+            android:name="com.bignerdranch.chemcraft.lesson_task.AllTestResult"
             android:exported="false" />
         <activity
             android:name=".cards.ui.CardsActivity"
             android:exported="false" />
         <activity
-            android:name="com.bignerdranch.chemcraft.task_for_card.ui.TaskActivity"
+            android:name="com.bignerdranch.chemcraft.lesson_task.ui.TaskActivity"
             android:exported="false" />
         <activity
-            android:name=".FavoriteActivity"
+            android:name=".local_storage.FavoriteActivity"
             android:exported="false" />
         <activity
             android:name="com.bignerdranch.chemcraft.items_in_lesson.ui.full_screen_img.FullScreenImageActivity"

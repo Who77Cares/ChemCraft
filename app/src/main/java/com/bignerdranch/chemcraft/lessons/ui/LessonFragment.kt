@@ -1,41 +1,65 @@
 package com.bignerdranch.chemcraft.lessons.ui
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.commit
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieDrawable
-import com.bignerdranch.chemcraft.cards.ui.CardsActivity
-import com.bignerdranch.chemcraft.databinding.ActivityLessonBinding
+import com.bignerdranch.chemcraft.R
+import com.bignerdranch.chemcraft.cards.ui.CardsFragment
+import com.bignerdranch.chemcraft.databinding.FragmentLessonBinding
 import com.bignerdranch.chemcraft.lessons.domain.models.LessonsModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LessonActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLessonBinding
+
+class LessonFragment : Fragment() {
+
+
+    private var _binding: FragmentLessonBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var adapter: LessonContentAdapter
 
     private val viewModel: LessonViewModel by viewModel()
 
     private var lessonsList: List<LessonsModel> = emptyList()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentLessonBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLessonBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
 
         adapter = LessonContentAdapter(
-            context = this@LessonActivity,
+            context = requireContext(),
             lessons = lessonsList,
             onLessonClick = { lesson ->
-                val intent = Intent(this, CardsActivity::class.java)
-                intent.putExtra("lessonId", lesson.id)
-                intent.putExtra("lessonTitle", lesson.name)
-                startActivity(intent)
+
+                if (savedInstanceState == null) {
+
+                    parentFragmentManager.commit {
+                        replace(
+                            R.id.rootFragmentContainerView,
+                            CardsFragment.newInstance(lesson.id, lesson.name)
+                        )
+                        addToBackStack(null)
+                    }
+
+
+                }
             }
         )
 
@@ -43,19 +67,23 @@ class LessonActivity : AppCompatActivity() {
         binding.lessonsRecycleView.adapter = adapter
 
         binding.lessonsRecycleView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
 
-        viewModel.observeState().observe(this) {
+        viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
 
         viewModel.getLessons()
 
 
-
-
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 
     private fun render(state: LessonsState) {
         when (state) {
@@ -66,12 +94,7 @@ class LessonActivity : AppCompatActivity() {
         }
     }
 
-
-
-
     private fun showContent(lessons: List<LessonsModel>) {
-
-
 
         adapter.lessons = lessons
         adapter.notifyDataSetChanged()
@@ -123,7 +146,6 @@ class LessonActivity : AppCompatActivity() {
 
         }
     }
-
 
 }
 

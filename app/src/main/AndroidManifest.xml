@@ -18,26 +18,9 @@
         <activity
             android:name="com.bignerdranch.chemcraft.lesson_task.AllTestResult"
             android:exported="false" />
+
         <activity
-            android:name=".cards.ui.CardsActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.bignerdranch.chemcraft.lesson_task.ui.TaskActivity"
-            android:exported="false" />
-        <activity
-            android:name=".local_storage.FavoriteActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.bignerdranch.chemcraft.items_in_lesson.ui.full_screen_img.FullScreenImageActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.bignerdranch.chemcraft.items_in_lesson.ui.ItemsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".lessons.ui.LessonActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainMenuActivity"
+            android:name=".RootActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

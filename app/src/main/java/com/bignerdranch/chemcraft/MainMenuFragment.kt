@@ -1,46 +1,67 @@
 package com.bignerdranch.chemcraft
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 
-
-import androidx.appcompat.app.AppCompatActivity
-import com.bignerdranch.chemcraft.network.admin_manager.FirebaseAdminManager
-import com.bignerdranch.chemcraft.databinding.ActivityMainBinding
-import com.bignerdranch.chemcraft.lessons.ui.LessonActivity
-import com.bignerdranch.chemcraft.network.admin_manager.MokeCardToFirebase
-import com.bignerdranch.chemcraft.network.admin_manager.models.TaskToServerModel
-import com.bignerdranch.chemcraft.lesson_task.ui.TaskActivity
+import com.bignerdranch.chemcraft.databinding.FragmentMainMenuBinding
+import com.bignerdranch.chemcraft.lesson_task.ui.TaskFragment
+import com.bignerdranch.chemcraft.lessons.ui.LessonFragment
 import com.bignerdranch.chemcraft.local_storage.FavoriteActivity
+import com.bignerdranch.chemcraft.network.admin_manager.FirebaseAdminManager
+import com.bignerdranch.chemcraft.network.admin_manager.MokeCardToFirebase
 import com.bignerdranch.chemcraft.network.admin_manager.MokeTaskToFirebase
+import com.bignerdranch.chemcraft.network.admin_manager.models.TaskToServerModel
 
 
-class MainMenuActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainMenuFragment: Fragment() {
 
+    private var _binding: FragmentMainMenuBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         binding.lessonsListButton.setOnClickListener {
-            startActivity(Intent(this, LessonActivity::class.java))
+            parentFragmentManager.commit {
+                replace(
+                    R.id.rootFragmentContainerView,
+                    LessonFragment()
+                )
+                addToBackStack(null)
+            }
         }
 
         binding.myListLessonsButton.setOnClickListener {
-            startActivity(Intent(this, FavoriteActivity::class.java))
+            val intent = Intent(requireContext(), FavoriteActivity::class.java)
+            startActivity(intent)
+
         }
 
         binding.testsButton.setOnClickListener {
-            startActivity(Intent(this, TaskActivity::class.java))
+            val intent = Intent(requireContext(), TaskFragment::class.java)
+            startActivity(intent)
         }
 
 
 
 
-///////////// создаем урок
+        ///////////// создаем урок
         // Данные
         val lessonData: HashMap<String, Any> = hashMapOf(
             "description" to "333",
@@ -91,7 +112,6 @@ class MainMenuActivity : AppCompatActivity() {
         /////////////////////
 
 
-
 ////////////////////
 
         val lessonIdtestToServerData: String = "tPG7SRYJRV64l9dcmjDa"
@@ -119,6 +139,11 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
 
-
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }

@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.items_in_lesson.domain.models.ItemModel
-import com.bignerdranch.chemcraft.items_in_lesson.ui.full_screen_img.FullScreenImageActivity
+import com.bignerdranch.chemcraft.items_in_lesson.ui.full_screen_img.FullScreenImageFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 
 class ItemsAdapter(
-    var itemsList: List<ItemModel> = emptyList()
+    var itemsList: List<ItemModel> = emptyList(),
+    private val onImageDoubleTap: (String) -> Unit
 ): RecyclerView.Adapter<ViewHolder> () {
 
     companion object {
@@ -37,7 +38,7 @@ class ItemsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             TEXT -> TextViewHolder(parent)
-            IMAGE -> ImageViewHolder(parent)
+            IMAGE -> ImageViewHolder(parent, onImageDoubleTap)
             else -> throw IllegalStateException("There is no ViewHolder for $viewType")
         }
     }
@@ -71,9 +72,11 @@ class TextViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
 }
 
 
-
 @SuppressLint("ClickableViewAccessibility")
-class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
+class ImageViewHolder(
+    parent: ViewGroup,
+    private val onImageDoubleTap: (String) -> Unit
+) : RecyclerView.ViewHolder(
     LayoutInflater
         .from(parent.context)
         .inflate(R.layout.item_image, parent, false)
@@ -97,7 +100,7 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
     private val gestureDetector = GestureDetector(itemView.context, object : GestureDetector.SimpleOnGestureListener() {
         override fun onDoubleTap(e: MotionEvent): Boolean {
             val itemModel = itemView.tag as ItemModel.ImageItem
-            openImageFullScreen(itemModel.url)
+            onImageDoubleTap(itemModel.url)
             return true
         }
     })
@@ -107,15 +110,6 @@ class ImageViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
             gestureDetector.onTouchEvent(event)
             true
         }
-
-
     }
-
-    private fun openImageFullScreen(imageUrl: String) {
-        val intent = Intent(itemView.context, FullScreenImageActivity::class.java)
-        intent.putExtra("image_url", imageUrl)
-        itemView.context.startActivity(intent)
-    }
-
 
 }

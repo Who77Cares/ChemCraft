@@ -1,43 +1,71 @@
 package com.bignerdranch.chemcraft.lesson_task.ui
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.bignerdranch.chemcraft.databinding.ActivityTaskBinding
-import com.bignerdranch.chemcraft.lesson_task.AllTestResult
+import androidx.fragment.app.Fragment
+import com.bignerdranch.chemcraft.databinding.FragmentTaskBinding
 import com.bignerdranch.chemcraft.lesson_task.domain.model.TaskModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-// чистая архитекктура только получения данных
-class TaskActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTaskBinding
+class TaskFragment: Fragment() {
+
+    companion object {
+        const val LESSON_ID = "lesson_id"
+        const val CARD_ID = "card_id"
+
+        fun newInstance(lessonId: String, cardId: String): TaskFragment {
+            return TaskFragment().apply {
+                arguments = Bundle().apply {
+                    putString(LESSON_ID, lessonId)
+                    putString(CARD_ID, cardId)
+                }
+            }
+        }
+
+    }
+
+
+    private var _binding: FragmentTaskBinding? = null
+    private val binding get() = _binding!!
+
+
     private lateinit var correctAnswer: String
     private val viewModel: TaskViewModel by viewModel()
 
     private var tasks: List<TaskModel> = emptyList()
     private var currentTask: TaskModel? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityTaskBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        val lessonId = intent.getStringExtra("LESSON_ID") ?: ""
-        val cardId = intent.getStringExtra("CARD_ID") ?: ""
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentTaskBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        viewModel.observeState().observe(this) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+        val lessonId = requireArguments().getString(LESSON_ID)?: ""
+        val cardId =  requireArguments().getString(CARD_ID) ?: ""
+
+        viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
         viewModel.setLessonId(lessonId = lessonId, cardId = cardId)
@@ -99,6 +127,10 @@ class TaskActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 
     fun hideKeyboard(view: View) {
@@ -143,41 +175,13 @@ class TaskActivity : AppCompatActivity() {
             correctAnswer = task.correctAnswer
             binding.testEditText.text?.clear()
         } ?: run {
-            Toast.makeText(this, "Вы прошли все задания!", Toast.LENGTH_LONG).show()
-            finish()
+            
+            Toast.makeText(requireContext(), "Вы прошли все задания!", Toast.LENGTH_LONG).show()
+            parentFragmentManager.popBackStack()
+
         }
     }
 
-//    override fun onBackPressed() {
-//        val view = currentFocus
-//        if (view is EditText) {
-//            // Снимем фокус
-//            view.clearFocus()
-//            // Скрываем клавиатуру
-//            hideKeyboard(view)
-//            // Поставим задержку для возврата назад — чтобы фокус точно сбросился и клавиатура скрылась
-//            window.decorView.postDelayed({
-//                super.onBackPressed()
-//            }, 150)
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        if (ev.action == MotionEvent.ACTION_DOWN) {
-            currentFocus?.let {
-                if (it !is EditText) return@let
-                val outRect = Rect()
-                it.getGlobalVisibleRect(outRect)
-                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
-                    it.clearFocus()
-                    hideKeyboard(it)
-                }
-            }
-        }
-        return super.dispatchTouchEvent(ev)
-    }
 
     private fun normalizeAnswer(text: String): String {
         return text

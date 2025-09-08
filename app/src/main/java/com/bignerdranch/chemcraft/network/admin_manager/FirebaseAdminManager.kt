@@ -19,18 +19,21 @@ class FirebaseAdminManager {
         // создаем 1 новый пустой урок
         fun createLesson(
             lessonData: HashMap<String, Any>,
-            onLessonCreated: (DocumentReference) -> Unit
+            onLessonCreated: (DocumentReference, String) -> Unit,
+            onFailure: (String) -> Unit
         ) {
             val db = Firebase.firestore
 
             db.collection("lessonsData")
                 .add(lessonData)
                 .addOnSuccessListener { lessonRef ->
-                    onLessonCreated(lessonRef)
-                    Log.d("Firestore", "Урок создан: ${lessonRef.id}")
+
+                    val name = (lessonData["name"] as String).take(200)
+                    onLessonCreated(lessonRef, name)
                 }
+
                 .addOnFailureListener {
-                    Log.e("Firestore", "Ошибка при создании урока", it)
+                    onFailure("Ошибка: ${it.toString()}")
                 }
         }
 
@@ -39,8 +42,8 @@ class FirebaseAdminManager {
         fun addCardToLesson(
             lessonId: String,
             cardModel: CardToServerModel,
-            onSuccess: (DocumentReference) -> Unit,
-            onFailure: (Exception) -> Unit
+            onSuccess: (DocumentReference, String, Int) -> Unit,
+            onFailure: (String) -> Unit
         ) {
             val db = FirebaseFirestore.getInstance()
 
@@ -50,11 +53,14 @@ class FirebaseAdminManager {
                 .add(cardModel)
 
                 .addOnSuccessListener { cardRef ->
-                    onSuccess(cardRef)
+                    onSuccess(cardRef,
+                        cardModel.title,
+                        cardModel.cardItems.size
+                    )
                 }
 
                 .addOnFailureListener { e ->
-                    onFailure(e)
+                    onFailure("$e")
                 }
         }
 

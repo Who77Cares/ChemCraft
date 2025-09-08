@@ -1,8 +1,9 @@
 package com.bignerdranch.chemcraft
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
+
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.bignerdranch.chemcraft.databinding.ActivityRootBinding
@@ -22,11 +23,21 @@ class RootActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        // Убираем  этот кусок кода т.к мы навигируемся теперь не чееагменты, а через navHostFragment
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.commit {
-//                this.add(R.id.rootFragmentContainerView, MainMenuFragment())
-//            }
-//        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.adminFragment,
+                R.id.lessonFragment,
+                R.id.favoriteFragment,
+                R.id.cardsFragment, -> {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+//                    binding.line.visibility = View.GONE
+                }
+
+                else -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                }
+            }
+        }
+
     }
 }

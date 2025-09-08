@@ -4,6 +4,12 @@ import com.bignerdranch.chemcraft.network.admin_manager.models.CardToServerModel
 
 object MokeCardToFirebase {
 
+    val biologyLessonId = "2R59WbnAxPwIxmcV0rO8"
+    val geographyLessonId = "pcrRTjyTBvduDkrpoeUc"
+    val historyLessonId = "tPG7SRYJRV64l9dcmjDa"
+
+
+
     var textContent = "Упадок греческих полисов\n" +
             "Недолго длился расцвет греческих городов. Ещё при жизни Перикла в самой Греции начались междоусобные войны. Сначала — между Афинами и Спартой, которые соперничали за господство над всей Элладой. Эта война, вошедшая в историю как Пелопоннесская, закончилась победой Спарты.\n" +
             "Однако вскоре против Спарты выступили другие греческие полисы. Казалось, войнам не будет конца... Настали страшные времена. Лилась кровь — греки убивали друг друга. Воины разрушали селения, вырубали оливковые рощи и виноградники, вытаптывали поля с пшеницей и ячменём. Разорялись земледельцы и ремесленники, а их имущество скупали богачи.\n" +
@@ -68,31 +74,31 @@ object MokeCardToFirebase {
 
     var cardItemsMoke = listOf(
 
-        mapOf( "type" to "text",  "content" to textContent),
-        mapOf( "type" to "img", "content" to urlContent),
+        mapOf("type" to "text", "content" to textContent),
+        mapOf("type" to "img", "content" to urlContent),
 
-        mapOf( "type" to "text",  "content" to textContent2),
-        mapOf( "type" to "img", "content" to urlContent2),
+        mapOf("type" to "text", "content" to textContent2),
+        mapOf("type" to "img", "content" to urlContent2),
 
-        mapOf( "type" to "text",  "content" to textContent3),
-        mapOf( "type" to "img", "content" to urlContent31),
-        mapOf( "type" to "img", "content" to urlContent32),
-        mapOf( "type" to "img", "content" to urlContent33),
-
-        mapOf( "type" to "text",  "content" to textContent4),
-        mapOf( "type" to "img", "content" to urlContent4),
-        mapOf( "type" to "img", "content" to urlContent41),
-
-        mapOf( "type" to "text",  "content" to textContent5),
-        mapOf( "type" to "img", "content" to urlContent5),
-        mapOf( "type" to "img", "content" to urlContent51),
+//        mapOf("type" to "text", "content" to textContent3),
+//        mapOf("type" to "img", "content" to urlContent31),
+//        mapOf("type" to "img", "content" to urlContent32),
+//        mapOf("type" to "img", "content" to urlContent33),
+//
+//        mapOf("type" to "text", "content" to textContent4),
+//        mapOf("type" to "img", "content" to urlContent4),
+//        mapOf("type" to "img", "content" to urlContent41),
+//
+//        mapOf("type" to "text", "content" to textContent5),
+//        mapOf("type" to "img", "content" to urlContent5),
+//        mapOf("type" to "img", "content" to urlContent51),
     )
 
 
     val cardsToServerData = CardToServerModel(
         imageUrl = "Тут должна быть картинка",
         important = false,
-        title = "Города Эллады подчиняются Флпу II",
+        title = "Города Эллады подчиняются Филипу II",
         cardItems = cardItemsMoke // биндим однотимным текстом и картинками (мок)
     )
 

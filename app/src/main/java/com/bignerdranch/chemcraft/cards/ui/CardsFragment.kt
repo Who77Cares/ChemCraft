@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieDrawable
 import com.bignerdranch.chemcraft.R
 import com.bignerdranch.chemcraft.databinding.FragmentCardsBinding
 import com.bignerdranch.chemcraft.items_in_lesson.ui.ItemsFragment
+import com.bignerdranch.chemcraft.items_in_lesson.ui.tab_fragment.TabsFragment
 import com.bignerdranch.chemcraft.lesson_task.ui.TaskFragment
 import com.bignerdranch.chemcraft.lessons.di.lessonsModule
 import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
@@ -77,21 +80,19 @@ class CardsFragment : Fragment() {
             requireContext(),
             onCardClick = { card, position ->
 
-                if (savedInstanceState == null) {
+                val nav = findNavController() // контроллер ТЕКУЩЕГО NavHost
 
-                parentFragmentManager.commit {
-                    replace(
-                        R.id.rootFragmentContainerView,
-                        ItemsFragment.newInstance(
-                            lessonId = requireArguments().getString(LESSON_ID) ?: "",
-                            cardId = card.id,
-                            cardTitle = card.title
+                if (nav.currentDestination?.id == R.id.cardsFragment) {
+                    nav.navigate(
+                        R.id.action_cardsFragment_to_tabsFragment,
+                        bundleOf(
+                            "lesson_id" to lessonId,
+                            "card_id" to card.id,
+                            "card_title" to card.title,
+                            "start_tab" to 1
                         )
                     )
-                    addToBackStack(null)
                 }
-                    }
-
             },
 
 

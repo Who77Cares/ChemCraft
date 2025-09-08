@@ -17,7 +17,6 @@ import com.bignerdranch.chemcraft.lesson_task.ui.TaskFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemsFragment : Fragment() {
-
     companion object {
 
         const val LESSON_ID = "lesson_id"
@@ -33,8 +32,6 @@ class ItemsFragment : Fragment() {
                 }
             }
         }
-
-
     }
     private var _binding: FragmentItemsBinding? = null
     private val binding get() = _binding!!
@@ -68,7 +65,7 @@ class ItemsFragment : Fragment() {
         binding.itemRecycleView.layoutManager = LinearLayoutManager(requireContext())
 
         adapter = ItemsAdapter() { url ->
-           parentFragmentManager.commit {
+            parentFragment?.parentFragmentManager?.commit {
                replace(
                    R.id.rootFragmentContainerView,
                    FullScreenImageFragment.newInstance(url)
@@ -87,24 +84,6 @@ class ItemsFragment : Fragment() {
         }
         viewModel.setLessonId(lessonId = lessonId, cardId = cardId)
         viewModel.getItems()
-
-
-        binding.itemTest.setOnClickListener {
-
-            if (savedInstanceState == null) {
-
-                parentFragmentManager.commit {
-                    replace(
-                        R.id.rootFragmentContainerView,
-                        TaskFragment.newInstance(
-                            lessonId = requireArguments().getString(LESSON_ID) ?: "",
-                            cardId = requireArguments().getString(CARD_ID) ?: ""
-                        )
-                    )
-                    addToBackStack(null)
-                }
-            }
-        }
 
     }
 

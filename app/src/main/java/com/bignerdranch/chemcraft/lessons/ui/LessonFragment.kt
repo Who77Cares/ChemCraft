@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieDrawable
 import com.bignerdranch.chemcraft.R
@@ -48,18 +50,13 @@ class LessonFragment : Fragment() {
             lessons = lessonsList,
             onLessonClick = { lesson ->
 
-                if (savedInstanceState == null) {
-
-                    parentFragmentManager.commit {
-                        replace(
-                            R.id.rootFragmentContainerView,
-                            CardsFragment.newInstance(lesson.id, lesson.name)
-                        )
-                        addToBackStack(null)
-                    }
-
-
-                }
+                findNavController().navigate(
+                    R.id.action_lessonFragment2_to_cardsFragment,
+                    bundleOf(
+                        "lesson_id" to lesson.id,
+                        "lesson_title" to lesson.name
+                    )
+                )
             }
         )
 

@@ -1,5 +1,6 @@
 package com.bignerdranch.chemcraft
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.bignerdranch.chemcraft.databinding.FragmentAdminBinding
 
 import com.bignerdranch.chemcraft.network.admin_manager.FirebaseAdminManager
 import com.bignerdranch.chemcraft.network.admin_manager.MokeCardToFirebase
+import com.bignerdranch.chemcraft.network.admin_manager.MokeLessonToFirebase
 import com.bignerdranch.chemcraft.network.admin_manager.MokeTaskToFirebase
 import com.bignerdranch.chemcraft.network.admin_manager.models.TaskToServerModel
 
@@ -29,78 +31,98 @@ class AdminFragment: Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-//        binding.lessonsListButton.setOnClickListener {
-//            parentFragmentManager.commit {
-//                replace(
-//                    R.id.rootFragmentContainerView,
-//                    LessonFragment()
-//                )
-//                addToBackStack(null)
-//            }
-//        }
-//
-//        binding.myListLessonsButton.setOnClickListener {
-//            parentFragmentManager.commit {
-//                replace(
-//                    R.id.rootFragmentContainerView,
-//                    FavoriteFragment()
-//                )
-//                addToBackStack(null)
-//            }
-//
-//        }
-
-
-        ///////////// создаем урок
-        // Данные
-        val lessonData: HashMap<String, Any> = hashMapOf(
-            "description" to "333",
-            "name" to "Древний Рим",
-        )
 
         // создаем урок
         binding.adminButtonOne.setOnClickListener {
 
             FirebaseAdminManager.createLesson(
-                lessonData = lessonData,
-                onLessonCreated = { result ->
-                    Log.d("Урок создан", "id : ${result.id}")
+                lessonData = MokeLessonToFirebase.lessonData,
+                onLessonCreated = { lessonRef, name ->
+                    binding.newDataId.text = "ID урока: ${lessonRef.id}"
+                    binding.contentParam.text = "Название нового урока: $name"
+
                 },
-
-                )
-
+                onFailure = { error ->
+                    binding.newDataId.text = error
+                }
+            )
         }
 ///////////
 
 
+
+
 ///////////////  Эта логика по идее должна быть в классе data
 
-        val lessonId_CardToLesson: String = "tPG7SRYJRV64l9dcmjDa"
 
-
-        binding.adminButtonTwo.setOnClickListener {
-
-
+        binding.adminButtonLoadCardToBio.setOnClickListener {
 
             FirebaseAdminManager.addCardToLesson(
-                lessonId = lessonId_CardToLesson,
+                lessonId = MokeCardToFirebase.biologyLessonId,
                 cardModel = MokeCardToFirebase.cardsToServerData,
-                onSuccess = { result ->
-                    Log.d("Карточка  добавлена в урок", "Карточка: ${result.id} в $lessonId_CardToLesson")
+                onSuccess = { cardRef, title, itemsSize ->
+
+                    binding.newDataId.text = "ID урока: ${cardRef.id}"
+                    binding.contentParam.text = "Название нового урока: $title \nКоличество айтемов: $itemsSize"
+
                     MokeCardToFirebase.cardItemsMoke.forEach{
                         Log.d("Данные загруженной карточки", "$it")
                     }
 
                 },
-                onFailure = { }
+                onFailure = { error ->
+                    binding.newDataId.text = error
+                }
             )
-
-
         }
+
+
+        binding.adminButtonLoadCardToHis.setOnClickListener {
+
+            FirebaseAdminManager.addCardToLesson(
+                lessonId = MokeCardToFirebase.historyLessonId,
+                cardModel = MokeCardToFirebase.cardsToServerData,
+                onSuccess = { cardRef, title, itemsSize ->
+
+                    binding.newDataId.text = "ID урока: ${cardRef.id}"
+                    binding.contentParam.text = "Название нового урока: $title \nКоличество айтемов: $itemsSize"
+
+                    MokeCardToFirebase.cardItemsMoke.forEach{
+                        Log.d("Данные загруженной карточки", "$it")
+                    }
+
+                },
+                onFailure = { error ->
+                    binding.newDataId.text = error
+                }
+            )
+        }
+
+        binding.adminButtonLoadCardToGeo.setOnClickListener {
+
+            FirebaseAdminManager.addCardToLesson(
+                lessonId = MokeCardToFirebase.geographyLessonId,
+                cardModel = MokeCardToFirebase.cardsToServerData,
+                onSuccess = { cardRef, title, itemsSize ->
+
+                    binding.newDataId.text = "ID урока: ${cardRef.id}"
+                    binding.contentParam.text = "Название нового урока: $title \nКоличество айтемов: $itemsSize"
+
+                    MokeCardToFirebase.cardItemsMoke.forEach{
+                        Log.d("Данные загруженной карточки", "$it")
+                    }
+
+                },
+                onFailure = { error ->
+                    binding.newDataId.text = error
+                }
+            )
+        }
+
 
 ///////////////////
         /////////////////////

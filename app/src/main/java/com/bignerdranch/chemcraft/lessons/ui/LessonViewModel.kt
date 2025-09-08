@@ -24,29 +24,30 @@ class LessonViewModel(
         stateLiveData.postValue(state)
     }
 
-     fun getLessons() {
-
-         renderState(LessonsState.Loading)
+    fun getLessons() {
 
         viewModelScope.launch {
+
+            renderState(LessonsState.Loading)
+
             val result = lessonInteractor.getLessons()
 
-           when(result) {
-               is Resource.Success -> {
-                   lessons = result.data ?: emptyList()
-                   renderState(LessonsState.Content(lessons))
+            when (result) {
+                is Resource.Success -> {
+                    lessons = result.data ?: emptyList()
+                    renderState(LessonsState.Content(lessons))
 
-               }
+                }
 
-               is Resource.Error -> {
-                   val errorMessage = result.message ?: "Unknown error"
-                   renderState(LessonsState.Error(errorMessage))
+                is Resource.Error -> {
+                    val errorMessage = result.message ?: "Unknown error"
+                    renderState(LessonsState.Error(errorMessage))
 
-                   delay(7000) // ⏱ Подожди 5 секунд
-                   getLessons() // 🔁 Повторно запусти
+                    delay(7000) // ⏱ Подожди 5 секунд
+                    getLessons() // 🔁 Повторно запусти
 
-               }
-           }
+                }
+            }
 
         }
     }

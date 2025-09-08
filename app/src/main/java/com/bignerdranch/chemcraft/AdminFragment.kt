@@ -1,27 +1,23 @@
 package com.bignerdranch.chemcraft
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import com.bignerdranch.chemcraft.databinding.FragmentAdminBinding
 
-import com.bignerdranch.chemcraft.databinding.FragmentMainMenuBinding
-import com.bignerdranch.chemcraft.lesson_task.ui.TaskFragment
-import com.bignerdranch.chemcraft.lessons.ui.LessonFragment
-import com.bignerdranch.chemcraft.local_storage.FavoriteActivity
+
 import com.bignerdranch.chemcraft.network.admin_manager.FirebaseAdminManager
 import com.bignerdranch.chemcraft.network.admin_manager.MokeCardToFirebase
 import com.bignerdranch.chemcraft.network.admin_manager.MokeTaskToFirebase
 import com.bignerdranch.chemcraft.network.admin_manager.models.TaskToServerModel
 
 
-class MainMenuFragment: Fragment() {
+class AdminFragment: Fragment() {
 
-    private var _binding: FragmentMainMenuBinding? = null
+    private var _binding: FragmentAdminBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -29,7 +25,7 @@ class MainMenuFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
+        _binding = FragmentAdminBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,28 +33,26 @@ class MainMenuFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding.lessonsListButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(
-                    R.id.rootFragmentContainerView,
-                    LessonFragment()
-                )
-                addToBackStack(null)
-            }
-        }
-
-        binding.myListLessonsButton.setOnClickListener {
-            val intent = Intent(requireContext(), FavoriteActivity::class.java)
-            startActivity(intent)
-
-        }
-
-        binding.testsButton.setOnClickListener {
-            val intent = Intent(requireContext(), TaskFragment::class.java)
-            startActivity(intent)
-        }
-
-
+//        binding.lessonsListButton.setOnClickListener {
+//            parentFragmentManager.commit {
+//                replace(
+//                    R.id.rootFragmentContainerView,
+//                    LessonFragment()
+//                )
+//                addToBackStack(null)
+//            }
+//        }
+//
+//        binding.myListLessonsButton.setOnClickListener {
+//            parentFragmentManager.commit {
+//                replace(
+//                    R.id.rootFragmentContainerView,
+//                    FavoriteFragment()
+//                )
+//                addToBackStack(null)
+//            }
+//
+//        }
 
 
         ///////////// создаем урок

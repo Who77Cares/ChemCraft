@@ -52,12 +52,11 @@ class FirebaseAdminManager {
                 .addOnSuccessListener { cardRef ->
                     onSuccess(cardRef)
                 }
+
                 .addOnFailureListener { e ->
                     onFailure(e)
                 }
         }
-
-
 
 
         // добавляем новый тест по id урока и карточки

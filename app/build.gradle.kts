@@ -65,11 +65,14 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.koin.android)
 
-
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
 
     // неиспользуемые зависимости
     implementation(libs.coil)
     implementation(libs.coil.gif)
+
+
 
 }

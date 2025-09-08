@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context="com.bignerdranch.chemcraft.AdminFragment">
 
     <!-- Горизонтальная направляющая по центру -->
     <androidx.constraintlayout.widget.Guideline

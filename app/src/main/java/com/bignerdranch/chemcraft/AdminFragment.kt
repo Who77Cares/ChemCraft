@@ -64,7 +64,7 @@ class AdminFragment: Fragment() {
             FirebaseAdminManager.addCardToLesson(
                 lessonId = MokeCardToFirebase.biologyLessonId,
                 cardModel = MokeCardToFirebase.cardsToServerData,
-                onSuccess = { cardRef, title, itemsSize ->
+                onSuccess = { cardRef, title, description, itemsSize ->
 
                     binding.newDataId.text = "ID урока: ${cardRef.id}"
                     binding.contentParam.text = "Название нового урока: $title \nКоличество айтемов: $itemsSize"
@@ -86,7 +86,7 @@ class AdminFragment: Fragment() {
             FirebaseAdminManager.addCardToLesson(
                 lessonId = MokeCardToFirebase.historyLessonId,
                 cardModel = MokeCardToFirebase.cardsToServerData,
-                onSuccess = { cardRef, title, itemsSize ->
+                onSuccess = { cardRef, title, description, itemsSize ->
 
                     binding.newDataId.text = "ID урока: ${cardRef.id}"
                     binding.contentParam.text = "Название нового урока: $title \nКоличество айтемов: $itemsSize"
@@ -107,7 +107,7 @@ class AdminFragment: Fragment() {
             FirebaseAdminManager.addCardToLesson(
                 lessonId = MokeCardToFirebase.geographyLessonId,
                 cardModel = MokeCardToFirebase.cardsToServerData,
-                onSuccess = { cardRef, title, itemsSize ->
+                onSuccess = { cardRef, title, description, itemsSize ->
 
                     binding.newDataId.text = "ID урока: ${cardRef.id}"
                     binding.contentParam.text = "Название нового урока: $title \nКоличество айтемов: $itemsSize"
@@ -130,6 +130,7 @@ class AdminFragment: Fragment() {
 
 ////////////////////
 
+        // тут вручную бинеятся данные для урока
         val lessonIdtestToServerData: String = "tPG7SRYJRV64l9dcmjDa"
         val cardIdtestToServerData: String = "TQabQdCAeEMnOg0c0DIY"
 

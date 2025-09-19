@@ -32,7 +32,7 @@ class TabsFragment: Fragment() {
         val lessonId = requireArguments().getString("lesson_id").orEmpty()
         val cardId   = requireArguments().getString("card_id").orEmpty()
         val title    = requireArguments().getString("card_title").orEmpty()
-        val startTab = requireArguments().getInt("start_tab", 0)
+
 
         binding.viewPager.adapter = TabsAdapter(this, lessonId, cardId, title)
         binding.viewPager.setCurrentItem(0, false)

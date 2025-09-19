@@ -1,6 +1,7 @@
 package com.bignerdranch.chemcraft.cards.ui
 
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,12 +22,13 @@ class CardsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val material_card_view: MaterialCardView = itemView.findViewById(R.id.material_card_view)
 
 
+    @SuppressLint("SetTextI18n")
     fun bind(
         model: CardModel,
         onCardClick: (CardModel) -> Unit) {
 
         card_title.text = model.title
-        lesson_description.text = model.id
+        lesson_description.text = "${model.id} : ${model.description}"
 
         material_card_view.setOnClickListener {
             onCardClick(model)

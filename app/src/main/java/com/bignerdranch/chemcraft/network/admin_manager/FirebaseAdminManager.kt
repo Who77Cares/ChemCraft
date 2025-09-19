@@ -42,7 +42,7 @@ class FirebaseAdminManager {
         fun addCardToLesson(
             lessonId: String,
             cardModel: CardToServerModel,
-            onSuccess: (DocumentReference, String, Int) -> Unit,
+            onSuccess: (DocumentReference, String, String, Int) -> Unit,
             onFailure: (String) -> Unit
         ) {
             val db = FirebaseFirestore.getInstance()
@@ -55,6 +55,7 @@ class FirebaseAdminManager {
                 .addOnSuccessListener { cardRef ->
                     onSuccess(cardRef,
                         cardModel.title,
+                        cardModel.description,
                         cardModel.cardItems.size
                     )
                 }

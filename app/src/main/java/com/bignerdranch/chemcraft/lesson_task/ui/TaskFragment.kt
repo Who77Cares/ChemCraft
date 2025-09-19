@@ -1,16 +1,13 @@
 package com.bignerdranch.chemcraft.lesson_task.ui
 
 import android.content.Context
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bignerdranch.chemcraft.databinding.FragmentTaskBinding
@@ -72,21 +69,21 @@ class TaskFragment: Fragment() {
         viewModel.getTasks()
 
 
-        binding.questionStatus.setOnClickListener {
-//            binding.lottiView.repeatCount = 4
-//            binding.lottiView.playAnimation()
+//        binding.questionStatus.setOnClickListener {
+////            binding.lottiView.repeatCount = 4
+////            binding.lottiView.playAnimation()
+////
+////
+////            Handler(Looper.getMainLooper()).postDelayed(
+////                {
+////                    val intent = Intent(this, AllTestResult::class.java)
+////                    startActivity(intent)
+////                    binding.lottiView.cancelAnimation()
+////                }, 3000
+////            )
 //
 //
-//            Handler(Looper.getMainLooper()).postDelayed(
-//                {
-//                    val intent = Intent(this, AllTestResult::class.java)
-//                    startActivity(intent)
-//                    binding.lottiView.cancelAnimation()
-//                }, 3000
-//            )
-
-
-        }
+//        }
 
 
         binding.testEditText.setOnEditorActionListener { v, actionId, _ ->

@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import com.bignerdranch.chemcraft.Resource
 import com.bignerdranch.chemcraft.cards.domain.api.GetCardsInteractor
 
 import com.bignerdranch.chemcraft.old_arch.cards.models.CardModel
-import kotlinx.coroutines.launch
+
 
 class CardsViewModel(
     private val cardsInteractor: GetCardsInteractor

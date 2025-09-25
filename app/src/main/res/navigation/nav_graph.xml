@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/lessonFragment">
+
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.bignerdranch.chemcraft.AdminFragment"
+        android:label="fragment_main_menu"
+        tools:layout="@layout/fragment_admin" />
+    <fragment
+        android:id="@+id/lessonFragment"
+        android:name="com.bignerdranch.chemcraft.lessons.ui.LessonFragment"
+        android:label="fragment_lesson"
+        tools:layout="@layout/fragment_lesson" >
+        <action
+            android:id="@+id/action_lessonFragment2_to_cardsFragment"
+            app:destination="@id/cardsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.bignerdranch.chemcraft.local_storage.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/cardsFragment"
+        android:name="com.bignerdranch.chemcraft.cards.ui.CardsFragment"
+        android:label="fragment_cards"
+        tools:layout="@layout/fragment_cards" >
+        <action
+            android:id="@+id/action_cardsFragment_to_tabsFragment"
+            app:destination="@id/tabsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.bignerdranch.chemcraft.lesson_task.ui.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" />
+    <fragment
+        android:id="@+id/fullScreenImageFragment"
+        android:name="com.bignerdranch.chemcraft.items_in_lesson.ui.full_screen_img.FullScreenImageFragment"
+        android:label="fragment_full_screen_image"
+        tools:layout="@layout/fragment_full_screen_image" />
+    <fragment
+        android:id="@+id/tabsFragment"
+        android:name="com.bignerdranch.chemcraft.items_in_lesson.ui.tab_fragment.TabsFragment"
+        android:label="TabsFragment" />
+    <fragment
+        android:id="@+id/itemsFragment"
+        android:name="com.bignerdranch.chemcraft.items_in_lesson.ui.ItemsFragment"
+        android:label="fragment_items"
+        tools:layout="@layout/fragment_items" >
+        <action
+            android:id="@+id/action_itemsFragment_to_fullScreenImageFragment"
+            app:destination="@id/fullScreenImageFragment" />
+    </fragment>
+</navigation>

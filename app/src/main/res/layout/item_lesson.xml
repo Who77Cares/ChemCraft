@@ -9,21 +9,21 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/lessonButton2"
+        android:id="@+id/lessonIItem"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:backgroundTint="@color/blue_light"
         android:layout_margin="5dp"
-        android:focusable="false"
-        android:clickable="false"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/black">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
@@ -160,24 +160,5 @@
 
 
     </com.google.android.material.card.MaterialCardView>
-
-<!--    <Button-->
-<!--        android:id="@+id/lessonButton"-->
-
-
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:text="Урок 1"-->
-<!--        android:backgroundTint="#f0bbbd"-->
-<!--        android:layout_marginTop="15dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:layout_marginStart="@dimen/dp25"-->
-
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

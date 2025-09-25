@@ -22,7 +22,7 @@ class GetCardsRepositoryImpl(
                     try {
                         CardModel(
                             id = map["id"] as? String ?: "",
-                            imageUrl = map["imageUrl"] as? String ?: "",
+                            description = map["description"] as? String ?: "",
                             important = true,
                             title = map["title"] as? String ?: ""
                         )

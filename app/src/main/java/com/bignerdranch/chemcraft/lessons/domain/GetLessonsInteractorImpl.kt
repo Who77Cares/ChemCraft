@@ -11,9 +11,6 @@ class GetLessonsInteractorImpl(
 ): GetLessonsInteractor {
     override suspend fun getLessons(): Resource<List<LessonsModel>> {
 
-
-
-
         // Допустим, здесь может быть логика фильтрации, сортировки и т.д.
         return repository.getLessons()
     }

@@ -9,8 +9,9 @@ import com.bignerdranch.chemcraft.items_in_lesson.domain.models.ItemModel
 class GetItemsInteractorImpl(
     private val repository: GetItemsRepository
 ): GetItemsInteractor {
-    override suspend fun getCards(lessonId: String, cardId: String): Resource<List<ItemModel>> {
 
+    override suspend fun getCards(lessonId: String, cardId: String): Resource<List<ItemModel>> {
         return repository.getLessons(lessonId, cardId)
     }
+
 }

@@ -1,0 +1,43 @@
+package com.bignerdranch.chemcraft
+
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.bignerdranch.chemcraft.databinding.ActivityRootBinding
+
+class RootActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRootBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityRootBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.rootFragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        binding.bottomNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.adminFragment,
+                R.id.lessonFragment,
+                R.id.favoriteFragment,
+                R.id.cardsFragment, -> {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+//                    binding.line.visibility = View.GONE
+                }
+
+                else -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                }
+            }
+        }
+
+    }
+}
